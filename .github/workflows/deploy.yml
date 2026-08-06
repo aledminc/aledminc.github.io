@@ -24,7 +24,16 @@ jobs:
           node-version: 20
           cache: npm
       - run: npm ci
+      # Vite inlines VITE_* vars at build time, so the EmailJS config has to be
+      # present in THIS step or the deployed form ships unconfigured. Add these
+      # under Settings -> Secrets and variables -> Actions. Missing secrets
+      # resolve to empty strings and the form renders its "not connected"
+      # notice rather than failing at runtime.
       - run: npm run build
+        env:
+          VITE_EMAILJS_SERVICE_ID: ${{ secrets.VITE_EMAILJS_SERVICE_ID }}
+          VITE_EMAILJS_TEMPLATE_ID: ${{ secrets.VITE_EMAILJS_TEMPLATE_ID }}
+          VITE_EMAILJS_PUBLIC_KEY: ${{ secrets.VITE_EMAILJS_PUBLIC_KEY }}
       # SPA fallback: Pages serves 404.html for any unmatched path, and since
       # it is a copy of index.html the React router renders the correct route.
       - run: cp dist/index.html dist/404.html

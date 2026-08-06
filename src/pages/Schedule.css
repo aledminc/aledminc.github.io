@@ -1,0 +1,412 @@
+/* /schedule — weekly timetable + meeting-request form. */
+
+.sched__head {
+  max-width: 62ch;
+}
+
+.sched h1 {
+  font-size: clamp(1.9rem, 4vw, 2.6rem);
+}
+
+.sched__sub {
+  margin: 0 0 18px;
+  font-size: 0.98rem;
+  line-height: 1.65;
+  color: var(--muted);
+}
+
+/* ---------- legend ---------- */
+.sched__legend {
+  display: flex;
+  gap: 18px;
+  list-style: none;
+  margin: 0 0 28px;
+  padding: 0;
+}
+
+.sched__legend-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--font-display);
+  font-size: 0.78rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--muted);
+}
+
+.sched__swatch {
+  width: 12px;
+  height: 12px;
+  border-radius: 3px;
+}
+
+.sched__swatch--class {
+  background: var(--accent);
+}
+
+.sched__swatch--club {
+  background: var(--accent-2);
+}
+
+/* ============================================================
+   TIMETABLE (desktop)
+
+   One CSS grid: column 1 is the hour gutter, then one column per day.
+   Rows are 15-minute slots, so an event spans (duration / 15) rows and
+   lands at its true position without any absolute positioning.
+   ============================================================ */
+.tt {
+  display: grid;
+  grid-template-columns: 66px repeat(5, minmax(0, 1fr));
+  /* Header row, then --tt-slots five-minute rows at 5px each = 60px/hour. */
+  grid-template-rows: auto repeat(var(--tt-slots), 5px);
+  gap: 0 8px;
+  margin-bottom: 72px;
+}
+
+.tt__dayhead {
+  grid-row: 1;
+  padding: 0 0 12px;
+  text-align: center;
+  font-family: var(--font-display);
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--muted);
+}
+
+.tt__hour {
+  grid-column: 1;
+  position: relative;
+  border-top: 1px solid var(--border);
+}
+
+.tt__hour-label {
+  position: absolute;
+  top: -0.62em;
+  right: 12px;
+  font-family: var(--font-display);
+  font-size: 0.74rem;
+  color: var(--muted);
+  background: var(--bg);
+  padding: 0 2px;
+}
+
+/* Empty hour cells only exist to draw the horizontal rules. */
+.tt__cell {
+  border-top: 1px solid var(--border);
+}
+
+/* ---------- an event block ---------- */
+.tt__event {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  overflow: hidden;
+  padding: 6px 9px;
+  margin: 1px 0;
+  border-radius: 8px;
+  /* Left rule in the event's colour, like a real calendar block. */
+  border-left: 3px solid var(--kind, var(--accent));
+  background: color-mix(in srgb, var(--kind, var(--accent)) 14%, var(--surface));
+  min-width: 0;
+}
+
+/* Sub-hour blocks: tighten so the content fits instead of being clipped. */
+.tt__event--short {
+  padding: 4px 8px;
+  gap: 0;
+}
+
+.tt__event--short .tt__event-title {
+  -webkit-line-clamp: 1;
+  line-clamp: 1;
+  font-size: 0.78rem;
+}
+
+.tt__event--short .tt__event-where {
+  display: none;
+}
+
+.tt__event--class {
+  --kind: var(--accent);
+}
+
+.tt__event--club {
+  --kind: var(--accent-2);
+}
+
+.tt__event-code {
+  font-family: var(--font-display);
+  font-size: 0.7rem;
+  letter-spacing: 0.04em;
+  color: var(--muted);
+}
+
+.tt__event-title {
+  font-size: 0.82rem;
+  font-weight: 600;
+  line-height: 1.25;
+  color: var(--text);
+  /* Titles are long and blocks are short — clamp rather than overflow. */
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.tt__event-time,
+.tt__event-where {
+  font-size: 0.7rem;
+  line-height: 1.3;
+  color: var(--muted);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* ============================================================
+   STACKED LIST (narrow screens)
+   ============================================================ */
+.sched__list {
+  display: flex;
+  flex-direction: column;
+  gap: 26px;
+  margin-bottom: 64px;
+}
+
+.sched__day-name {
+  margin: 0 0 10px;
+  font-size: 1.05rem;
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+
+.sched__free {
+  margin: 0;
+  font-size: 0.9rem;
+  color: var(--muted);
+  opacity: 0.7;
+}
+
+.sched__day-items {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.sched__row {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 2px;
+  padding: 12px 14px;
+  border: 1px solid var(--border);
+  border-left: 3px solid var(--kind, var(--accent));
+  border-radius: 10px;
+  background: var(--surface);
+}
+
+.sched__row--class {
+  --kind: var(--accent);
+}
+
+.sched__row--club {
+  --kind: var(--accent-2);
+}
+
+.sched__row-time {
+  font-family: var(--font-display);
+  font-size: 0.78rem;
+  color: var(--accent);
+}
+
+.sched__row-code {
+  font-family: var(--font-display);
+  font-size: 0.72rem;
+  color: var(--muted);
+}
+
+.sched__row-title {
+  font-size: 0.95rem;
+  font-weight: 600;
+}
+
+.sched__row-where {
+  font-size: 0.78rem;
+  color: var(--muted);
+}
+
+/* ============================================================
+   MEETING REQUEST FORM
+   ============================================================ */
+.meet {
+  padding-top: 8px;
+  border-top: 1px solid var(--border);
+}
+
+.meet__intro {
+  max-width: 60ch;
+  margin: 32px 0 24px;
+}
+
+.meet__intro h2 {
+  font-size: clamp(1.5rem, 3vw, 2rem);
+}
+
+.meet__intro p {
+  margin: 0;
+  font-size: 0.98rem;
+  line-height: 1.65;
+  color: var(--muted);
+}
+
+.meet__mailto {
+  color: var(--accent);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.meet__notice {
+  max-width: 60ch;
+  margin: 0 0 24px;
+  padding: 14px 16px;
+  border: 1px solid var(--border);
+  border-left: 3px solid var(--accent-2);
+  border-radius: 10px;
+  background: var(--surface);
+  font-size: 0.9rem;
+  line-height: 1.6;
+  color: var(--muted);
+}
+
+.meet-form {
+  max-width: 760px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.meet-form__row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  min-width: 0;
+}
+
+.field__label {
+  font-family: var(--font-display);
+  font-size: 0.74rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--muted);
+}
+
+.field input,
+.field textarea {
+  width: 100%;
+  padding: 11px 14px;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: var(--surface);
+  color: var(--text);
+  font-family: var(--font-body);
+  font-size: 0.95rem;
+  transition: border-color 160ms ease;
+}
+
+.field input:focus,
+.field textarea:focus {
+  border-color: var(--accent);
+}
+
+.field textarea {
+  resize: vertical;
+  line-height: 1.6;
+}
+
+/* The native date picker indicator is near-black on our dark surface. */
+.field input[type='datetime-local']::-webkit-calendar-picker-indicator {
+  filter: invert(1);
+  opacity: 0.55;
+  cursor: pointer;
+}
+
+.field__error {
+  font-size: 0.8rem;
+  color: var(--accent-2);
+}
+
+/* Honeypot: off-screen rather than display:none, since some bots skip
+   display:none fields. Never focusable, never announced. */
+.meet-form__trap {
+  position: absolute;
+  left: -9999px;
+  width: 1px;
+  height: 1px;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.meet-form__actions {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.meet-form__submit {
+  padding: 12px 22px;
+  border: none;
+  border-radius: 999px;
+  background: var(--accent);
+  color: #0e0e11;
+  font-family: var(--font-display);
+  font-size: 0.9rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition:
+    filter 160ms ease,
+    translate 160ms ease;
+}
+
+.meet-form__submit:hover:not(:disabled) {
+  filter: brightness(1.08);
+  translate: 0 -1px;
+}
+
+.meet-form__submit:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+.meet-form__ok,
+.meet-form__err {
+  margin: 0;
+  font-size: 0.9rem;
+}
+
+.meet-form__ok {
+  color: var(--tag-research, #43d6a8);
+}
+
+.meet-form__err {
+  color: var(--accent-2);
+}
+
+@media (max-width: 620px) {
+  .meet-form__row {
+    grid-template-columns: 1fr;
+  }
+}
