@@ -1,0 +1,7 @@
+<!-- PLACEHOLDER LOGO — TODO(xander): replace with your real logo mark.
+     Keep this filename/path (public/assets/logo.svg) and the nav picks it up
+     with no code change. Square viewBox works best in the 32px nav slot. -->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="32" height="32" role="img" aria-label="Xander Minch logo">
+  <rect width="32" height="32" rx="8" fill="#6c8cff" />
+  <path d="M9 9l14 14M23 9L9 23" stroke="#0e0e11" stroke-width="3" stroke-linecap="round" />
+</svg>

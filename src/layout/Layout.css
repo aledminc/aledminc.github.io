@@ -1,0 +1,255 @@
+/* Layout chrome: nav header + footer. All values come from the tokens in
+   index.css — no hard-coded colors or fonts here. */
+
+.shell {
+  display: flex;
+  flex-direction: column;
+  min-height: 100%;
+}
+
+.shell__main {
+  flex: 1 0 auto;
+}
+
+/* ============================================================
+   NAV HEADER
+   ============================================================ */
+.nav {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: var(--surface-translucent);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border);
+}
+
+/* 3-column grid keeps the center nav optically centered no matter how wide
+   the brand or the right-hand cluster gets. */
+.nav__inner {
+  max-width: var(--maxw);
+  margin: 0 auto;
+  padding: 0 24px;
+  height: var(--nav-h);
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+  gap: 16px;
+}
+
+/* ---------- left: brand ---------- */
+.nav__brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  justify-self: start;
+  min-width: 0;
+}
+
+.nav__logo {
+  width: 32px;
+  height: 32px;
+  flex: none;
+  display: block;
+}
+
+.nav__name {
+  font-family: var(--font-display);
+  font-size: 1.15rem;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  white-space: nowrap;
+}
+
+/* ---------- center: page nav ---------- */
+.nav__links {
+  display: flex;
+  align-items: center;
+  gap: 28px;
+  justify-self: center;
+}
+
+.nav__links a {
+  position: relative;
+  font-size: 0.95rem;
+  font-weight: 500;
+  color: var(--muted);
+  padding: 6px 0;
+  transition: color 160ms ease;
+}
+
+.nav__links a:hover {
+  color: var(--text);
+}
+
+/* NavLink adds .active on the matching route. */
+.nav__links a.active {
+  color: var(--text);
+}
+
+.nav__links a.active::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 2px;
+  border-radius: 2px;
+  background: var(--accent);
+}
+
+/* ---------- right: socials + CTA ---------- */
+.nav__right {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  justify-self: end;
+}
+
+.nav__socials {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.social {
+  display: inline-flex;
+  color: var(--muted);
+  transition: color 160ms ease;
+}
+
+.social:hover {
+  color: var(--text);
+}
+
+.nav__cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 9px 16px;
+  border-radius: 999px;
+  border: 1px solid var(--border);
+  background: var(--accent);
+  color: #0e0e11;
+  font-size: 0.9rem;
+  font-weight: 600;
+  white-space: nowrap;
+  transition:
+    filter 160ms ease,
+    transform 160ms ease;
+}
+
+.nav__cta:hover {
+  filter: brightness(1.08);
+  transform: translateY(-1px);
+}
+
+/* Hamburger — hidden until the mobile breakpoint. */
+.nav__toggle {
+  display: none;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  padding: 0;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: transparent;
+  color: var(--text);
+  cursor: pointer;
+}
+
+/* ---------- mobile drawer ---------- */
+.nav__drawer {
+  display: none;
+  border-top: 1px solid var(--border);
+  background: var(--surface);
+  padding: 16px 24px 24px;
+}
+
+.nav__drawer-links {
+  display: flex;
+  flex-direction: column;
+}
+
+.nav__drawer-links a {
+  padding: 14px 0;
+  font-size: 1.05rem;
+  font-weight: 500;
+  color: var(--muted);
+  border-bottom: 1px solid var(--border);
+}
+
+.nav__drawer-links a.active {
+  color: var(--accent);
+}
+
+.nav__drawer-socials {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  margin-top: 20px;
+}
+
+/* ============================================================
+   BREAKPOINT — collapse center links + socials into the drawer
+   ============================================================ */
+@media (max-width: 768px) {
+  .nav__inner {
+    grid-template-columns: 1fr auto;
+    padding: 0 16px;
+  }
+
+  .nav__links,
+  .nav__socials,
+  .nav__right > .nav__cta {
+    display: none;
+  }
+
+  .nav__toggle {
+    display: inline-flex;
+  }
+
+  /* [hidden] on the element keeps it out of the a11y tree when closed. */
+  .nav__drawer--open {
+    display: block;
+  }
+}
+
+/* ============================================================
+   FOOTER — deliberately quiet; the nav is the primary surface.
+   ============================================================ */
+.footer {
+  border-top: 1px solid var(--border);
+  background: var(--surface);
+  padding: 28px 0;
+}
+
+.footer__inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.footer__copy {
+  color: var(--muted);
+  font-size: 0.85rem;
+}
+
+.footer__links {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.footer__mail {
+  color: var(--muted);
+  font-size: 0.85rem;
+  transition: color 160ms ease;
+}
+
+.footer__mail:hover {
+  color: var(--text);
+}

@@ -2,9 +2,26 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <!-- Shares the placeholder logo; swap public/assets/logo.svg and both the
+         favicon and the nav mark update together. -->
+    <link rel="icon" type="image/svg+xml" href="/assets/logo.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="Xander Minch — personal portfolio, projects, and availability."
+    />
     <title>Xander Minch</title>
+
+    <!-- TODO(xander): fonts are a design decision. Currently Playfair Display
+         (display) + Inter (body) from Google Fonts. If you'd rather have Clash
+         Display, it is Fontshare-only — self-host it into src/assets and drop
+         these <link> tags. Swap --font-display / --font-body in index.css. -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
   </head>
   <body>
     <div id="root"></div>
