@@ -1,0 +1,226 @@
+/* Hobbies rolodex: media pane left, stat dashboard right, controls below. */
+
+.hobbies {
+  padding: 96px 0;
+}
+
+.hobbies__heading {
+  font-size: clamp(1.8rem, 4vw, 2.6rem);
+  margin-bottom: 40px;
+}
+
+.hobbies__stage {
+  display: grid;
+  grid-template-columns: 1.15fr 1fr;
+  gap: 32px;
+  align-items: stretch;
+}
+
+/* ---------- left: media ---------- */
+.hobby__media {
+  position: relative;
+  border-radius: var(--radius);
+  overflow: hidden;
+  border: 1px solid var(--border);
+  background: var(--surface);
+  aspect-ratio: 16 / 9;
+  will-change: transform;
+}
+
+.hobby__media video,
+.hobby__media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* ---------- right: dashboard ---------- */
+.hobby__dash {
+  display: flex;
+  flex-direction: column;
+  padding: 26px 28px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--surface);
+}
+
+.hobby__dash-title {
+  font-size: 1.4rem;
+  margin: 0 0 22px;
+  color: var(--accent);
+}
+
+.hobby__stats {
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+}
+
+.stat {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: baseline;
+  gap: 4px 12px;
+  will-change: transform;
+}
+
+.stat__label {
+  font-family: var(--font-display);
+  font-size: 0.74rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--muted);
+}
+
+.stat__value {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: 1.5rem;
+  font-weight: 700;
+  line-height: 1;
+  justify-self: end;
+  /* Digits change width mid-count-up and would jitter the layout otherwise. */
+  font-variant-numeric: tabular-nums;
+}
+
+.stat__track {
+  grid-column: 1 / -1;
+  height: 6px;
+  border-radius: 999px;
+  background: var(--border);
+  overflow: hidden;
+}
+
+.stat__bar {
+  height: 100%;
+  border-radius: inherit;
+  background: linear-gradient(to right, var(--accent), var(--accent-2));
+
+  /* Width is the resting state (set inline from the data); anime grows it with
+     scaleX. Origin must be static CSS — anime treats transform-origin as an
+     animatable property and would interpolate it instead of setting it. */
+  transform-origin: left;
+  will-change: transform;
+}
+
+/* margin-top:auto pins the note to the bottom of the pane, so the dashboard
+   fills the media pane's height deliberately instead of trailing off. */
+.hobby__note {
+  margin: 24px 0 0;
+  margin-top: auto;
+  padding-top: 24px;
+  font-size: 0.92rem;
+  line-height: 1.65;
+  color: var(--muted);
+}
+
+/* ---------- controls ---------- */
+.hobbies__controls {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  margin-top: 32px;
+  flex-wrap: wrap;
+}
+
+.hobbies__arrow {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  flex: none;
+  border: 1px solid var(--border);
+  border-radius: 50%;
+  background: var(--surface);
+  color: var(--text);
+  cursor: pointer;
+  transition:
+    border-color 160ms ease,
+    color 160ms ease;
+}
+
+.hobbies__arrow:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+.hobbies__labels {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.hobbies__label {
+  padding: 9px 16px;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  background: transparent;
+  color: var(--muted);
+  font-family: var(--font-display);
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition:
+    color 160ms ease,
+    border-color 160ms ease,
+    background 160ms ease;
+}
+
+.hobbies__label:hover {
+  color: var(--text);
+  border-color: var(--muted);
+}
+
+.hobbies__label.is-active {
+  color: var(--bg);
+  background: var(--accent);
+  border-color: var(--accent);
+}
+
+/* ============================================================
+   ENTRANCE START STATE — hidden only when motion is allowed, so
+   reduced-motion visitors (for whom no scope is created) see the
+   finished dashboard rather than an empty one.
+
+   Deliberately absent: any `scale` on .stat__bar. anime grows the
+   bar through `transform`, and a CSS `scale` would multiply with
+   it and pin the bar at zero forever.
+   ============================================================ */
+@media (prefers-reduced-motion: no-preference) {
+  .hobby__media,
+  .hobby__dash-title,
+  .stat,
+  .hobby__note {
+    opacity: 0;
+  }
+
+  .stat__bar {
+    transform: scaleX(0);
+  }
+}
+
+/* ============================================================
+   MOBILE — stack the two panes
+   ============================================================ */
+@media (max-width: 768px) {
+  .hobbies {
+    padding: 72px 0;
+  }
+
+  .hobbies__stage {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+
+  .hobby__dash {
+    padding: 22px;
+  }
+
+  .hobbies__controls {
+    margin-top: 24px;
+  }
+}
