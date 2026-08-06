@@ -1,0 +1,210 @@
+/* /projects — YouTube-homepage-style grid.
+
+   This page intentionally uses its own wider max-width instead of the site
+   .container (1200px). YouTube's grid is the recognizable cue, and at 1200px
+   with 300px minimum tiles you only ever get 3 columns; 1600px gives the
+   4-5 column look the homage depends on. */
+.yt {
+  max-width: 1600px;
+  margin: 0 auto;
+  padding: 20px 24px 96px;
+}
+
+/* ---------- filter chip row ---------- */
+.yt__chips {
+  display: flex;
+  gap: 10px;
+  padding: 4px 0 20px;
+  overflow-x: auto;
+  /* Chips scroll sideways on narrow screens rather than wrapping, which is how
+     YouTube behaves. Hide the scrollbar but keep the scrolling. */
+  scrollbar-width: none;
+}
+
+.yt__chips::-webkit-scrollbar {
+  display: none;
+}
+
+.yt__chip {
+  flex: none;
+  padding: 8px 15px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--surface);
+  color: var(--text);
+  font-family: var(--font-display);
+  font-size: 0.85rem;
+  white-space: nowrap;
+  cursor: pointer;
+  transition:
+    background 160ms ease,
+    color 160ms ease,
+    border-color 160ms ease;
+}
+
+.yt__chip:hover {
+  border-color: var(--muted);
+}
+
+.yt__chip.is-active {
+  background: var(--text);
+  border-color: var(--text);
+  color: var(--bg);
+}
+
+/* ---------- grid ---------- */
+.yt-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 26px 16px;
+}
+
+.yt-card {
+  min-width: 0; /* lets the title ellipsis work inside a grid track */
+  will-change: transform;
+}
+
+.yt-card__link {
+  display: block;
+  border-radius: 12px;
+}
+
+/* ---------- thumbnail ---------- */
+.yt-thumb {
+  position: relative;
+  /* Reserving the box with aspect-ratio is what keeps lazy-loaded thumbnails
+     from shifting the grid as they arrive. */
+  aspect-ratio: 16 / 9;
+  border-radius: 12px;
+  overflow: hidden;
+  background: var(--surface);
+}
+
+.yt-thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition:
+    scale 260ms ease,
+    filter 260ms ease;
+}
+
+/* YouTube's duration pill. */
+.yt-thumb__pill {
+  position: absolute;
+  right: 8px;
+  bottom: 8px;
+  padding: 2px 6px;
+  border-radius: 5px;
+  background: rgba(0, 0, 0, 0.78);
+  color: #fff;
+  font-family: var(--font-display);
+  font-size: 0.72rem;
+  font-weight: 700;
+  line-height: 1.5;
+  letter-spacing: 0.02em;
+}
+
+/* Hover: a light zoom on the image inside its fixed box, plus a lift.
+   `scale` is the standalone property, not `transform` — anime writes an inline
+   transform on .yt-card for the entrance, and an inline style always beats a
+   stylesheet rule, so a transform-based hover here would silently never run. */
+.yt-card__link:hover .yt-thumb img {
+  scale: 1.04;
+}
+
+.yt-card__link:hover .yt-title {
+  color: var(--accent);
+}
+
+/* ---------- meta row ---------- */
+.yt-meta {
+  display: flex;
+  gap: 12px;
+  padding: 12px 0 0;
+}
+
+.yt-avatar {
+  flex: none;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  color: var(--muted);
+  font-family: var(--font-display);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+}
+
+.yt-meta__text {
+  min-width: 0;
+}
+
+.yt-title {
+  margin: 0 0 5px;
+  font-family: var(--font-body);
+  font-size: 0.95rem;
+  font-weight: 600;
+  line-height: 1.3;
+  color: var(--text);
+
+  /* Two lines, then ellipsis — the YouTube clamp. */
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+
+  /* Hold two lines' worth of height even for short titles, so the contributor
+     and date rows stay aligned across the grid. */
+  min-height: calc(2 * 1.3em);
+  transition: color 160ms ease;
+}
+
+.yt-channel,
+.yt-sub {
+  margin: 0;
+  font-size: 0.85rem;
+  line-height: 1.45;
+  color: var(--muted);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.yt-sub {
+  font-size: 0.82rem;
+}
+
+.yt__none {
+  color: var(--muted);
+  font-size: 0.95rem;
+}
+
+/* ---------- entrance start state ----------
+   Only when motion is allowed: under reduced motion useAnimeScope never
+   creates a scope, so anything hidden here would stay hidden. */
+@media (prefers-reduced-motion: no-preference) {
+  .yt-card {
+    opacity: 0;
+  }
+}
+
+/* ---------- narrow screens ----------
+   Below ~660px the auto-fill minimum would still force 300px tracks, so drop
+   to a single column and let tiles use the full width. */
+@media (max-width: 660px) {
+  .yt {
+    padding: 16px 16px 72px;
+  }
+
+  .yt-grid {
+    grid-template-columns: 1fr;
+    gap: 22px 0;
+  }
+}
