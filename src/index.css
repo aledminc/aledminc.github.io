@@ -29,6 +29,13 @@
   --brand-size: 30px;
   --brand-text-scale: 1;
 
+  /* Timeline tag colors — visual grouping for career entries.
+     TODO(xander): tune alongside --accent once you pick your palette. */
+  --tag-education: var(--accent);
+  --tag-industry: var(--accent-2);
+  --tag-research: #43d6a8;
+  --tag-leadership: #c084fc;
+
   /* Derived tokens — kept here so components never hard-code color math. */
   --border: rgba(255, 255, 255, 0.08);
   --surface-translucent: rgba(23, 23, 28, 0.72);

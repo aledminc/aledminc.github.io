@@ -1,0 +1,276 @@
+/* Career timeline: vertical spine, alternating cards on desktop,
+   single column on mobile. Tokens only. */
+
+.tl {
+  padding: 96px 0;
+}
+
+.tl__heading {
+  font-size: clamp(1.8rem, 4vw, 2.6rem);
+  margin-bottom: 56px;
+}
+
+.tl__track {
+  position: relative;
+}
+
+/* ---------- the spine ----------
+   Centered with `left: calc(50% - 1px)` rather than translateX(-50%) on
+   purpose: anime.js animates this element's scaleY by writing inline
+   `transform`, which would overwrite any transform used for centering. */
+.tl__spine {
+  position: absolute;
+  top: 6px;
+  bottom: 6px;
+  left: calc(50% - 1px);
+  width: 2px;
+  border-radius: 2px;
+  background: var(--border);
+  will-change: transform;
+
+  /* Must be set here, NOT passed to anime as `transformOrigin`. anime treats it
+     as an animatable property and interpolates it from the element's current
+     value, so the origin drifts while the scaleY plays (and for a scroll-synced
+     animation it never arrives at all). Static CSS pins it. */
+  transform-origin: top;
+}
+
+/* Scroll-linked fill riding on top of the spine. Hidden by default and only
+   enabled under `no-preference` below: it is driven by scroll position, so with
+   reduced motion (where no scope is created) it would sit at zero height
+   forever and read as a broken element. */
+.tl__progress {
+  display: none;
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: linear-gradient(to bottom, var(--accent), var(--accent-2));
+  will-change: transform;
+  transform-origin: top; /* see note on .tl__spine */
+}
+
+.tl__list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 44px;
+}
+
+/* ---------- rows ----------
+   3 columns: content | spine gutter | content. The node always occupies the
+   middle so it sits exactly on the spine; the card and date swap sides. */
+.tl__row {
+  display: grid;
+  grid-template-columns: 1fr 56px 1fr;
+  align-items: start;
+}
+
+.tl__node {
+  grid-column: 2;
+  justify-self: center;
+  width: 15px;
+  height: 15px;
+  margin-top: 6px;
+  border-radius: 50%;
+  background: var(--tag, var(--accent));
+  box-shadow: 0 0 0 4px var(--bg);
+  will-change: transform;
+}
+
+/* Not-yet-completed entries read as hollow. */
+.tl__node--upcoming {
+  background: var(--bg);
+  border: 2px solid var(--tag, var(--accent));
+}
+
+.tl__node[data-tag='education'] {
+  --tag: var(--tag-education);
+}
+.tl__node[data-tag='industry'] {
+  --tag: var(--tag-industry);
+}
+.tl__node[data-tag='research'] {
+  --tag: var(--tag-research);
+}
+.tl__node[data-tag='leadership'] {
+  --tag: var(--tag-leadership);
+}
+
+.tl__card[data-tag='education'] {
+  --tag: var(--tag-education);
+}
+.tl__card[data-tag='industry'] {
+  --tag: var(--tag-industry);
+}
+.tl__card[data-tag='research'] {
+  --tag: var(--tag-research);
+}
+.tl__card[data-tag='leadership'] {
+  --tag: var(--tag-leadership);
+}
+
+/* ---------- side placement ---------- */
+.tl__row.left .tl__card {
+  grid-column: 1;
+}
+.tl__row.left .tl__date {
+  grid-column: 3;
+  text-align: left;
+}
+.tl__row.right .tl__card {
+  grid-column: 3;
+}
+.tl__row.right .tl__date {
+  grid-column: 1;
+  text-align: right;
+}
+
+/* ---------- date ---------- */
+.tl__date {
+  margin-top: 4px;
+  font-family: var(--font-display);
+  font-size: 0.9rem;
+  color: var(--muted);
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.tl__row.right .tl__date {
+  align-items: flex-end;
+}
+
+.tl__expected {
+  font-size: 0.68rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--muted);
+  opacity: 0.75;
+}
+
+/* ---------- card ---------- */
+.tl__card {
+  padding: 20px 22px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--surface);
+  will-change: transform;
+
+  /* Hover lift uses the standalone `translate` property, NOT `transform`.
+     anime.js leaves an inline `transform: translateX(0px)` on these cards after
+     the entrance, and an inline style always beats a stylesheet rule — a
+     `transform`-based hover would silently never apply. `translate` is a
+     separate property, so the two compose instead of fighting. */
+  transition:
+    translate 180ms ease,
+    border-color 180ms ease,
+    box-shadow 180ms ease;
+}
+
+.tl__card:hover {
+  translate: 0 -4px;
+  border-color: var(--tag, var(--accent));
+  box-shadow: 0 12px 28px -12px var(--tag, var(--accent));
+}
+
+.tl__card h3 {
+  font-size: 1.06rem;
+  margin: 0 0 6px;
+}
+
+.tl__org {
+  margin: 0 0 10px;
+  font-family: var(--font-display);
+  font-size: 0.82rem;
+  color: var(--tag, var(--accent));
+}
+
+.tl__blurb {
+  margin: 0;
+  font-size: 0.92rem;
+  line-height: 1.65;
+  color: var(--muted);
+}
+
+/* ============================================================
+   ENTRANCE START STATE — same rule as the hero: only hide things
+   when motion is allowed, because under reduced motion
+   useAnimeScope never creates the scope and nothing would ever
+   animate these back to visible.
+
+   Note there is deliberately no `scale` here for the nodes. anime
+   animates scale through `transform`, and a CSS `scale` property
+   would multiply with it — pinning the nodes at zero forever.
+   ============================================================ */
+@media (prefers-reduced-motion: no-preference) {
+  .tl__heading,
+  .tl__node,
+  .tl__card,
+  .tl__date {
+    opacity: 0;
+  }
+
+  .tl__spine {
+    transform: scaleY(0);
+  }
+
+  .tl__progress {
+    display: block;
+  }
+}
+
+/* ============================================================
+   MOBILE — single column, spine pinned left
+   ============================================================ */
+@media (max-width: 768px) {
+  .tl {
+    padding: 72px 0;
+  }
+
+  .tl__heading {
+    margin-bottom: 36px;
+  }
+
+  .tl__spine {
+    left: 7px;
+  }
+
+  .tl__list {
+    gap: 32px;
+  }
+
+  .tl__row {
+    grid-template-columns: 16px 1fr;
+    column-gap: 18px;
+    row-gap: 8px;
+  }
+
+  /* 15px dot centered in a 16px column lands on the spine at left: 7px. */
+  .tl__node {
+    grid-column: 1;
+    grid-row: 1;
+    justify-self: center;
+    margin-top: 4px;
+  }
+
+  /* Both sides collapse into the same single column. */
+  .tl__row.left .tl__card,
+  .tl__row.right .tl__card {
+    grid-column: 2;
+    grid-row: 2;
+  }
+
+  .tl__row.left .tl__date,
+  .tl__row.right .tl__date {
+    grid-column: 2;
+    grid-row: 1;
+    text-align: left;
+    margin-top: 0;
+  }
+
+  .tl__row.right .tl__date {
+    align-items: flex-start;
+  }
+}

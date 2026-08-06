@@ -10,7 +10,5 @@ export const socials = [
   { id: 'linkedin', label: 'LinkedIn', url: 'https://www.linkedin.com/in/xander-minch' },
 ]
 
-// TODO(xander): confirm this is the address you want public. This is the value
-// given in the build plan; the other addresses on file are aledminc@iu.edu and
-// alexander.d.minch@gmail.com.
+// Confirmed against the 2026 resume.
 export const contactEmail = 'xanderminch@gmail.com'
