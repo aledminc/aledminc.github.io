@@ -17,9 +17,17 @@
   --accent-2: #ff7a59;
   --radius: 14px;
   --maxw: 1200px;
-  --font-display: 'Clash Display', 'Playfair Display', serif; /* "fancy" */
+  /* Anonymous Pro is a monospace/slab face — it only ships 400 and 700, so
+     headings and the wordmark use 700 rather than 600. */
+  --font-display: 'Anonymous Pro', ui-monospace, 'Courier New', monospace;
   --font-body: 'Inter', system-ui, sans-serif;
   --nav-h: 72px;
+
+  /* Brand sizing: --brand-size is the logo box, and the wordmark is sized from
+     it so the two always occupy the same top-to-bottom band. --brand-text-scale
+     is the dial if you want the text a touch smaller or larger than the mark. */
+  --brand-size: 30px;
+  --brand-text-scale: 1;
 
   /* Derived tokens — kept here so components never hard-code color math. */
   --border: rgba(255, 255, 255, 0.08);
@@ -59,7 +67,7 @@ h1,
 h2,
 h3 {
   font-family: var(--font-display);
-  font-weight: 600;
+  font-weight: 700;
   line-height: 1.15;
   margin: 0 0 0.5em;
 }

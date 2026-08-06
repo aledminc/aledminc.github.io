@@ -1,0 +1,118 @@
+/* Hero / intro band. Tokens only — no literal colors or fonts. */
+
+.about {
+  position: relative;
+  overflow: hidden; /* keeps the drifting blob from adding scrollbars */
+  display: flex;
+  align-items: center;
+  min-height: min(88vh, 820px);
+  padding: 72px 0;
+}
+
+.about__inner {
+  position: relative;
+  z-index: 1;
+}
+
+/* Soft accent glow behind the hero. Sits under the content and is decorative. */
+.about__blob {
+  position: absolute;
+  top: -18%;
+  right: -10%;
+  width: min(60vw, 680px);
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: radial-gradient(
+    circle at 35% 35%,
+    var(--accent) 0%,
+    var(--accent-2) 55%,
+    transparent 72%
+  );
+  opacity: 0.18;
+  filter: blur(60px);
+  pointer-events: none;
+  will-change: transform;
+}
+
+.about__eyebrow {
+  margin: 0 0 18px;
+  font-family: var(--font-display);
+  font-size: 0.95rem;
+  letter-spacing: 0.04em;
+  color: var(--accent);
+}
+
+.about__title {
+  /* Monospace runs wide, so cap the upper end harder than a proportional face. */
+  font-size: clamp(2.4rem, 7.5vw, 5rem);
+  letter-spacing: -0.03em;
+  margin: 0 0 24px;
+}
+
+.about__body {
+  max-width: 58ch;
+  margin: 0 0 40px;
+  font-size: 1.075rem;
+  line-height: 1.7;
+  color: var(--muted);
+}
+
+/* ---------- quick facts ---------- */
+.about__facts {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+  margin: 0;
+}
+
+.about__fact {
+  padding: 14px 20px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--surface);
+  min-width: 0;
+}
+
+.about__fact dt {
+  font-family: var(--font-display);
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--muted);
+  margin-bottom: 6px;
+}
+
+.about__fact dd {
+  margin: 0;
+  font-size: 0.95rem;
+  font-weight: 500;
+}
+
+/* ============================================================
+   ENTRANCE START STATE
+
+   Hiding these in CSS is what prevents a flash of finished content
+   before anime.js takes over on first paint. It is deliberately behind
+   `no-preference`: when reduced motion is set, useAnimeScope never
+   creates the scope, so nothing would ever animate these back to
+   visible. Under reduced motion they simply render as-is.
+   ============================================================ */
+@media (prefers-reduced-motion: no-preference) {
+  .about__eyebrow,
+  .about__title,
+  .about__body,
+  .about__fact {
+    opacity: 0;
+  }
+}
+
+@media (max-width: 768px) {
+  .about {
+    min-height: auto;
+    padding: 56px 0 72px;
+  }
+
+  .about__fact {
+    flex: 1 1 100%;
+  }
+}

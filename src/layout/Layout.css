@@ -38,26 +38,32 @@
 }
 
 /* ---------- left: brand ---------- */
+/* The logo and the wordmark are both driven by --brand-size, so they always
+   occupy the identical top-to-bottom band: the mark is a --brand-size box, and
+   the text's line box is exactly --brand-size tall (font-size x line-height 1).
+   Changing --brand-size scales both together — they can never drift apart. */
 .nav__brand {
   display: inline-flex;
   align-items: center;
   gap: 10px;
   justify-self: start;
   min-width: 0;
+  font-size: var(--brand-size);
 }
 
 .nav__logo {
-  width: 32px;
-  height: 32px;
+  width: 1em;
+  height: 1em;
   flex: none;
   display: block;
 }
 
 .nav__name {
   font-family: var(--font-display);
-  font-size: 1.15rem;
-  font-weight: 600;
-  letter-spacing: 0.01em;
+  font-size: calc(1em * var(--brand-text-scale));
+  line-height: 1;
+  font-weight: 700;
+  letter-spacing: -0.01em;
   white-space: nowrap;
 }
 
@@ -198,6 +204,12 @@
   .nav__inner {
     grid-template-columns: 1fr auto;
     padding: 0 16px;
+  }
+
+  /* "Xander Minch" is 12 monospace characters, so the wordmark is wide. Scale
+     the whole brand down here so it never collides with the hamburger. */
+  .nav__brand {
+    --brand-size: 20px;
   }
 
   .nav__links,

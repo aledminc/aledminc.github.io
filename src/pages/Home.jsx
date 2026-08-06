@@ -1,9 +1,15 @@
-// Composes the four homepage sections — filled in files 3-6:
-// AboutMe, CareerTimeline, HobbiesRolodex, SignatureCollage.
+import AboutMe from '../sections/AboutMe.jsx'
+import CareerTimeline from '../sections/CareerTimeline.jsx'
+import HobbiesRolodex from '../sections/HobbiesRolodex.jsx'
+import SignatureCollage from '../sections/SignatureCollage.jsx'
+
 export default function Home() {
   return (
-    <div className="container page">
-      <h1>Home</h1>
-    </div>
+    <>
+      <AboutMe />
+      <CareerTimeline />
+      <HobbiesRolodex />
+      <SignatureCollage />
+    </>
   )
 }
