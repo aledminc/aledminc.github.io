@@ -7,7 +7,7 @@ React + Vite single-page portfolio, deployed to GitHub Pages via GitHub Actions.
 | Concern    | Choice                                     |
 | ---------- | ------------------------------------------ |
 | Build tool | Vite                                       |
-| Framework  | React + `react-router-dom` v6              |
+| Framework  | React 19 + `react-router-dom` v7           |
 | Animation  | anime.js v4 (`animejs`)                    |
 | Email      | EmailJS (`@emailjs/browser`) — client-side |
 | Deploy     | GitHub Actions → GitHub Pages              |
