@@ -4,23 +4,18 @@ import { timeline as data } from '../data/timeline.js'
 import './CareerTimeline.css'
 
 export default function CareerTimeline() {
-  const { root } = useAnimeScope(() => {
-    // One timeline for the whole sequence, played by a ScrollObserver.
+  const { root } = useAnimeScope((self) => {
+    // One timeline for the whole sequence, gated on the section coming into
+    // view (see the IntersectionObserver at the bottom of this function).
     //
-    // Threshold strings are "container target" — verified against anime.js
-    // v4 source (events/scroll.js splits on ' ' and assigns [0] to the
-    // container, [1] to the target). So 'bottom-=15% top' means: fire when the
-    // container's bottom minus 15% meets the target's top, i.e. just after the
-    // section starts entering the viewport.
-    //
-    // repeat:false makes the observer detach once the timeline completes, so
-    // the sequence plays exactly once instead of re-firing on every scroll.
-    const tl = createTimeline({
-      autoplay: onScroll({
-        enter: 'bottom-=15% top',
-        repeat: false,
-      }),
-    })
+    // Deliberately NOT anime's onScroll here. This section is taller than the
+    // viewport, so a single instantaneous scroll — a deep link, the End key,
+    // browser scroll restoration — can land past the enter threshold without
+    // ever crossing it. The observer then never fires and the whole section
+    // stays invisible, which is the worst possible failure. The plain
+    // IntersectionObserver below also treats "already scrolled past" as a
+    // reason to play.
+    const tl = createTimeline({ autoplay: false })
 
     // Below the breakpoint every card sits in one column, so a horizontal slide
     // both looks wrong and briefly pushes the card past the viewport edge,
@@ -89,8 +84,9 @@ export default function CareerTimeline() {
         '<<',
       )
 
-    // Scroll-linked progress fill on the spine (sync mode, not a played
-    // animation) — tracks position rather than firing once.
+    // Scroll-linked progress fill on the spine. This one IS an anime
+    // ScrollObserver, and correctly so: `sync` tracks scroll position
+    // continuously rather than firing once, so a jump cannot skip it.
     animate('.tl__progress', {
       scaleY: [0, 1],
       ease: 'linear',
@@ -100,14 +96,46 @@ export default function CareerTimeline() {
         sync: 0.35, // smoothing factor: eases toward scroll position
       }),
     })
+
+    // Play once, the first time the section is in view OR already above the
+    // fold line. A plain scroll check rather than IntersectionObserver: IO only
+    // fires on threshold crossings, so an element that goes from below the
+    // viewport straight to above it — one instant jump — never reports at all
+    // and the section would stay invisible permanently.
+    let played = false
+    const maybePlay = () => {
+      if (played) return
+      // Negative top means the section is already behind us; either way it
+      // has been reached and should not be sitting at opacity 0.
+      if (self.root.getBoundingClientRect().top < window.innerHeight * 0.88) {
+        played = true
+        tl.play()
+        stopWatching()
+      }
+    }
+    const stopWatching = () => {
+      window.removeEventListener('scroll', maybePlay)
+      window.removeEventListener('resize', maybePlay)
+    }
+
+    maybePlay() // covers loading already scrolled down
+    window.addEventListener('scroll', maybePlay, { passive: true })
+    window.addEventListener('resize', maybePlay, { passive: true })
+
+    return stopWatching
   })
 
   return (
     <section ref={root} className="tl" aria-labelledby="career-heading">
       <div className="container">
-        <h2 id="career-heading" className="tl__heading">
-          Career
-        </h2>
+        <div className="section-head tl__heading">
+          <p className="eyebrow">Trajectory · 2023 — 2027</p>
+          <h2 id="career-heading">Where I've been</h2>
+          <p>
+            Coursework, the lab, the internship, and the rover — in the order
+            they happened.
+          </p>
+        </div>
 
         <div className="tl__track">
           {/* Decorative: the spine and its scroll-linked fill. */}
@@ -134,6 +162,7 @@ export default function CareerTimeline() {
                 </time>
 
                 <article className="tl__card" data-tag={entry.tag}>
+                  <span className="tl__tag">{entry.tag}</span>
                   <h3>{entry.title}</h3>
                   <p className="tl__org">{entry.org}</p>
                   <p className="tl__blurb">{entry.blurb}</p>

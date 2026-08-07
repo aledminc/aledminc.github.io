@@ -1,13 +1,65 @@
-﻿<!-- PLACEHOLDER thumbnail — TODO(xander): replace with real 16:9 artwork. -->
+<!-- PLACEHOLDER — TODO(xander): replace with real 16:9 artwork. -->
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 360" width="640" height="360" role="img" aria-label="IUB Schedule">
   <defs>
-    <linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0" stop-color="#f472b6"/>
-      <stop offset="1" stop-color="#4d1130"/>
+    <linearGradient id="w" x1="1" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#E86FBE" stop-opacity="0.30"/>
+      <stop offset="0.55" stop-color="#E86FBE" stop-opacity="0.06"/>
+      <stop offset="1" stop-color="#E86FBE" stop-opacity="0"/>
     </linearGradient>
+    <pattern id="g" width="40" height="40" patternUnits="userSpaceOnUse">
+      <path d="M40 0H0V40" fill="none" stroke="#A796E0" stroke-opacity="0.07" stroke-width="1"/>
+    </pattern>
   </defs>
+  <rect width="640" height="360" fill="#0F0C1A"/>
   <rect width="640" height="360" fill="url(#g)"/>
-  <rect width="640" height="360" fill="#0e0e11" opacity="0.28"/>
-  <text x="40" y="300" font-family="'Anonymous Pro', monospace" font-size="40" font-weight="700" fill="#ffffff">IUB Schedule</text>
-  <text x="40" y="332" font-family="'Anonymous Pro', monospace" font-size="15" fill="#ffffff" opacity="0.7">placeholder thumbnail</text>
+  <rect width="640" height="360" fill="url(#w)"/>
+  <circle cx="286" cy="142.3" r="2.3" fill="#E86FBE" opacity="0.55"/>
+  <circle cx="488.3" cy="230.6" r="1.6" fill="#E86FBE" opacity="0.29"/>
+  <circle cx="132.4" cy="110.8" r="3.2" fill="#E86FBE" opacity="0.79"/>
+  <circle cx="486.3" cy="205.3" r="1.4" fill="#E86FBE" opacity="0.42"/>
+  <circle cx="204.8" cy="138.7" r="4.1" fill="#E86FBE" opacity="0.66"/>
+  <circle cx="385.6" cy="141" r="3.2" fill="#E86FBE" opacity="0.31"/>
+  <circle cx="270.2" cy="215.9" r="3.5" fill="#E86FBE" opacity="0.57"/>
+  <circle cx="454" cy="151.2" r="2.5" fill="#E86FBE" opacity="0.54"/>
+  <circle cx="283.8" cy="125.9" r="2.6" fill="#E86FBE" opacity="0.75"/>
+  <circle cx="335.9" cy="146.7" r="2.8" fill="#E86FBE" opacity="0.32"/>
+  <circle cx="165.7" cy="116.7" r="2.1" fill="#E86FBE" opacity="0.7"/>
+  <circle cx="465.3" cy="249.8" r="3.4" fill="#E86FBE" opacity="0.42"/>
+  <circle cx="217.2" cy="135.4" r="4" fill="#E86FBE" opacity="0.34"/>
+  <circle cx="471" cy="197.6" r="1.3" fill="#E86FBE" opacity="0.68"/>
+  <circle cx="273" cy="91.3" r="3.7" fill="#E86FBE" opacity="0.75"/>
+  <circle cx="333.3" cy="195.7" r="2.9" fill="#E86FBE" opacity="0.76"/>
+  <circle cx="275.5" cy="73.4" r="1.4" fill="#E86FBE" opacity="0.49"/>
+  <circle cx="351" cy="142.3" r="2.3" fill="#E86FBE" opacity="0.39"/>
+  <circle cx="292.3" cy="167.9" r="2.8" fill="#E86FBE" opacity="0.2"/>
+  <circle cx="485.5" cy="235.6" r="2.8" fill="#E86FBE" opacity="0.18"/>
+  <circle cx="168.6" cy="117.2" r="1.4" fill="#E86FBE" opacity="0.35"/>
+  <circle cx="396.1" cy="138.3" r="3.9" fill="#E86FBE" opacity="0.44"/>
+  <circle cx="171.9" cy="163.4" r="1.4" fill="#E86FBE" opacity="0.76"/>
+  <circle cx="405.2" cy="205.4" r="1.8" fill="#E86FBE" opacity="0.68"/>
+  <circle cx="260.9" cy="124.5" r="4.4" fill="#E86FBE" opacity="0.64"/>
+  <circle cx="473.9" cy="141.9" r="2" fill="#E86FBE" opacity="0.45"/>
+  <circle cx="125" cy="143.5" r="2.2" fill="#E86FBE" opacity="0.27"/>
+  <circle cx="330.2" cy="269.5" r="4.5" fill="#E86FBE" opacity="0.25"/>
+  <circle cx="232" cy="183.3" r="3.2" fill="#E86FBE" opacity="0.65"/>
+  <circle cx="406.2" cy="154.7" r="3.1" fill="#E86FBE" opacity="0.66"/>
+  <circle cx="146" cy="169.3" r="1.8" fill="#E86FBE" opacity="0.51"/>
+  <circle cx="339.1" cy="179.9" r="4.3" fill="#E86FBE" opacity="0.44"/>
+  <circle cx="193.4" cy="171.8" r="2" fill="#E86FBE" opacity="0.49"/>
+  <circle cx="476.6" cy="231.3" r="1.9" fill="#E86FBE" opacity="0.3"/>
+  <circle cx="118.6" cy="165.9" r="1.8" fill="#E86FBE" opacity="0.74"/>
+  <circle cx="479.1" cy="221.2" r="2.5" fill="#E86FBE" opacity="0.4"/>
+  <circle cx="230" cy="214.7" r="2.2" fill="#E86FBE" opacity="0.61"/>
+  <circle cx="507" cy="186.2" r="2.5" fill="#E86FBE" opacity="0.54"/>
+  <circle cx="257.9" cy="100.2" r="3" fill="#E86FBE" opacity="0.27"/>
+  <circle cx="507.9" cy="226.9" r="2.4" fill="#E86FBE" opacity="0.62"/>
+  <circle cx="213" cy="204.8" r="3.6" fill="#E86FBE" opacity="0.41"/>
+  <circle cx="467.4" cy="190.1" r="2.2" fill="#E86FBE" opacity="0.75"/>
+  <circle cx="207.4" cy="134" r="3.6" fill="#E86FBE" opacity="0.68"/>
+  <circle cx="331.5" cy="218.7" r="4.5" fill="#E86FBE" opacity="0.51"/>
+  <circle cx="156.1" cy="194.8" r="4.2" fill="#E86FBE" opacity="0.26"/>
+  <circle cx="342.6" cy="155.8" r="2.7" fill="#E86FBE" opacity="0.19"/>
+  <rect x="0" y="290" width="640" height="70" fill="#0F0C1A" opacity="0.55"/>
+  <text x="34" y="322" font-family="'Anonymous Pro',monospace" font-size="27" font-weight="700" fill="#ECE9F7">IUB Schedule</text>
+  <text x="34" y="341" font-family="'Anonymous Pro',monospace" font-size="12" fill="#948CB6">placeholder thumbnail</text>
 </svg>

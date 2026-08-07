@@ -73,8 +73,28 @@ function makeStyle(existing) {
   return fallback.style
 }
 
+// Xander signs his own board first. Without this the section is ~460px of
+// empty slate for the first visitor, and nobody can tell what it does. Fixed
+// placement rather than random so it never drifts into an awkward spot.
+// TODO(xander): delete this to start the board empty again.
+const OWNER_MARK = {
+  id: -1,
+  kind: 'typed',
+  payload: 'Xander Minch',
+  createdAt: 0,
+  style: {
+    box: { left: 8, top: 22, w: 30, h: 16 },
+    scale: 1.5,
+    rotate: -5,
+    color: '#ffffff',
+    font: 'Caveat',
+    inkOpacity: 0.93,
+    blur: 0,
+  },
+}
+
 export default function SignatureCollage() {
-  const [marks, setMarks] = useState([])
+  const [marks, setMarks] = useState([OWNER_MARK])
   const [typed, setTyped] = useState('')
   const [strokes, setStrokes] = useState(0)
   const [error, setError] = useState('')
@@ -175,11 +195,12 @@ export default function SignatureCollage() {
   return (
     <section ref={root} className="collage" aria-labelledby="collage-heading">
       <div className="container">
-        <div className="collage__intro">
+        <div className="collage__intro section-head">
+          <p className="eyebrow">Visitors</p>
           <h2 id="collage-heading">Sign the board</h2>
           <p className="collage__sub">
-            Draw your signature or type your name — it gets chalked onto the
-            board in a random hand.
+            Draw your signature or type your name. It gets chalked on in a
+            random hand and stays for your visit.
           </p>
         </div>
 
@@ -188,7 +209,7 @@ export default function SignatureCollage() {
           <div className="board__frame" aria-hidden="true" />
 
           {marks.length === 0 && (
-            <p className="board__empty">Be the first to sign.</p>
+            <p className="board__empty">The board is clean. Go on.</p>
           )}
 
           <ul className="board__marks">
@@ -274,7 +295,7 @@ export default function SignatureCollage() {
 
         <p className="collage__note" role="status">
           {error ||
-            `${marks.length}/${MAX_MARKS} on the board — signatures last for this visit only.`}
+            `${marks.length} of ${MAX_MARKS} on the board — yours stays for this visit.`}
         </p>
       </div>
     </section>

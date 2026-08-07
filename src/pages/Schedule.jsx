@@ -60,9 +60,30 @@ export default function Schedule() {
 
   const totalSlots = (dayEnd - dayStart) / SLOT_MINUTES
 
-  const kindsPresent = useMemo(
-    () => [...new Set(events.map((e) => e.kind))],
-    [],
+  // Colour by COURSE, not by kind. Every entry this semester is a class, so a
+  // class/club legend would be one grey swatch telling you nothing — whereas
+  // per-course colour lets you read the whole week at a glance and turns the
+  // legend into the actual course list.
+  const courses = useMemo(() => {
+    const seen = new Map()
+    for (const e of events) {
+      if (!seen.has(e.code)) {
+        seen.set(e.code, { code: e.code, title: e.title, kind: e.kind, i: seen.size })
+      }
+    }
+    return [...seen.values()]
+  }, [])
+
+  const courseIndex = useMemo(
+    () => Object.fromEntries(courses.map((c) => [c.code, c.i])),
+    [courses],
+  )
+
+  // Only worth labelling the kind once there is more than one. Right now every
+  // entry is a class, so five "CLASS" tags would be pure noise.
+  const showKind = useMemo(
+    () => new Set(courses.map((c) => c.kind)).size > 1,
+    [courses],
   )
 
   const byDay = useMemo(
@@ -122,17 +143,24 @@ export default function Schedule() {
   return (
     <div className="sched container page">
       <header className="sched__head">
-        <h1>Schedule</h1>
+        <p className="eyebrow">{semester} · Indiana University</p>
+        <h1>Where I am each week</h1>
         <p className="sched__sub">
-          My weekly routine for {semester}. This is where I already am each week
-          — not an availability calendar. To actually meet, send a request below.
+          My fixed commitments this semester — classes and club, not an
+          availability calendar. Everything outside these blocks is fair game;
+          send a request and I'll confirm.
         </p>
 
         <ul className="sched__legend">
-          {kindsPresent.map((kind) => (
-            <li key={kind} className="sched__legend-item">
-              <span className={`sched__swatch sched__swatch--${kind}`} aria-hidden="true" />
-              {kindLabels[kind] ?? kind}
+          {courses.map((c) => (
+            <li key={c.code} className="sched__legend-item" data-course={c.i}>
+              <span className="sched__swatch" aria-hidden="true" />
+              <b>{c.code}</b>
+              {showKind && (
+                <span className="sched__legend-kind">
+                  {kindLabels[c.kind] ?? c.kind}
+                </span>
+              )}
             </li>
           ))}
         </ul>
@@ -151,7 +179,11 @@ export default function Schedule() {
               ) : (
                 <ul className="sched__day-items">
                   {items.map((e, i) => (
-                    <li key={`${e.code}-${i}`} className={`sched__row sched__row--${e.kind}`}>
+                    <li
+                      key={`${e.code}-${i}`}
+                      className="sched__row"
+                      data-course={courseIndex[e.code]}
+                    >
                       <span className="sched__row-time">
                         {label12h(toMinutes(e.start))} – {label12h(toMinutes(e.end))}
                       </span>
@@ -228,7 +260,8 @@ export default function Schedule() {
             const isShort = toMinutes(e.end) - toMinutes(e.start) < 60
             return (
               <article
-                className={`tt__event tt__event--${e.kind}${isShort ? ' tt__event--short' : ''}`}
+                className={`tt__event${isShort ? ' tt__event--short' : ''}`}
+                data-course={courseIndex[e.code]}
                 key={`${e.code}-${e.day}-${i}`}
                 style={{
                   gridColumn: col + 2,

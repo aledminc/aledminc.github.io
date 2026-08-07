@@ -1,13 +1,65 @@
-﻿<!-- PLACEHOLDER thumbnail — TODO(xander): replace with real 16:9 artwork. -->
+<!-- PLACEHOLDER — TODO(xander): replace with real 16:9 artwork. -->
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 360" width="640" height="360" role="img" aria-label="CatanAI">
   <defs>
-    <linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0" stop-color="#fb923c"/>
-      <stop offset="1" stop-color="#4a2408"/>
+    <linearGradient id="w" x1="1" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#FDE725" stop-opacity="0.30"/>
+      <stop offset="0.55" stop-color="#FDE725" stop-opacity="0.06"/>
+      <stop offset="1" stop-color="#FDE725" stop-opacity="0"/>
     </linearGradient>
+    <pattern id="g" width="40" height="40" patternUnits="userSpaceOnUse">
+      <path d="M40 0H0V40" fill="none" stroke="#A796E0" stroke-opacity="0.07" stroke-width="1"/>
+    </pattern>
   </defs>
+  <rect width="640" height="360" fill="#0F0C1A"/>
   <rect width="640" height="360" fill="url(#g)"/>
-  <rect width="640" height="360" fill="#0e0e11" opacity="0.28"/>
-  <text x="40" y="300" font-family="'Anonymous Pro', monospace" font-size="40" font-weight="700" fill="#ffffff">CatanAI</text>
-  <text x="40" y="332" font-family="'Anonymous Pro', monospace" font-size="15" fill="#ffffff" opacity="0.7">placeholder thumbnail</text>
+  <rect width="640" height="360" fill="url(#w)"/>
+  <circle cx="323.4" cy="186.4" r="2.6" fill="#FDE725" opacity="0.22"/>
+  <circle cx="462.7" cy="274.1" r="1.3" fill="#FDE725" opacity="0.54"/>
+  <circle cx="246.6" cy="138.4" r="4.2" fill="#FDE725" opacity="0.25"/>
+  <circle cx="410.7" cy="284.3" r="3.8" fill="#FDE725" opacity="0.26"/>
+  <circle cx="148.1" cy="169.8" r="1.2" fill="#FDE725" opacity="0.76"/>
+  <circle cx="413.8" cy="181.7" r="1.7" fill="#FDE725" opacity="0.43"/>
+  <circle cx="293.9" cy="73.1" r="3.3" fill="#FDE725" opacity="0.64"/>
+  <circle cx="416.5" cy="311.8" r="3" fill="#FDE725" opacity="0.24"/>
+  <circle cx="293.5" cy="187.5" r="3" fill="#FDE725" opacity="0.6"/>
+  <circle cx="484.4" cy="190.3" r="1.8" fill="#FDE725" opacity="0.79"/>
+  <circle cx="234.8" cy="149.6" r="3" fill="#FDE725" opacity="0.59"/>
+  <circle cx="494.2" cy="233.8" r="2.4" fill="#FDE725" opacity="0.44"/>
+  <circle cx="249.2" cy="85.2" r="3.3" fill="#FDE725" opacity="0.31"/>
+  <circle cx="444" cy="272.7" r="3.7" fill="#FDE725" opacity="0.75"/>
+  <circle cx="274.5" cy="60.3" r="2.1" fill="#FDE725" opacity="0.43"/>
+  <circle cx="377.2" cy="216.7" r="2.3" fill="#FDE725" opacity="0.58"/>
+  <circle cx="328.9" cy="176" r="2.2" fill="#FDE725" opacity="0.41"/>
+  <circle cx="406.1" cy="186.5" r="2.9" fill="#FDE725" opacity="0.76"/>
+  <circle cx="246.3" cy="61.7" r="2.7" fill="#FDE725" opacity="0.58"/>
+  <circle cx="465.3" cy="244.9" r="3.7" fill="#FDE725" opacity="0.44"/>
+  <circle cx="279.2" cy="87.7" r="1.7" fill="#FDE725" opacity="0.23"/>
+  <circle cx="425.2" cy="221.3" r="3.6" fill="#FDE725" opacity="0.28"/>
+  <circle cx="159.8" cy="150.6" r="4.5" fill="#FDE725" opacity="0.56"/>
+  <circle cx="528.8" cy="288.6" r="4.4" fill="#FDE725" opacity="0.32"/>
+  <circle cx="192.7" cy="192" r="3.5" fill="#FDE725" opacity="0.73"/>
+  <circle cx="384.7" cy="321.3" r="1.9" fill="#FDE725" opacity="0.49"/>
+  <circle cx="265" cy="160" r="3.4" fill="#FDE725" opacity="0.42"/>
+  <circle cx="410.7" cy="189.7" r="2.6" fill="#FDE725" opacity="0.33"/>
+  <circle cx="192.3" cy="185" r="3.5" fill="#FDE725" opacity="0.71"/>
+  <circle cx="391.5" cy="209.4" r="2.4" fill="#FDE725" opacity="0.6"/>
+  <circle cx="155.2" cy="81.5" r="2.1" fill="#FDE725" opacity="0.55"/>
+  <circle cx="389.4" cy="309.4" r="1.5" fill="#FDE725" opacity="0.68"/>
+  <circle cx="155.1" cy="90.2" r="2.4" fill="#FDE725" opacity="0.57"/>
+  <circle cx="520.6" cy="299.8" r="2.3" fill="#FDE725" opacity="0.65"/>
+  <circle cx="324.1" cy="157.8" r="2.6" fill="#FDE725" opacity="0.57"/>
+  <circle cx="493.6" cy="220.1" r="4.3" fill="#FDE725" opacity="0.18"/>
+  <circle cx="178.6" cy="167.7" r="2.3" fill="#FDE725" opacity="0.19"/>
+  <circle cx="384.5" cy="184.6" r="1.5" fill="#FDE725" opacity="0.21"/>
+  <circle cx="242.7" cy="205.9" r="3.9" fill="#FDE725" opacity="0.76"/>
+  <circle cx="503.5" cy="267.2" r="2.5" fill="#FDE725" opacity="0.65"/>
+  <circle cx="250.2" cy="186.3" r="2.2" fill="#FDE725" opacity="0.19"/>
+  <circle cx="508.5" cy="289.7" r="2.7" fill="#FDE725" opacity="0.45"/>
+  <circle cx="237.1" cy="196.5" r="4.2" fill="#FDE725" opacity="0.47"/>
+  <circle cx="521.5" cy="280.2" r="1.3" fill="#FDE725" opacity="0.66"/>
+  <circle cx="181.6" cy="97.9" r="2.5" fill="#FDE725" opacity="0.42"/>
+  <circle cx="476.2" cy="185.4" r="3.6" fill="#FDE725" opacity="0.19"/>
+  <rect x="0" y="290" width="640" height="70" fill="#0F0C1A" opacity="0.55"/>
+  <text x="34" y="322" font-family="'Anonymous Pro',monospace" font-size="27" font-weight="700" fill="#ECE9F7">CatanAI</text>
+  <text x="34" y="341" font-family="'Anonymous Pro',monospace" font-size="12" fill="#948CB6">placeholder thumbnail</text>
 </svg>

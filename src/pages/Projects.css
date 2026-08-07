@@ -7,14 +7,31 @@
 .yt {
   max-width: 1600px;
   margin: 0 auto;
-  padding: 20px 24px 96px;
+  padding: 56px 28px 104px;
+}
+
+/* ---------- page header ---------- */
+.yt__head {
+  max-width: 62ch;
+  margin-bottom: 32px;
+}
+
+.yt__head h1 {
+  font-size: var(--step-3);
+  margin: 0 0 12px;
+}
+
+.yt__lead {
+  margin: 0;
+  color: var(--dim);
+  font-size: var(--step-0);
 }
 
 /* ---------- filter chip row ---------- */
 .yt__chips {
   display: flex;
   gap: 10px;
-  padding: 4px 0 20px;
+  padding: 4px 0 26px;
   overflow-x: auto;
   /* Chips scroll sideways on narrow screens rather than wrapping, which is how
      YouTube behaves. Hide the scrollbar but keep the scrolling. */
@@ -27,29 +44,31 @@
 
 .yt__chip {
   flex: none;
-  padding: 8px 15px;
+  padding: 8px 16px;
   border: 1px solid var(--border);
-  border-radius: 8px;
-  background: var(--surface);
-  color: var(--text);
+  border-radius: 999px;
+  background: transparent;
+  color: var(--dim);
   font-family: var(--font-display);
-  font-size: 0.85rem;
+  font-size: 0.82rem;
+  font-weight: 700;
   white-space: nowrap;
   cursor: pointer;
   transition:
-    background 160ms ease,
-    color 160ms ease,
-    border-color 160ms ease;
+    background 180ms ease,
+    color 180ms ease,
+    border-color 180ms ease;
 }
 
 .yt__chip:hover {
-  border-color: var(--muted);
+  color: var(--text);
+  border-color: var(--border-hi);
 }
 
 .yt__chip.is-active {
-  background: var(--text);
-  border-color: var(--text);
-  color: var(--bg);
+  background: var(--accent);
+  border-color: var(--accent);
+  color: #0b0912;
 }
 
 /* ---------- grid ---------- */
@@ -78,6 +97,15 @@
   border-radius: 12px;
   overflow: hidden;
   background: var(--surface);
+  border: 1px solid var(--border);
+  transition:
+    border-color 240ms ease,
+    box-shadow 240ms ease;
+}
+
+.yt-card__link:hover .yt-thumb {
+  border-color: color-mix(in srgb, var(--accent) 55%, transparent);
+  box-shadow: 0 20px 44px -26px var(--accent);
 }
 
 .yt-thumb img {

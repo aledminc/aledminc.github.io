@@ -2,12 +2,7 @@
    single column on mobile. Tokens only. */
 
 .tl {
-  padding: 96px 0;
-}
-
-.tl__heading {
-  font-size: clamp(1.8rem, 4vw, 2.6rem);
-  margin-bottom: 56px;
+  padding: clamp(72px, 9vw, 120px) 0;
 }
 
 .tl__track {
@@ -15,9 +10,9 @@
 }
 
 /* ---------- the spine ----------
-   Centered with `left: calc(50% - 1px)` rather than translateX(-50%) on
+   Centred with `left: calc(50% - 1px)` rather than translateX(-50%) on
    purpose: anime.js animates this element's scaleY by writing inline
-   `transform`, which would overwrite any transform used for centering. */
+   `transform`, which would overwrite any transform used for centring. */
 .tl__spine {
   position: absolute;
   top: 6px;
@@ -28,25 +23,31 @@
   background: var(--border);
   will-change: transform;
 
-  /* Must be set here, NOT passed to anime as `transformOrigin`. anime treats it
-     as an animatable property and interpolates it from the element's current
-     value, so the origin drifts while the scaleY plays (and for a scroll-synced
-     animation it never arrives at all). Static CSS pins it. */
+  /* Must be set here, NOT passed to anime as `transformOrigin`. anime treats
+     it as an animatable property and interpolates it from the element's
+     current value, so the origin drifts while the scaleY plays (and for a
+     scroll-synced animation it never arrives). Static CSS pins it. */
   transform-origin: top;
 }
 
 /* Scroll-linked fill riding on top of the spine. Hidden by default and only
-   enabled under `no-preference` below: it is driven by scroll position, so with
-   reduced motion (where no scope is created) it would sit at zero height
+   enabled under `no-preference` below: it is driven by scroll position, so
+   with reduced motion (where no scope is created) it would sit at zero height
    forever and read as a broken element. */
 .tl__progress {
   display: none;
   position: absolute;
   inset: 0;
   border-radius: inherit;
-  background: linear-gradient(to bottom, var(--accent), var(--accent-2));
+  background: linear-gradient(
+    to bottom,
+    var(--v-violet),
+    var(--v-magenta) 45%,
+    var(--v-amber)
+  );
   will-change: transform;
   transform-origin: top; /* see note on .tl__spine */
+  box-shadow: 0 0 12px -2px var(--v-violet);
 }
 
 .tl__list {
@@ -55,7 +56,7 @@
   padding: 0;
   display: flex;
   flex-direction: column;
-  gap: 44px;
+  gap: 20px;
 }
 
 /* ---------- rows ----------
@@ -63,19 +64,32 @@
    middle so it sits exactly on the spine; the card and date swap sides. */
 .tl__row {
   display: grid;
-  grid-template-columns: 1fr 56px 1fr;
+  grid-template-columns: 1fr 64px 1fr;
   align-items: start;
+}
+
+/* All three cells are pinned to row 1 explicitly. They set grid-column but,
+   without a row, sparse auto-placement walks the cursor forward and drops
+   whichever item sits "behind" it into an implicit SECOND row — which silently
+   added ~40-65px of dead height to every entry and knocked the dates out of
+   line with their cards. */
+.tl__node,
+.tl__date,
+.tl__card {
+  grid-row: 1;
 }
 
 .tl__node {
   grid-column: 2;
   justify-self: center;
-  width: 15px;
-  height: 15px;
-  margin-top: 6px;
+  width: 13px;
+  height: 13px;
+  margin-top: 26px;
   border-radius: 50%;
   background: var(--tag, var(--accent));
-  box-shadow: 0 0 0 4px var(--bg);
+  box-shadow:
+    0 0 0 4px var(--bg),
+    0 0 14px -1px var(--tag, var(--accent));
   will-change: transform;
 }
 
@@ -83,6 +97,7 @@
 .tl__node--upcoming {
   background: var(--bg);
   border: 2px solid var(--tag, var(--accent));
+  box-shadow: 0 0 0 4px var(--bg);
 }
 
 .tl__node[data-tag='education'] {
@@ -127,15 +142,18 @@
   text-align: right;
 }
 
-/* ---------- date ---------- */
+/* ---------- date ----------
+   Sized up and set in the data face: the year is the thing you scan for. */
 .tl__date {
-  margin-top: 4px;
+  margin-top: 18px;
   font-family: var(--font-display);
-  font-size: 0.9rem;
-  color: var(--muted);
+  font-size: 1.02rem;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  color: var(--text);
   display: flex;
   flex-direction: column;
-  gap: 4px;
+  gap: 5px;
 }
 
 .tl__row.right .tl__date {
@@ -143,62 +161,101 @@
 }
 
 .tl__expected {
-  font-size: 0.68rem;
+  font-size: 0.64rem;
+  font-weight: 400;
   text-transform: uppercase;
-  letter-spacing: 0.1em;
-  color: var(--muted);
-  opacity: 0.75;
+  letter-spacing: 0.14em;
+  color: var(--dim);
 }
 
 /* ---------- card ---------- */
 .tl__card {
-  padding: 20px 22px;
+  position: relative;
+  padding: 22px 24px;
   border: 1px solid var(--border);
   border-radius: var(--radius);
-  background: var(--surface);
+  background: var(--panel);
+  overflow: hidden;
   will-change: transform;
 
   /* Hover lift uses the standalone `translate` property, NOT `transform`.
-     anime.js leaves an inline `transform: translateX(0px)` on these cards after
-     the entrance, and an inline style always beats a stylesheet rule — a
-     `transform`-based hover would silently never apply. `translate` is a
+     anime.js leaves an inline `transform: translateX(0px)` on these cards
+     after the entrance, and an inline style always beats a stylesheet rule —
+     a `transform`-based hover would silently never apply. `translate` is a
      separate property, so the two compose instead of fighting. */
   transition:
-    translate 180ms ease,
-    border-color 180ms ease,
-    box-shadow 180ms ease;
+    translate 220ms cubic-bezier(0.22, 1, 0.36, 1),
+    border-color 220ms ease,
+    box-shadow 220ms ease;
+}
+
+/* A thin bar of the entry's colour along the spine-facing edge. */
+.tl__card::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  background: var(--tag, var(--accent));
+  opacity: 0.55;
+  transition: opacity 220ms ease;
+}
+
+.tl__row.left .tl__card::after {
+  right: 0;
+}
+
+.tl__row.right .tl__card::after {
+  left: 0;
 }
 
 .tl__card:hover {
   translate: 0 -4px;
-  border-color: var(--tag, var(--accent));
-  box-shadow: 0 12px 28px -12px var(--tag, var(--accent));
+  border-color: color-mix(in srgb, var(--tag, var(--accent)) 55%, transparent);
+  box-shadow: 0 18px 40px -22px var(--tag, var(--accent));
+}
+
+.tl__card:hover::after {
+  opacity: 1;
+}
+
+.tl__tag {
+  display: inline-block;
+  margin-bottom: 12px;
+  padding: 3px 9px;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--tag, var(--accent)) 16%, transparent);
+  color: var(--tag, var(--accent));
+  font-family: var(--font-display);
+  font-size: 0.62rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
 }
 
 .tl__card h3 {
-  font-size: 1.06rem;
+  font-size: var(--step-1);
   margin: 0 0 6px;
 }
 
 .tl__org {
-  margin: 0 0 10px;
+  margin: 0 0 12px;
   font-family: var(--font-display);
-  font-size: 0.82rem;
-  color: var(--tag, var(--accent));
+  font-size: 0.8rem;
+  color: var(--dim);
 }
 
 .tl__blurb {
   margin: 0;
   font-size: 0.92rem;
-  line-height: 1.65;
-  color: var(--muted);
+  line-height: 1.68;
+  color: var(--dim);
 }
 
 /* ============================================================
-   ENTRANCE START STATE — same rule as the hero: only hide things
-   when motion is allowed, because under reduced motion
-   useAnimeScope never creates the scope and nothing would ever
-   animate these back to visible.
+   ENTRANCE START STATE — only hide things when motion is allowed,
+   because under reduced motion useAnimeScope never creates the
+   scope and nothing would ever animate these back to visible.
 
    Note there is deliberately no `scale` here for the nodes. anime
    animates scale through `transform`, and a CSS `scale` property
@@ -225,34 +282,26 @@
    MOBILE — single column, spine pinned left
    ============================================================ */
 @media (max-width: 768px) {
-  .tl {
-    padding: 72px 0;
-  }
-
-  .tl__heading {
-    margin-bottom: 36px;
-  }
-
   .tl__spine {
     left: 7px;
   }
 
   .tl__list {
-    gap: 32px;
+    gap: 26px;
   }
 
   .tl__row {
     grid-template-columns: 16px 1fr;
-    column-gap: 18px;
+    column-gap: 20px;
     row-gap: 8px;
   }
 
-  /* 15px dot centered in a 16px column lands on the spine at left: 7px. */
+  /* 13px dot centred in a 16px column lands on the spine at left: 7px. */
   .tl__node {
     grid-column: 1;
     grid-row: 1;
     justify-self: center;
-    margin-top: 4px;
+    margin-top: 5px;
   }
 
   /* Both sides collapse into the same single column. */
@@ -267,10 +316,14 @@
     grid-column: 2;
     grid-row: 1;
     text-align: left;
+    align-items: flex-start;
     margin-top: 0;
+    font-size: 0.9rem;
   }
 
-  .tl__row.right .tl__date {
-    align-items: flex-start;
+  .tl__row.left .tl__card::after,
+  .tl__row.right .tl__card::after {
+    left: 0;
+    right: auto;
   }
 }

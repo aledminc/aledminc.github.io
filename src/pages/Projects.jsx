@@ -57,9 +57,13 @@ export default function Projects() {
 
   return (
     <div className="yt" ref={root}>
-      {/* The YouTube homepage has no page title, just the chip row. Keep the
-          heading for landmark navigation but hide it visually. */}
-      <h1 className="sr-only">Projects</h1>
+      <header className="yt__head">
+        <p className="eyebrow">{projects.length} repositories · 2025 — 2026</p>
+        <h1>Projects</h1>
+        <p className="yt__lead">
+          Everything I've shipped since March 2025. Each tile opens the repo.
+        </p>
+      </header>
 
       <div className="yt__chips" role="group" aria-label="Filter projects by category">
         {chips.map((tag) => (

@@ -1,45 +1,75 @@
 /* ============================================================
-   DESIGN TOKENS — single source of truth for the whole site.
-   Every component pulls from these; change the look here, not
-   in component CSS.
+   VIRIDIS LAB — design tokens
 
-   TODO(xander): these are the knobs that are your call —
-     --accent / --accent-2 : your signature accent colors
-     --font-display        : the "fancy" face for logo + headings
-     dark vs light         : swap the bg/surface/text/muted block
+   The palette is lifted from the matplotlib `viridis` / `plasma`
+   colormaps: the exact ramps Xander's single-cell RNA work is plotted
+   in. That is why the ground is violet-black rather than neutral
+   black, and why the accents run violet -> teal -> citron instead of
+   one arbitrary brand hue.
+
+   Boldness is spent in ONE place: --highlight (citron). It appears on
+   the hero signature, active states, and nothing else.
    ============================================================ */
 :root {
-  --bg: #0e0e11; /* deep near-black base */
-  --surface: #17171c;
-  --text: #f2f2f5;
-  --muted: #9a9aa5;
-  --accent: #6c8cff; /* TODO(xander): pick your signature accent */
-  --accent-2: #ff7a59;
-  --radius: 14px;
-  --maxw: 1200px;
-  /* Anonymous Pro is a monospace/slab face — it only ships 400 and 700, so
-     headings and the wordmark use 700 rather than 600. */
-  --font-display: 'Anonymous Pro', ui-monospace, 'Courier New', monospace;
-  --font-body: 'Inter', system-ui, sans-serif;
-  --nav-h: 72px;
+  /* ---- ground & surfaces ---- */
+  --ground: #0b0912;
+  --panel: #14111f;
+  --panel-hi: #1c1830;
+  --paper: #ece9f7;
+  --dim: #948cb6;
 
-  /* Brand sizing: --brand-size is the logo box, and the wordmark is sized from
-     it so the two always occupy the same top-to-bottom band. --brand-text-scale
-     is the dial if you want the text a touch smaller or larger than the mark. */
+  /* ---- viridis / plasma ramp ---- */
+  --v-violet: #7c5cff;
+  --v-indigo: #4c6fd4;
+  --v-teal: #23b5ac;
+  --v-green: #5ec962;
+  --v-amber: #ff9e4a;
+  --v-magenta: #e86fbe;
+  --v-citron: #fde725;
+
+  /* ---- semantic aliases (component CSS reads these) ---- */
+  --bg: var(--ground);
+  --surface: var(--panel);
+  --text: var(--paper);
+  --muted: var(--dim);
+  --accent: var(--v-violet);
+  --accent-2: var(--v-teal);
+  --highlight: var(--v-citron);
+
+  --border: rgba(167, 150, 224, 0.13);
+  --border-hi: rgba(167, 150, 224, 0.26);
+  --surface-translucent: rgba(14, 11, 24, 0.72);
+  --focus: var(--v-citron);
+
+  /* ---- timeline tag colors ---- */
+  --tag-education: var(--v-violet);
+  --tag-industry: var(--v-amber);
+  --tag-research: var(--v-teal);
+  --tag-leadership: var(--v-magenta);
+
+  /* ---- type ----
+     Anonymous Pro keeps the data/label role (and the nav wordmark).
+     Archivo carries the headlines, set expanded so titles read as
+     engineered signage rather than default UI text. */
+  --font-title: 'Archivo', system-ui, sans-serif;
+  --font-body: 'IBM Plex Sans', system-ui, sans-serif;
+  --font-display: 'Anonymous Pro', ui-monospace, 'Courier New', monospace;
+
+  /* ---- type scale ---- */
+  --step--1: clamp(0.76rem, 0.74rem + 0.1vw, 0.82rem);
+  --step-0: clamp(0.95rem, 0.92rem + 0.15vw, 1.02rem);
+  --step-1: clamp(1.12rem, 1.05rem + 0.32vw, 1.3rem);
+  --step-2: clamp(1.45rem, 1.28rem + 0.8vw, 2rem);
+  --step-3: clamp(2rem, 1.6rem + 1.8vw, 3.1rem);
+  --step-4: clamp(2.6rem, 1.7rem + 4vw, 5.2rem);
+
+  /* ---- geometry ---- */
+  --radius: 14px;
+  --radius-sm: 9px;
+  --maxw: 1200px;
+  --nav-h: 74px;
   --brand-size: 30px;
   --brand-text-scale: 1;
-
-  /* Timeline tag colors — visual grouping for career entries.
-     TODO(xander): tune alongside --accent once you pick your palette. */
-  --tag-education: var(--accent);
-  --tag-industry: var(--accent-2);
-  --tag-research: #43d6a8;
-  --tag-leadership: #c084fc;
-
-  /* Derived tokens — kept here so components never hard-code color math. */
-  --border: rgba(255, 255, 255, 0.08);
-  --surface-translucent: rgba(23, 23, 28, 0.72);
-  --focus: var(--accent);
 }
 
 * {
@@ -53,11 +83,38 @@ body,
   height: 100%;
 }
 
+html {
+  scroll-padding-top: calc(var(--nav-h) + 16px);
+}
+
 body {
   background: var(--bg);
   color: var(--text);
   font-family: var(--font-body);
+  font-size: var(--step-0);
+  line-height: 1.6;
   -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+/* A faint measurement field across the whole site — the page sits on
+   graph paper. Two hairline grids, 88px major. Kept under 4% opacity so
+   it registers as texture, never as decoration. */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background-image:
+    linear-gradient(to right, rgba(167, 150, 224, 0.035) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(167, 150, 224, 0.035) 1px, transparent 1px);
+  background-size: 88px 88px;
+}
+
+#root {
+  position: relative;
+  z-index: 1;
 }
 
 a {
@@ -65,21 +122,38 @@ a {
   text-decoration: none;
 }
 
-/* Anchor jumps and in-page links must clear the sticky nav. */
-html {
-  scroll-padding-top: var(--nav-h);
-}
-
+/* ---------- headings ---------- */
 h1,
 h2,
 h3 {
-  font-family: var(--font-display);
-  font-weight: 700;
-  line-height: 1.15;
+  font-family: var(--font-title);
+  font-weight: 800;
+  /* The width axis is the point — expanded titles read as instrument
+     panel labels, and contrast hard against the monospace data type. */
+  font-stretch: 118%;
+  line-height: 1.02;
+  letter-spacing: -0.022em;
   margin: 0 0 0.5em;
+  text-wrap: balance;
 }
 
-/* Visible focus ring for keyboard users on every interactive element. */
+h1 {
+  font-size: var(--step-4);
+}
+h2 {
+  font-size: var(--step-3);
+}
+h3 {
+  font-size: var(--step-1);
+  font-stretch: 110%;
+  font-weight: 700;
+  letter-spacing: -0.012em;
+}
+
+p {
+  text-wrap: pretty;
+}
+
 :focus-visible {
   outline: 2px solid var(--focus);
   outline-offset: 3px;
@@ -97,20 +171,20 @@ h3 {
   }
 }
 
-/* ---------- layout utilities ---------- */
+/* ============================================================
+   LAYOUT UTILITIES
+   ============================================================ */
 .container {
   max-width: var(--maxw);
   margin: 0 auto;
-  padding: 0 24px;
+  padding: 0 28px;
 }
 
-/* Vertical breathing room for pages and homepage sections. */
 .page {
-  padding-top: 48px;
-  padding-bottom: 96px;
+  padding-top: 56px;
+  padding-bottom: 104px;
 }
 
-/* Screen-reader-only text (used by the mobile nav toggle). */
 .sr-only {
   position: absolute;
   width: 1px;
@@ -121,4 +195,143 @@ h3 {
   clip: rect(0, 0, 0, 0);
   white-space: nowrap;
   border: 0;
+}
+
+/* ============================================================
+   SHARED IDIOM
+
+   `.eyebrow` is the site's structural device. It is a channel label,
+   not a step number: this content is a set of parallel domains, not a
+   sequence, so numbering it 01/02/03 would assert an order that isn't
+   real. The leading tick is a measurement mark.
+   ============================================================ */
+.eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-family: var(--font-display);
+  font-size: var(--step--1);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+  color: var(--dim);
+  margin: 0 0 18px;
+}
+
+.eyebrow::before {
+  content: '';
+  width: 26px;
+  height: 1px;
+  background: currentColor;
+  opacity: 0.6;
+}
+
+.eyebrow--accent {
+  color: var(--accent);
+}
+
+/* Section heading block: eyebrow + title, used across every band. */
+.section-head {
+  margin-bottom: 44px;
+  max-width: 62ch;
+}
+
+.section-head p {
+  margin: 14px 0 0;
+  color: var(--dim);
+  font-size: var(--step-0);
+  max-width: 58ch;
+}
+
+/* ---------- panel ----------
+   The base card surface. The top hairline catches "light" from above,
+   the way a physical panel would. */
+.panel {
+  position: relative;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+}
+
+.panel::before {
+  content: '';
+  position: absolute;
+  inset: 0 0 auto;
+  height: 1px;
+  border-radius: inherit;
+  background: linear-gradient(
+    to right,
+    transparent,
+    rgba(167, 150, 224, 0.28),
+    transparent
+  );
+  pointer-events: none;
+}
+
+/* ---------- buttons ----------
+   Solid violet with a light sweep on hover. The sweep is the one
+   borrowed "uiverse" flourish; it is hand-built from tokens so it
+   matches the palette instead of importing someone else's blue. */
+.btn {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  padding: 11px 20px;
+  border: none;
+  border-radius: 999px;
+  background: var(--accent);
+  color: #0b0912;
+  font-family: var(--font-display);
+  font-size: var(--step--1);
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  cursor: pointer;
+  overflow: hidden;
+  isolation: isolate;
+  transition:
+    translate 180ms ease,
+    box-shadow 180ms ease;
+}
+
+.btn::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  translate: -110% 0;
+  background: linear-gradient(
+    100deg,
+    transparent 20%,
+    rgba(255, 255, 255, 0.42) 50%,
+    transparent 80%
+  );
+  transition: translate 620ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.btn:hover:not(:disabled) {
+  translate: 0 -2px;
+  box-shadow: 0 10px 30px -12px var(--accent);
+}
+
+.btn:hover:not(:disabled)::after {
+  translate: 110% 0;
+}
+
+.btn:disabled {
+  opacity: 0.42;
+  cursor: not-allowed;
+}
+
+/* Quiet variant: outline that warms to the accent. */
+.btn--ghost {
+  background: transparent;
+  border: 1px solid var(--border-hi);
+  color: var(--text);
+}
+
+.btn--ghost:hover:not(:disabled) {
+  border-color: var(--accent);
+  color: var(--accent);
+  box-shadow: none;
 }

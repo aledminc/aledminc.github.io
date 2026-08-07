@@ -20,7 +20,7 @@ export const hobbies = [
       src: '/assets/hobbies/basketball.svg',
       poster: '/assets/hobbies/basketball.svg',
     },
-    accent: '#ff7a59',
+    accent: '#FF9E4A',
     stats: [
       { label: 'Years playing', value: 12, unit: '' },
       { label: 'Free-throw %', value: 78, unit: '%', max: 100 },
@@ -36,7 +36,7 @@ export const hobbies = [
       src: '/assets/hobbies/photography.svg',
       poster: '/assets/hobbies/photography.svg',
     },
-    accent: '#6c8cff',
+    accent: '#4C6FD4',
     stats: [
       { label: 'Rolls shot', value: 34, unit: '' },
       { label: 'Keeper rate', value: 62, unit: '%', max: 100 },
@@ -52,7 +52,7 @@ export const hobbies = [
       src: '/assets/hobbies/chess.svg',
       poster: '/assets/hobbies/chess.svg',
     },
-    accent: '#43d6a8',
+    accent: '#23B5AC',
     stats: [
       { label: 'Rapid rating', value: 1480, unit: '' },
       { label: 'Win rate', value: 54, unit: '%', max: 100 },

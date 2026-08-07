@@ -83,9 +83,11 @@ export default function HobbiesRolodex() {
   return (
     <section ref={root} className="hobbies" aria-labelledby="hobbies-heading">
       <div className="container">
-        <h2 id="hobbies-heading" className="hobbies__heading">
-          Hobbies
-        </h2>
+        <div className="section-head hobbies__heading">
+          <p className="eyebrow">Off the clock</p>
+          <h2 id="hobbies-heading">What I do otherwise</h2>
+          <p>Same instinct to measure things. Flip through.</p>
+        </div>
 
         <div className="hobbies__stage">
           {/* LEFT: media. Keyed by hobby id so React remounts rather than
