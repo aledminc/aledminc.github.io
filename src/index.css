@@ -1,75 +1,92 @@
 /* ============================================================
-   VIRIDIS LAB — design tokens
+   MERIDIAN — design tokens
 
-   The palette is lifted from the matplotlib `viridis` / `plasma`
-   colormaps: the exact ramps Xander's single-cell RNA work is plotted
-   in. That is why the ground is violet-black rather than neutral
-   black, and why the accents run violet -> teal -> citron instead of
-   one arbitrary brand hue.
+   A daylight instrument panel. The ground is warm cream paper;
+   everything structural is deep navy, and dark forest green is the
+   only "live" colour — it marks the single active thing in view and
+   nothing else.
 
-   Boldness is spent in ONE place: --highlight (citron). It appears on
-   the hero signature, active states, and nothing else.
+   Depth comes from two materials, used together and never mixed
+   arbitrarily:
+     RAISE  soft neumorphic relief, lit from the top-left. Used for
+            anything you can press, and for the stage each scene
+            sits on.
+     GLASS  translucent + blurred, so the site-wide field behind it
+            stays visible through the content. Used for panels that
+            float over the background.
    ============================================================ */
 :root {
-  /* ---- ground & surfaces ---- */
-  --ground: #05050b;
-  --panel: #10101a;
-  --panel-hi: #171727;
-  --paper: #f5f3ff;
-  --dim: #aaa5c0;
+  /* ---- ground & surfaces ----
+     Warm grey-cream, not ivory. An earlier pass sat around #ecead9, which
+     has ~19 points more red than blue and read olive the moment the navy
+     and forest washes crossed it. Keeping the spread under 8 points holds
+     it at "cream white" while still feeling warm rather than clinical. */
+  --bone: #efeee9;
+  --bone-deep: #e4e2dc;
+  --paper: #faf9f6;
+  --chalk: #ffffff;
 
-  /* ---- viridis / plasma ramp ---- */
-  --v-violet: #8f72ff;
-  --v-indigo: #4c6fd4;
-  --v-teal: #42e8d4;
-  --v-green: #5ec962;
-  --v-amber: #ff9e4a;
-  --v-magenta: #e86fbe;
-  --v-citron: #fde725;
+  /* ---- ink ---- */
+  --ink: #0e1a2b;
+  --navy: #17304f;
+  --navy-soft: #33507a;
+  --forest: #1c4335;
+  --forest-soft: #2c6a51;
+  --forest-lit: #3f8a68;
+  --slate: #5b6675;
+  --slate-soft: #8c95a2;
 
   /* ---- semantic aliases (component CSS reads these) ---- */
-  --bg: var(--ground);
-  --surface: var(--panel);
-  --text: var(--paper);
-  --muted: var(--dim);
-  --accent: var(--v-violet);
-  --accent-2: var(--v-teal);
-  --highlight: var(--v-citron);
+  --bg: var(--bone);
+  --text: var(--ink);
+  --muted: var(--slate);
+  --accent: var(--navy);
+  --accent-2: var(--forest-soft);
 
-  --border: rgba(205, 198, 255, 0.12);
-  --border-hi: rgba(205, 198, 255, 0.28);
-  --surface-translucent: rgba(5, 5, 11, 0.7);
-  --focus: var(--v-citron);
+  --line: rgba(14, 26, 43, 0.1);
+  --line-hi: rgba(14, 26, 43, 0.2);
+  --focus: var(--forest-soft);
 
-  /* ---- timeline tag colors ---- */
-  --tag-education: var(--v-violet);
-  --tag-industry: var(--v-amber);
-  --tag-research: var(--v-teal);
-  --tag-leadership: var(--v-magenta);
+  /* ---- neumorphic light model ----
+     One light source, upper-left, for the entire site. Every relief in
+     the UI is derived from these two colours so nothing ever looks lit
+     from a different direction. */
+  --lit: rgba(255, 255, 255, 1);
+  --shade: rgba(14, 26, 43, 0.17);
+  --shade-deep: rgba(14, 26, 43, 0.24);
+
+  --raise-1: -4px -4px 10px var(--lit), 5px 6px 14px var(--shade);
+  --raise-2: -8px -8px 20px var(--lit), 10px 14px 30px var(--shade);
+  --raise-3: -12px -12px 32px var(--lit), 18px 24px 52px var(--shade-deep);
+  --press: inset 3px 3px 7px var(--shade), inset -3px -3px 7px var(--lit);
+  --well: inset 5px 5px 13px var(--shade), inset -4px -4px 10px var(--lit);
 
   /* ---- type ----
-     Anonymous Pro keeps the data/label role (and the nav wordmark).
-     Archivo carries the headlines, set expanded so titles read as
-     engineered signage rather than default UI text. */
-  --font-title: 'Archivo', system-ui, sans-serif;
-  --font-body: 'IBM Plex Sans', system-ui, sans-serif;
-  --font-display: 'Anonymous Pro', ui-monospace, 'Courier New', monospace;
+     Space Grotesk carries every headline: geometric, slightly technical,
+     and it holds up at display size without ornament. Inter is the
+     neutral reading face. JetBrains Mono is reserved for data — times,
+     counts, codes, labels — so numbers always look like readouts. */
+  --font-title: 'Space Grotesk', system-ui, sans-serif;
+  --font-body: 'Inter', system-ui, sans-serif;
+  --font-data: 'JetBrains Mono', ui-monospace, 'Courier New', monospace;
 
   /* ---- type scale ---- */
-  --step--1: clamp(0.76rem, 0.74rem + 0.1vw, 0.82rem);
-  --step-0: clamp(0.95rem, 0.92rem + 0.15vw, 1.02rem);
-  --step-1: clamp(1.12rem, 1.05rem + 0.32vw, 1.3rem);
-  --step-2: clamp(1.45rem, 1.28rem + 0.8vw, 2rem);
-  --step-3: clamp(2rem, 1.6rem + 1.8vw, 3.1rem);
-  --step-4: clamp(2.6rem, 1.7rem + 4vw, 5.2rem);
+  --step--2: clamp(0.66rem, 0.64rem + 0.08vw, 0.72rem);
+  --step--1: clamp(0.78rem, 0.76rem + 0.1vw, 0.84rem);
+  --step-0: clamp(0.97rem, 0.94rem + 0.15vw, 1.05rem);
+  --step-1: clamp(1.14rem, 1.06rem + 0.34vw, 1.34rem);
+  --step-2: clamp(1.5rem, 1.3rem + 0.9vw, 2.1rem);
+  --step-3: clamp(2rem, 1.55rem + 2vw, 3.2rem);
+  --step-4: clamp(2.7rem, 1.6rem + 4.8vw, 5.8rem);
 
-  /* ---- geometry ---- */
-  --radius: 14px;
-  --radius-sm: 9px;
-  --maxw: 1200px;
-  --nav-h: 74px;
-  --brand-size: 30px;
-  --brand-text-scale: 1;
+  /* ---- geometry ----
+     Radii are generous. Neumorphism needs room for the highlight and
+     the shadow to curve around an edge; tight corners just look muddy. */
+  --radius-lg: 30px;
+  --radius: 20px;
+  --radius-sm: 13px;
+  --maxw: 1180px;
+  --nav-h: 78px;
 }
 
 * {
@@ -80,37 +97,40 @@ html,
 body,
 #root {
   margin: 0;
-  height: 100%;
+  min-height: 100%;
 }
 
 html {
-  scroll-padding-top: calc(var(--nav-h) + 16px);
+  scroll-padding-top: calc(var(--nav-h) + 24px);
 }
 
 body {
-  background:
-    radial-gradient(circle at 76% -10%, rgba(86, 57, 185, .22), transparent 32rem),
-    var(--bg);
+  background: var(--bg);
   color: var(--text);
   font-family: var(--font-body);
   font-size: var(--step-0);
-  line-height: 1.6;
+  line-height: 1.65;
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
+  /* The scene exit drifts content sideways on its way out; without this a
+     leaving layer would widen the document and flash a scrollbar. */
+  overflow-x: hidden;
 }
 
-/* A faint measurement field across the whole site — the page sits on
-   graph paper. Two hairline grids, 88px major. Kept under 4% opacity so
-   it registers as texture, never as decoration. */
+/* The measurement field. Fixed, so it never scrolls — the whole site is one
+   continuous sheet of graph paper and the pages move across it. */
 body::before {
   content: '';
   position: fixed;
   inset: 0;
   z-index: 0;
   pointer-events: none;
-  background-image: linear-gradient(to right, rgba(190, 180, 255, 0.025) 1px, transparent 1px);
-  background-size: 8.333vw 100%;
-  mask-image: linear-gradient(to bottom, black, transparent 92%);
+  background-image:
+    linear-gradient(to right, rgba(14, 26, 43, 0.045) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(14, 26, 43, 0.045) 1px, transparent 1px);
+  background-size: 104px 104px;
+  mask-image: radial-gradient(ellipse 120% 90% at 50% 0%, #000 20%, transparent 78%);
+  -webkit-mask-image: radial-gradient(ellipse 120% 90% at 50% 0%, #000 20%, transparent 78%);
 }
 
 #root {
@@ -118,19 +138,17 @@ body::before {
   z-index: 1;
 }
 
-.ambient-field {
-  position: fixed;
-  inset: 0;
-  z-index: 0;
-  width: 100%;
-  height: 100%;
-  pointer-events: none;
-  opacity: .9;
-}
-
 a {
   color: inherit;
   text-decoration: none;
+}
+
+img,
+svg,
+canvas,
+video {
+  display: block;
+  max-width: 100%;
 }
 
 /* ---------- headings ---------- */
@@ -138,67 +156,47 @@ h1,
 h2,
 h3 {
   font-family: var(--font-title);
-  font-weight: 800;
-  /* The width axis is the point — expanded titles read as instrument
-     panel labels, and contrast hard against the monospace data type. */
-  font-stretch: 118%;
-  line-height: 1.02;
-  letter-spacing: -0.022em;
+  font-weight: 600;
+  line-height: 1.03;
+  letter-spacing: -0.03em;
   margin: 0 0 0.5em;
   text-wrap: balance;
 }
 
 h1 {
   font-size: var(--step-4);
+  letter-spacing: -0.045em;
+}
+
+/* Only the hero earns display size. On an interior page a 5.8rem title just
+   pushes the actual content — the project list, the timetable — below the
+   fold, which is the opposite of what a heading is for. */
+.page h1 {
+  font-size: var(--step-3);
 }
 h2 {
   font-size: var(--step-3);
+  letter-spacing: -0.035em;
 }
 h3 {
   font-size: var(--step-1);
-  font-stretch: 110%;
-  font-weight: 700;
-  letter-spacing: -0.012em;
+  font-weight: 600;
+  letter-spacing: -0.018em;
 }
 
 p {
   text-wrap: pretty;
 }
 
+::selection {
+  background: var(--forest-soft);
+  color: #fff;
+}
+
 :focus-visible {
   outline: 2px solid var(--focus);
   outline-offset: 3px;
-  border-radius: 4px;
-}
-
-@media (prefers-reduced-motion: reduce) {
-  *,
-  *::before,
-  *::after {
-    animation-duration: 0.01ms !important;
-    animation-iteration-count: 1 !important;
-    transition-duration: 0.01ms !important;
-    scroll-behavior: auto !important;
-  }
-}
-
-/* ============================================================
-   LAYOUT UTILITIES
-   ============================================================ */
-.container {
-  max-width: var(--maxw);
-  margin: 0 auto;
-  padding: 0 28px;
-}
-
-.page {
-  padding-top: 56px;
-  padding-bottom: 104px;
-}
-
-::selection {
-  background: var(--v-violet);
-  color: #fff;
+  border-radius: 6px;
 }
 
 .sr-only {
@@ -213,141 +211,334 @@ p {
   border: 0;
 }
 
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* ============================================================
+   LAYOUT
+   ============================================================ */
+.container {
+  width: 100%;
+  max-width: var(--maxw);
+  margin: 0 auto;
+  padding: 0 clamp(20px, 4vw, 40px);
+}
+
+.page {
+  padding-top: clamp(48px, 7vw, 88px);
+  padding-bottom: clamp(72px, 10vw, 128px);
+}
+
+/* ============================================================
+   SCENES
+
+   The background is continuous for the whole site; the content is
+   staged on top of it. A scene enters however it likes, but it may
+   never LEAVE by sliding up — that would just look like scrolling.
+   Instead each layer drifts sideways (or shrinks in place) and
+   dissolves, so the stage clears and the next scene arrives on the
+   same unbroken field.
+
+   `--p` is the layer's own exit progress, 0 -> 1, written by
+   useSceneExit() from the layer's position on screen.
+   ============================================================ */
+.scene {
+  position: relative;
+  padding: clamp(72px, 11vh, 132px) 0;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .layer {
+    --p: 0;
+    --dx: 0;
+    /* Standalone translate/scale, never `transform`: anime.js writes inline
+       `transform` on the entrance targets inside these layers, and inline
+       style would beat a stylesheet rule. These two properties compose with
+       it instead of fighting it. */
+    translate: calc(var(--dx) * var(--p) * 1px) 0;
+    scale: calc(1 - var(--p) * 0.07);
+    opacity: calc(1 - var(--p));
+  }
+
+  /* Text-only layers can afford the blur; anything containing a .glass panel
+     must not, because a `filter` on an ancestor breaks backdrop-filter. */
+  .layer--soft {
+    filter: blur(calc(var(--p) * 7px));
+  }
+
+  .layer--left {
+    --dx: -170;
+  }
+  .layer--right {
+    --dx: 170;
+  }
+  /* --dx 0: dissolves where it stands. */
+
+  /* Once the layout stacks there is no column for a layer to drift toward,
+     and a full-width block sliding 170px reads as a glitch rather than a
+     scene change. Shorten the throw instead of dropping it — the sideways
+     language is the point. */
+  @media (max-width: 760px) {
+    .layer--left {
+      --dx: -68;
+    }
+    .layer--right {
+      --dx: 68;
+    }
+  }
+}
+
+/* ============================================================
+   MATERIALS
+   ============================================================ */
+
+/* RAISE — neumorphic relief, the site's "solid" material. */
+.raise {
+  background: linear-gradient(150deg, var(--paper), var(--bone-deep));
+  border-radius: var(--radius);
+  box-shadow: var(--raise-2);
+}
+
+/* GLASS — floats over the field. The inner top highlight is what sells it as
+   a physical pane rather than a translucent rectangle. */
+.glass {
+  position: relative;
+  border-radius: var(--radius);
+  background: linear-gradient(
+    150deg,
+    rgba(255, 255, 255, 0.86),
+    rgba(255, 255, 255, 0.48)
+  );
+  backdrop-filter: blur(22px) saturate(140%);
+  -webkit-backdrop-filter: blur(22px) saturate(140%);
+  border: 1px solid rgba(255, 255, 255, 0.8);
+  box-shadow:
+    var(--raise-2),
+    inset 0 1px 0 rgba(255, 255, 255, 0.95);
+}
+
+/* WELL — a recess. Tracks, boards, and input fields sit inside one. */
+.well {
+  border-radius: var(--radius);
+  background: linear-gradient(150deg, var(--bone-deep), var(--paper));
+  box-shadow: var(--well);
+}
+
 /* ============================================================
    SHARED IDIOM
-
-   `.eyebrow` is the site's structural device. It is a channel label,
-   not a step number: this content is a set of parallel domains, not a
-   sequence, so numbering it 01/02/03 would assert an order that isn't
-   real. The leading tick is a measurement mark.
    ============================================================ */
+
+/* Channel label. The dot is a status lamp — forest means "this is the
+   thing you are looking at", and it is the only place the colour appears
+   outside a live control. */
 .eyebrow {
   display: inline-flex;
   align-items: center;
-  gap: 10px;
-  font-family: var(--font-display);
-  font-size: var(--step--1);
-  font-weight: 700;
+  gap: 11px;
+  font-family: var(--font-data);
+  font-size: var(--step--2);
+  font-weight: 500;
   text-transform: uppercase;
-  letter-spacing: 0.18em;
-  color: var(--dim);
-  margin: 0 0 18px;
+  letter-spacing: 0.22em;
+  color: var(--slate);
+  margin: 0 0 20px;
 }
 
 .eyebrow::before {
   content: '';
-  width: 26px;
-  height: 1px;
-  background: currentColor;
-  opacity: 0.6;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--forest-soft);
+  box-shadow: 0 0 0 4px rgba(44, 106, 81, 0.14);
+  flex: none;
 }
 
-.eyebrow--accent {
-  color: var(--accent);
+.lede {
+  margin: 0;
+  max-width: 46ch;
+  color: var(--slate);
+  font-size: var(--step-1);
+  line-height: 1.55;
 }
 
-/* Section heading block: eyebrow + title, used across every band. */
-.section-head {
-  margin-bottom: 44px;
-  max-width: 62ch;
-}
+/* ============================================================
+   BUTTONS
 
-.section-head p {
-  margin: 14px 0 0;
-  color: var(--dim);
-  font-size: var(--step-0);
-  max-width: 58ch;
-}
-
-/* ---------- panel ----------
-   The base card surface. The top hairline catches "light" from above,
-   the way a physical panel would. */
-.panel {
-  position: relative;
-  background: var(--panel);
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-}
-
-.panel::before {
-  content: '';
-  position: absolute;
-  inset: 0 0 auto;
-  height: 1px;
-  border-radius: inherit;
-  background: linear-gradient(
-    to right,
-    transparent,
-    rgba(167, 150, 224, 0.28),
-    transparent
-  );
-  pointer-events: none;
-}
-
-/* ---------- buttons ----------
-   Solid violet with a light sweep on hover. The sweep is the one
-   borrowed "uiverse" flourish; it is hand-built from tokens so it
-   matches the palette instead of importing someone else's blue. */
+   One shape, two weights. `.btn` is the single call to action a scene
+   is allowed; `.btn--quiet` is for the rare second-choice link, and is
+   deliberately flat so it never competes.
+   ============================================================ */
 .btn {
-  position: relative;
   display: inline-flex;
   align-items: center;
-  gap: 9px;
-  padding: 11px 20px;
-  border: none;
+  gap: 10px;
+  padding: 15px 26px;
+  border: 1px solid transparent;
   border-radius: 999px;
-  background: var(--accent);
-  color: #0b0912;
-  font-family: var(--font-display);
+  background: var(--ink);
+  color: var(--paper);
+  font-family: var(--font-data);
   font-size: var(--step--1);
-  font-weight: 700;
+  font-weight: 500;
   letter-spacing: 0.02em;
   cursor: pointer;
-  overflow: hidden;
-  isolation: isolate;
+  box-shadow:
+    var(--raise-1),
+    inset 0 1px 0 rgba(255, 255, 255, 0.14);
   transition:
-    translate 180ms ease,
-    box-shadow 180ms ease;
+    translate 240ms cubic-bezier(0.22, 1, 0.36, 1),
+    box-shadow 240ms ease,
+    background 240ms ease;
 }
 
-.btn::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  z-index: -1;
-  translate: -110% 0;
-  background: linear-gradient(
-    100deg,
-    transparent 20%,
-    rgba(255, 255, 255, 0.42) 50%,
-    transparent 80%
-  );
-  transition: translate 620ms cubic-bezier(0.22, 1, 0.36, 1);
+.btn svg {
+  transition: translate 240ms cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 .btn:hover:not(:disabled) {
+  background: var(--forest);
   translate: 0 -2px;
-  box-shadow: 0 10px 30px -12px var(--accent);
+  box-shadow:
+    var(--raise-2),
+    inset 0 1px 0 rgba(255, 255, 255, 0.16);
 }
 
-.btn:hover:not(:disabled)::after {
-  translate: 110% 0;
+.btn:hover:not(:disabled) svg {
+  translate: 4px 0;
+}
+
+.btn:active:not(:disabled) {
+  translate: 0 0;
+  box-shadow: var(--press);
 }
 
 .btn:disabled {
-  opacity: 0.42;
+  opacity: 0.4;
   cursor: not-allowed;
 }
 
-/* Quiet variant: outline that warms to the accent. */
-.btn--ghost {
-  background: transparent;
-  border: 1px solid var(--border-hi);
-  color: var(--text);
+/* Quiet variant — relief instead of fill, so it reads as a surface you can
+   press rather than a second primary action. */
+.btn--quiet {
+  background: linear-gradient(150deg, var(--paper), var(--bone-deep));
+  color: var(--ink);
+  box-shadow: var(--raise-1);
 }
 
-.btn--ghost:hover:not(:disabled) {
-  border-color: var(--accent);
-  color: var(--accent);
-  box-shadow: none;
+.btn--quiet:hover:not(:disabled) {
+  background: linear-gradient(150deg, var(--paper), var(--bone-deep));
+  color: var(--forest);
+  box-shadow: var(--raise-2);
+}
+
+/* ============================================================
+   SWITCH
+
+   The site's one selector: a pressed track holding a raised option.
+   It filters projects, picks a pursuit, and chooses a signature
+   method — three different jobs, one control to learn. Shared here
+   rather than in a section file because three pages depend on it.
+   ============================================================ */
+.switch {
+  display: inline-flex;
+  flex-wrap: wrap;
+  padding: 5px;
+  border-radius: 999px;
+  background: linear-gradient(150deg, var(--bone-deep), var(--paper));
+  box-shadow: var(--press);
+}
+
+.switch__opt {
+  padding: 10px 22px;
+  border: none;
+  border-radius: 999px;
+  background: transparent;
+  color: var(--slate);
+  font-family: var(--font-data);
+  font-size: var(--step--1);
+  letter-spacing: 0.03em;
+  cursor: pointer;
+  white-space: nowrap;
+  transition:
+    color 260ms ease,
+    background 320ms ease,
+    box-shadow 320ms ease;
+}
+
+.switch__opt:hover {
+  color: var(--ink);
+}
+
+.switch__opt.is-active {
+  color: var(--ink);
+  background: linear-gradient(150deg, var(--paper), var(--bone-deep));
+  box-shadow: var(--raise-1);
+}
+
+@media (max-width: 460px) {
+  .switch__opt {
+    padding: 9px 15px;
+    font-size: 0.74rem;
+  }
+}
+
+/* ============================================================
+   FIELDS — a pressed well, because an input is somewhere you put
+   something INTO. It rises to glass on focus.
+   ============================================================ */
+.field {
+  display: block;
+}
+
+.field__label {
+  display: block;
+  margin-bottom: 9px;
+  font-family: var(--font-data);
+  font-size: var(--step--2);
+  text-transform: uppercase;
+  letter-spacing: 0.16em;
+  color: var(--slate);
+}
+
+.field input,
+.field textarea {
+  width: 100%;
+  padding: 14px 18px;
+  border: 1px solid transparent;
+  border-radius: var(--radius-sm);
+  background: var(--bone);
+  box-shadow: var(--press);
+  color: var(--ink);
+  font-family: var(--font-body);
+  font-size: var(--step-0);
+  transition:
+    box-shadow 220ms ease,
+    background 220ms ease;
+}
+
+.field textarea {
+  resize: vertical;
+  min-height: 120px;
+}
+
+.field input:focus,
+.field textarea:focus {
+  outline: none;
+  background: var(--chalk);
+  box-shadow:
+    var(--raise-1),
+    0 0 0 2px rgba(44, 106, 81, 0.5);
+}
+
+.field input::placeholder {
+  color: var(--slate-soft);
 }

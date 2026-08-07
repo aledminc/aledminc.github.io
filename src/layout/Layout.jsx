@@ -1,18 +1,25 @@
-import { Outlet } from 'react-router-dom'
+import { useEffect } from 'react'
+import { Outlet, useLocation } from 'react-router-dom'
 import NavHeader from './NavHeader.jsx'
 import Footer from './Footer.jsx'
-import AmbientField from './AmbientField.jsx'
+import MeridianField from './MeridianField.jsx'
 import './Layout.css'
 
 export default function Layout() {
+  const { pathname } = useLocation()
+
+  // Every page opens at the top. Without this a route change keeps the old
+  // scroll offset, which lands you mid-scene with the entrance already spent.
+  useEffect(() => {
+    window.scrollTo(0, 0)
+  }, [pathname])
+
   return (
     <div className="shell">
-      <AmbientField />
+      {/* Fixed, behind everything, shared by every route — see MeridianField. */}
+      <MeridianField />
       <NavHeader />
-      {/* No padding-top here on purpose: the nav is position:sticky, so it
-          still occupies flow space and cannot overlap content — padding would
-          just add a blank nav-height gap. Anchor jumps are handled instead by
-          scroll-padding-top on <html> in index.css. */}
+      {/* The nav is fixed, so main has to reserve its height itself. */}
       <main className="shell__main">
         <Outlet />
       </main>

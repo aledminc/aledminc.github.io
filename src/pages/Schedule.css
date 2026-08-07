@@ -1,35 +1,443 @@
-.sched { padding-top: clamp(70px, 10vw, 130px); }
-.sched__head { position: relative; max-width: none; display: grid; grid-template-columns: minmax(0, 1.25fr) minmax(260px, .75fr); column-gap: 8vw; align-items: end; }
-.sched__head .eyebrow, .sched__head h1, .sched__legend { grid-column: 1; }
-.sched h1 { font-size: clamp(4rem, 9vw, 8.8rem); line-height: .78; letter-spacing: -.075em; margin: 18px 0 42px; }
-.sched h1 em { font-style: normal; color: transparent; -webkit-text-stroke: 1px rgba(245,243,255,.52); }
-.sched__sub { grid-column: 2; grid-row: 2; align-self: end; max-width: 40ch; margin: 0 0 45px; color: var(--muted); font-size: 1rem; line-height: 1.75; }
-.sched__metrics { grid-column: 2; grid-row: 3 / span 2; display: grid; grid-template-columns: repeat(3,1fr); gap: 1px; margin: 0 0 40px; background: var(--border); border: 1px solid var(--border); border-radius: 16px; overflow: hidden; }
-.sched__metrics div { padding: 18px 14px; background: rgba(12,12,21,.88); }
-.sched__metrics dt { margin-bottom: 8px; color: var(--dim); font: 400 .6rem/1 var(--font-display); letter-spacing: .13em; text-transform: uppercase; }
-.sched__metrics dd { margin: 0; font: 700 clamp(.9rem,1.4vw,1.16rem)/1 var(--font-title); }
-[data-course='0'] { --course: var(--v-violet); } [data-course='1'] { --course: var(--v-teal); } [data-course='2'] { --course: var(--v-amber); } [data-course='3'] { --course: var(--v-magenta); } [data-course='4'] { --course: var(--v-indigo); } [data-course='5'] { --course: var(--v-green); }
-.sched__legend { display: flex; gap: 9px; flex-wrap: wrap; list-style: none; margin: 0 0 40px; padding: 0; }
-.sched__legend-item { display: inline-flex; align-items: center; gap: 8px; padding: 7px 11px; border: 1px solid var(--border); border-radius: 999px; background: rgba(255,255,255,.025); color: var(--dim); font: .68rem var(--font-display); }
-.sched__legend-item b { color: var(--text); }.sched__legend-kind { padding-left: 8px; border-left: 1px solid var(--border); }.sched__swatch { width: 6px; height: 6px; border-radius: 50%; background: var(--course); box-shadow: 0 0 10px var(--course); }
+/* ============================================================
+   SCHEDULE
 
-.sched__board { margin-top: 30px; padding: 14px; border: 1px solid rgba(255,255,255,.1); border-radius: 28px; background: linear-gradient(145deg, rgba(255,255,255,.065), rgba(255,255,255,.015)); box-shadow: 0 50px 100px -55px rgba(52,24,160,.7); backdrop-filter: blur(20px); }
-.sched__board-top { display: flex; justify-content: space-between; gap: 20px; padding: 10px 10px 23px; color: var(--dim); font: .64rem var(--font-display); text-transform: uppercase; letter-spacing: .13em; }
-.sched__board-top div { display:flex; align-items:center; gap:9px; color:var(--text); }.sched__pulse { width:7px;height:7px;border-radius:50%;background:var(--v-teal);box-shadow:0 0 12px var(--v-teal);animation:sched-pulse 2s ease-in-out infinite; }
-@keyframes sched-pulse { 50% { opacity:.45; scale:.72; } }
-.tt { display:grid; grid-template-columns:66px repeat(5,minmax(0,1fr)); grid-template-rows:auto repeat(var(--tt-slots),5px); gap:0 6px; padding: 18px 12px 20px; margin:0; border-radius:18px; background:rgba(3,3,9,.72); border:1px solid rgba(255,255,255,.06); overflow:hidden; }
-.tt__dayhead { grid-row:1; padding:0 0 18px; text-align:center; color:var(--muted); font:700 .7rem var(--font-display); letter-spacing:.16em; text-transform:uppercase; }
-.tt__hour { grid-column:1; position:relative; border-top:1px solid rgba(255,255,255,.07); }.tt__hour-label { position:absolute; top:-.62em; right:12px; padding:0 3px; background:#08080e; color:var(--muted); font:.66rem var(--font-display); }.tt__cell { border-top:1px solid rgba(255,255,255,.06); }
-.tt__event { position:relative; display:flex; flex-direction:column; gap:2px; min-width:0; margin:2px 0; padding:8px 10px; overflow:hidden; border:1px solid color-mix(in srgb,var(--course) 24%,transparent); border-radius:6px 13px 13px 13px; background:linear-gradient(135deg,color-mix(in srgb,var(--course) 22%,#11111b),color-mix(in srgb,var(--course) 7%,#0b0b12)); box-shadow:inset 2px 0 var(--course),0 12px 20px -16px var(--course); transition:translate 220ms ease,filter 220ms ease,border-color 220ms ease; }
-.tt__event::after { content:''; position:absolute; right:-12px; top:-16px; width:52px; height:52px; border-radius:50%; background:var(--course); opacity:.12; filter:blur(10px); }.tt__event:hover { z-index:3; translate:0 -3px; filter:brightness(1.15); border-color:color-mix(in srgb,var(--course) 52%,transparent); }
-.tt__event-code { color:var(--course); font:700 .62rem var(--font-display); letter-spacing:.04em; }.tt__event-title { display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden; color:var(--text); font-size:.78rem; font-weight:600; line-height:1.22; }.tt__event-time,.tt__event-where { overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color:var(--muted);font:.63rem/1.3 var(--font-display); }
-.tt__event--short { padding:4px 10px;gap:0;justify-content:center }.tt__event--short .tt__event-title{-webkit-line-clamp:1;font-size:.72rem}.tt__event--short .tt__event-where{display:none}.tt__event--short .tt__event-code,.tt__event--short .tt__event-time{font-size:.58rem}
+   Course colours are a single navy -> forest ramp. Five arbitrary
+   hues would have been five new brand colours; a ramp keeps the page
+   inside the palette and still lets you tell Tuesday from Thursday
+   at a glance.
+   ============================================================ */
+.sched {
+  --course-0: #17304f;
+  --course-1: #234a63;
+  --course-2: #1c4335;
+  --course-3: #2c6a51;
+  --course-4: #3f8a68;
+  --course-5: #33507a;
+}
 
-.sched__list { display:flex; flex-direction:column; gap:12px; padding:4px; }.sched__day { padding:18px; border-radius:16px; background:rgba(3,3,9,.62); border:1px solid rgba(255,255,255,.06); }.sched__day-name { margin:0 0 12px;color:var(--text);font-size:.86rem;letter-spacing:.12em;text-transform:uppercase }.sched__day-items{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:9px}.sched__free{margin:0;color:var(--dim);font-size:.82rem}.sched__row{display:grid;grid-template-columns:1fr;gap:2px;padding:14px;border:1px solid color-mix(in srgb,var(--course) 25%,transparent);border-radius:4px 12px 12px;background:color-mix(in srgb,var(--course) 9%,#101019);box-shadow:inset 2px 0 var(--course)}.sched__row-time{color:var(--course);font:700 .7rem var(--font-display)}.sched__row-code{color:var(--muted);font:.65rem var(--font-display)}.sched__row-title{font-size:.92rem;font-weight:600}.sched__row-where{color:var(--muted);font-size:.72rem}
+/* Scoped to .sched: data-course is a generic attribute and these must not
+   leak onto anything else that happens to use it. */
+.sched [data-course='0'] {
+  --c: var(--course-0);
+}
+.sched [data-course='1'] {
+  --c: var(--course-1);
+}
+.sched [data-course='2'] {
+  --c: var(--course-2);
+}
+.sched [data-course='3'] {
+  --c: var(--course-3);
+}
+.sched [data-course='4'] {
+  --c: var(--course-4);
+}
+.sched [data-course='5'] {
+  --c: var(--course-5);
+}
 
-.meet { position:relative; margin-top:clamp(100px,13vw,170px); padding:clamp(32px,5vw,68px); border:1px solid rgba(255,255,255,.1); border-radius:30px; overflow:hidden; background:linear-gradient(135deg,rgba(93,62,205,.16),rgba(12,12,22,.88) 48%,rgba(34,196,178,.08)); }
-.meet::after{content:'';position:absolute;right:-15%;bottom:-65%;width:520px;aspect-ratio:1;border:1px solid rgba(143,114,255,.15);border-radius:50%;box-shadow:0 0 0 60px rgba(143,114,255,.035),0 0 0 120px rgba(143,114,255,.02);pointer-events:none}.meet__intro{position:relative;z-index:1;max-width:650px;margin:0 0 34px}.meet__intro h2{font-size:clamp(2.5rem,6vw,5.4rem);letter-spacing:-.055em;margin-bottom:18px}.meet__intro p{margin:0;max-width:56ch;color:var(--muted);line-height:1.7}.meet__mailto{color:var(--v-teal);text-decoration:none;border-bottom:1px solid currentColor}.meet__notice{position:relative;z-index:1;max-width:760px;padding:13px 16px;border-left:2px solid var(--v-teal);background:rgba(0,0,0,.24);color:var(--muted);font-size:.82rem}
-.meet-form{position:relative;z-index:1;max-width:860px;display:flex;flex-direction:column;gap:16px}.meet-form__row{display:grid;grid-template-columns:1fr 1fr;gap:16px}.field{display:flex;flex-direction:column;gap:8px}.field__label{color:var(--muted);font:.65rem var(--font-display);letter-spacing:.12em;text-transform:uppercase}.field input,.field textarea{width:100%;padding:14px 15px;border:1px solid rgba(255,255,255,.11);border-radius:10px;background:rgba(3,3,9,.55);color:var(--text);font:inherit;outline:none;transition:border-color 180ms,box-shadow 180ms}.field input:focus,.field textarea:focus{border-color:var(--v-violet);box-shadow:0 0 0 3px rgba(143,114,255,.12)}.field textarea{resize:vertical}.field input[type='datetime-local']::-webkit-calendar-picker-indicator{filter:invert(1);opacity:.6}.field__error,.meet-form__err{color:#ff8fbc;font-size:.78rem}.meet-form__trap{position:absolute;left:-9999px;width:1px;height:1px;opacity:0}.meet-form__actions{display:flex;align-items:center;gap:16px;flex-wrap:wrap}.meet-form__submit{padding:14px 24px;border:0;border-radius:999px;background:linear-gradient(100deg,var(--v-violet),#b38aff);box-shadow:0 14px 35px -14px var(--v-violet);color:white;font:700 .78rem var(--font-display);cursor:pointer;transition:translate 180ms,box-shadow 180ms}.meet-form__submit:hover:not(:disabled){translate:0 -2px;box-shadow:0 18px 40px -12px var(--v-violet)}.meet-form__submit:disabled{opacity:.42;cursor:not-allowed}.meet-form__ok{color:var(--v-teal);font-size:.82rem}
-@media(prefers-reduced-motion:no-preference){.sched__reveal{opacity:0}}
-@media(max-width:900px){.sched__head{grid-template-columns:1fr}.sched__head .eyebrow,.sched__head h1,.sched__sub,.sched__metrics,.sched__legend{grid-column:1;grid-row:auto}.sched__sub{margin-bottom:28px}.sched__metrics{max-width:620px}.sched h1{line-height:.86}}
-@media(max-width:620px){.sched{padding-top:58px}.sched h1{font-size:clamp(3.5rem,18vw,5.6rem);margin-bottom:30px}.sched__metrics{grid-template-columns:1fr}.sched__metrics div{display:flex;align-items:center;justify-content:space-between}.sched__metrics dt{margin:0}.sched__board{padding:8px;border-radius:20px}.sched__board-top{padding:10px 8px 16px}.sched__board-top>span{display:none}.meet{padding:28px 20px;border-radius:22px}.meet-form__row{grid-template-columns:1fr}}
+/* ---------- scene 1 ---------- */
+/* rem, not ch: `ch` here resolves against the body font-size, not the h1's. */
+.sched__head {
+  max-width: 42rem;
+  margin-bottom: clamp(30px, 5vw, 48px);
+}
+
+.sched__head h1 {
+  margin: 0 0 16px;
+}
+
+.sched__head .lede {
+  font-size: var(--step-0);
+  margin-bottom: 28px;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .sched__head > *,
+  .board__shell,
+  .tt__event,
+  .sched__row {
+    opacity: 0;
+  }
+}
+
+/* ============================================================
+   scene 2 — THE BOARD
+
+   A recessed plate with the week set into it. The whole grid is one
+   object, so it gets one surface and no internal cards.
+   ============================================================ */
+.sched__board {
+  margin-bottom: clamp(46px, 7vw, 84px);
+}
+
+.board__shell {
+  padding: clamp(14px, 2vw, 22px);
+  border-radius: var(--radius-lg);
+  background: linear-gradient(155deg, var(--paper), var(--bone-deep));
+  box-shadow: var(--raise-2);
+}
+
+.board__top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+  padding: 4px 8px 16px;
+  font-family: var(--font-data);
+  font-size: var(--step--2);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--slate);
+}
+
+.board__live {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  color: var(--forest);
+}
+
+.board__live i {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--forest-lit);
+  box-shadow: 0 0 0 0 rgba(63, 138, 104, 0.55);
+  animation: board-pulse 2.6s ease-out infinite;
+}
+
+@keyframes board-pulse {
+  70% {
+    box-shadow: 0 0 0 9px rgba(63, 138, 104, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(63, 138, 104, 0);
+  }
+}
+
+/* ---------- the timetable ---------- */
+.tt {
+  display: grid;
+  /* One gutter column, then one per day. Rows are 5-minute slots — see the
+     SLOT_MINUTES comment in Schedule.jsx for why not 15. */
+  grid-template-columns: 62px repeat(5, minmax(0, 1fr));
+  grid-template-rows: auto repeat(var(--tt-slots), 5px);
+  gap: 0 6px;
+  padding: 10px;
+  border-radius: var(--radius);
+  background: var(--bone);
+  box-shadow: var(--well);
+}
+
+.tt__dayhead {
+  grid-row: 1;
+  padding: 4px 0 12px;
+  text-align: center;
+  font-family: var(--font-data);
+  font-size: var(--step--2);
+  text-transform: uppercase;
+  letter-spacing: 0.16em;
+  color: var(--slate);
+}
+
+.tt__hour {
+  grid-column: 1;
+  position: relative;
+  border-top: 1px solid rgba(14, 26, 43, 0.09);
+}
+
+.tt__hour-label {
+  position: absolute;
+  top: -0.6em;
+  right: 12px;
+  font-family: var(--font-data);
+  font-size: 0.68rem;
+  color: var(--slate-soft);
+  background: var(--bone);
+  padding: 0 2px;
+}
+
+.tt__cell {
+  border-top: 1px solid rgba(14, 26, 43, 0.06);
+}
+
+/* ---------- an event block ---------- */
+.tt__event {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  margin: 1px 0;
+  padding: 9px 11px;
+  border-radius: 11px;
+  overflow: hidden;
+  /* Tinted glass rather than a solid fill: the ruled grid stays faintly
+     visible through every block, so the week still reads as a grid. */
+  background: color-mix(in srgb, var(--c) 16%, rgba(255, 255, 255, 0.7));
+  box-shadow:
+    inset 0 0 0 1px color-mix(in srgb, var(--c) 26%, transparent),
+    var(--raise-1);
+  color: var(--c);
+  transition:
+    box-shadow 260ms ease,
+    translate 260ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* The bar on the leading edge is the colour at full strength — enough to
+   identify the course without flooding the block. */
+.tt__event::before {
+  content: '';
+  position: absolute;
+  inset: 0 auto 0 0;
+  width: 3px;
+  background: var(--c);
+}
+
+.tt__event:hover {
+  translate: 0 -2px;
+  box-shadow:
+    inset 0 0 0 1px color-mix(in srgb, var(--c) 40%, transparent),
+    var(--raise-2);
+}
+
+.tt__event-code {
+  font-family: var(--font-data);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+}
+
+.tt__event-title {
+  font-size: 0.82rem;
+  line-height: 1.25;
+  color: var(--ink);
+  opacity: 0.78;
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+}
+
+.tt__event-time {
+  margin-top: auto;
+  font-family: var(--font-data);
+  font-size: 0.66rem;
+  letter-spacing: 0.04em;
+  opacity: 0.72;
+}
+
+/* Under an hour there is no room for three lines at 5px per slot. */
+.tt__event--short {
+  padding: 6px 9px;
+}
+
+.tt__event--short .tt__event-title {
+  -webkit-line-clamp: 1;
+}
+
+.tt__event--short .tt__event-time {
+  display: none;
+}
+
+/* ---------- narrow: stacked days ---------- */
+.sched__list {
+  display: grid;
+  gap: 22px;
+  padding: 6px 2px;
+}
+
+.sched__day-name {
+  margin: 0 0 10px;
+  font-family: var(--font-data);
+  font-size: var(--step--2);
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+  color: var(--slate);
+}
+
+.sched__free {
+  margin: 0;
+  padding: 14px 16px;
+  border-radius: var(--radius-sm);
+  background: var(--bone);
+  box-shadow: var(--press);
+  font-size: var(--step--1);
+  color: var(--slate-soft);
+}
+
+.sched__day-items {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 8px;
+}
+
+.sched__row {
+  position: relative;
+  display: grid;
+  gap: 2px;
+  padding: 12px 16px 12px 20px;
+  border-radius: var(--radius-sm);
+  background: color-mix(in srgb, var(--c) 12%, rgba(255, 255, 255, 0.6));
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--c) 22%, transparent);
+}
+
+.sched__row::before {
+  content: '';
+  position: absolute;
+  inset: 0 auto 0 0;
+  width: 3px;
+  border-radius: 3px 0 0 3px;
+  background: var(--c);
+}
+
+.sched__row-time {
+  font-family: var(--font-data);
+  font-size: 0.7rem;
+  letter-spacing: 0.04em;
+  color: var(--c);
+}
+
+.sched__row-code {
+  font-family: var(--font-data);
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: var(--c);
+}
+
+.sched__row-title {
+  font-size: var(--step--1);
+  color: var(--slate);
+}
+
+/* ---------- legend ---------- */
+.legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 10px;
+  list-style: none;
+  margin: 18px 0 0;
+  padding: 0;
+}
+
+.legend li {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  padding: 7px 15px;
+  border-radius: 999px;
+  background: linear-gradient(150deg, var(--paper), var(--bone-deep));
+  box-shadow: var(--raise-1);
+  font-family: var(--font-data);
+  font-size: 0.72rem;
+  letter-spacing: 0.04em;
+  color: var(--slate);
+}
+
+.legend span {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: var(--c);
+}
+
+.legend em {
+  font-style: normal;
+  opacity: 0.6;
+}
+
+/* ============================================================
+   scene 3 — THE FORM
+   ============================================================ */
+.meet__card {
+  padding: clamp(28px, 4vw, 54px);
+  border-radius: var(--radius-lg);
+}
+
+.meet__card h2 {
+  margin: 0 0 30px;
+  max-width: 18ch;
+}
+
+.meet__notice {
+  margin: 0 0 26px;
+  padding: 15px 18px;
+  border-radius: var(--radius-sm);
+  background: rgba(14, 26, 43, 0.05);
+  box-shadow: inset 0 0 0 1px rgba(14, 26, 43, 0.09);
+  font-size: var(--step--1);
+  color: var(--slate);
+}
+
+.meet__notice strong {
+  color: var(--ink);
+}
+
+.meet__notice a,
+.meet__err a {
+  color: var(--forest-soft);
+  border-bottom: 1px solid currentColor;
+}
+
+.meet__form {
+  display: grid;
+  gap: 20px;
+}
+
+.meet__row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+
+.meet__error {
+  display: block;
+  margin-top: 7px;
+  font-family: var(--font-data);
+  font-size: 0.7rem;
+  color: #9c3b32;
+}
+
+/* Off-screen rather than display:none — a hidden input a bot cannot see is
+   the point, and display:none is the one thing they all skip. */
+.meet__trap {
+  position: absolute;
+  left: -9999px;
+  opacity: 0;
+  height: 0;
+  width: 0;
+}
+
+.meet__actions {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  flex-wrap: wrap;
+  margin-top: 6px;
+}
+
+.meet__ok,
+.meet__err {
+  margin: 0;
+  font-family: var(--font-data);
+  font-size: var(--step--1);
+}
+
+.meet__ok {
+  color: var(--forest-soft);
+}
+
+.meet__err {
+  color: #9c3b32;
+}
+
+@media (max-width: 640px) {
+  .meet__row {
+    grid-template-columns: 1fr;
+  }
+}
+

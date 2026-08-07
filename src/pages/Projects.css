@@ -1,238 +1,311 @@
-/* /projects — YouTube-homepage-style grid.
+/* ============================================================
+   PROJECTS — an index, not a gallery
 
-   This page intentionally uses its own wider max-width instead of the site
-   .container (1200px). YouTube's grid is the recognizable cue, and at 1200px
-   with 300px minimum tiles you only ever get 3 columns; 1600px gives the
-   4-5 column look the homage depends on. */
-.yt {
-  max-width: 1600px;
-  margin: 0 auto;
-  padding: 56px 28px 104px;
+   Nine thumbnails competing at once was the old page. Here the list
+   is type only; the artwork lives in one panel that follows the
+   cursor, so exactly one project is ever illustrated.
+   ============================================================ */
+/* rem, not ch: `ch` here resolves against the body font-size, not the h1's. */
+.index__head {
+  max-width: 40rem;
+  margin-bottom: clamp(24px, 4vw, 38px);
 }
 
-/* ---------- page header ---------- */
-.yt__head {
-  max-width: 62ch;
-  margin-bottom: 32px;
+.index__head h1 {
+  margin: 0 0 16px;
 }
 
-.yt__head h1 {
-  font-size: var(--step-3);
-  margin: 0 0 12px;
-}
-
-.yt__lead {
-  margin: 0;
-  color: var(--dim);
+.index__head .lede {
   font-size: var(--step-0);
 }
 
-/* ---------- filter chip row ---------- */
-.yt__chips {
-  display: flex;
-  gap: 10px;
-  padding: 4px 0 26px;
-  overflow-x: auto;
-  /* Chips scroll sideways on narrow screens rather than wrapping, which is how
-     YouTube behaves. Hide the scrollbar but keep the scrolling. */
-  scrollbar-width: none;
+.index__filter {
+  margin-bottom: clamp(26px, 4vw, 44px);
 }
 
-.yt__chips::-webkit-scrollbar {
-  display: none;
+.index__list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  border-top: 1px solid var(--line);
 }
 
-.yt__chip {
-  flex: none;
-  padding: 8px 16px;
-  border: 1px solid var(--border);
-  border-radius: 999px;
-  background: transparent;
-  color: var(--dim);
-  font-family: var(--font-display);
-  font-size: 0.82rem;
-  font-weight: 700;
-  white-space: nowrap;
-  cursor: pointer;
-  transition:
-    background 180ms ease,
-    color 180ms ease,
-    border-color 180ms ease;
+.row-wrap {
+  border-bottom: 1px solid var(--line);
 }
 
-.yt__chip:hover {
-  color: var(--text);
-  border-color: var(--border-hi);
+/* Rows leave along the list's own axis, one after another as each reaches
+   the top — a conveyor rather than a page scrolling away. Shorter throw than
+   a full scene layer, because nine of them are doing it in sequence. */
+.index__list > .row-wrap {
+  --dx: 120;
 }
 
-.yt__chip.is-active {
-  background: var(--accent);
-  border-color: var(--accent);
-  color: #0b0912;
-}
-
-/* ---------- grid ---------- */
-.yt-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-  gap: 26px 16px;
-}
-
-.yt-card {
-  min-width: 0; /* lets the title ellipsis work inside a grid track */
-  will-change: transform;
-}
-
-.yt-card__link {
-  display: block;
-  border-radius: 12px;
-}
-
-/* ---------- thumbnail ---------- */
-.yt-thumb {
+/* ---------- a row ---------- */
+.row {
   position: relative;
-  /* Reserving the box with aspect-ratio is what keeps lazy-loaded thumbnails
-     from shifting the grid as they arrive. */
-  aspect-ratio: 16 / 9;
-  border-radius: 12px;
-  overflow: hidden;
-  background: var(--surface);
-  border: 1px solid var(--border);
-  transition:
-    border-color 240ms ease,
-    box-shadow 240ms ease;
-}
-
-.yt-card__link:hover .yt-thumb {
-  border-color: color-mix(in srgb, var(--accent) 55%, transparent);
-  box-shadow: 0 20px 44px -26px var(--accent);
-}
-
-.yt-thumb img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  display: block;
-  transition:
-    scale 260ms ease,
-    filter 260ms ease;
-}
-
-/* YouTube's duration pill. */
-.yt-thumb__pill {
-  position: absolute;
-  right: 8px;
-  bottom: 8px;
-  padding: 2px 6px;
-  border-radius: 5px;
-  background: rgba(0, 0, 0, 0.78);
-  color: #fff;
-  font-family: var(--font-display);
-  font-size: 0.72rem;
-  font-weight: 700;
-  line-height: 1.5;
-  letter-spacing: 0.02em;
-}
-
-/* Hover: a light zoom on the image inside its fixed box, plus a lift.
-   `scale` is the standalone property, not `transform` — anime writes an inline
-   transform on .yt-card for the entrance, and an inline style always beats a
-   stylesheet rule, so a transform-based hover here would silently never run. */
-.yt-card__link:hover .yt-thumb img {
-  scale: 1.04;
-}
-
-.yt-card__link:hover .yt-title {
-  color: var(--accent);
-}
-
-/* ---------- meta row ---------- */
-.yt-meta {
-  display: flex;
-  gap: 12px;
-  padding: 12px 0 0;
-}
-
-.yt-avatar {
-  flex: none;
-  width: 36px;
-  height: 36px;
-  border-radius: 50%;
   display: grid;
-  place-items: center;
-  background: var(--surface);
-  border: 1px solid var(--border);
-  color: var(--muted);
-  font-family: var(--font-display);
-  font-size: 0.72rem;
-  font-weight: 700;
-  letter-spacing: 0.02em;
+  grid-template-columns: auto minmax(0, 1fr) auto auto;
+  align-items: center;
+  gap: clamp(16px, 3vw, 36px);
+  padding: clamp(20px, 2.6vw, 30px) clamp(10px, 2vw, 24px);
+  border-radius: var(--radius);
+  transition:
+    background 380ms ease,
+    box-shadow 380ms ease,
+    padding 420ms cubic-bezier(0.22, 1, 0.36, 1);
 }
 
-.yt-meta__text {
+/* The hovered row lifts onto glass. It is the only row with a surface, which
+   is what keeps the rest of the page reading as a plain list. */
+.row:hover,
+.row:focus-visible {
+  background: linear-gradient(
+    120deg,
+    rgba(255, 255, 255, 0.7),
+    rgba(255, 255, 255, 0.28)
+  );
+  backdrop-filter: blur(14px) saturate(130%);
+  -webkit-backdrop-filter: blur(14px) saturate(130%);
+  box-shadow: var(--raise-2);
+}
+
+.row__idx {
+  font-family: var(--font-data);
+  font-size: var(--step--2);
+  letter-spacing: 0.1em;
+  color: var(--slate-soft);
+  font-variant-numeric: tabular-nums;
+  transition: color 320ms ease;
+}
+
+.row:hover .row__idx {
+  color: var(--forest-soft);
+}
+
+.row__main {
   min-width: 0;
 }
 
-.yt-title {
-  margin: 0 0 5px;
-  font-family: var(--font-body);
-  font-size: 0.95rem;
+.row__title {
+  display: block;
+  font-family: var(--font-title);
+  font-size: clamp(1.05rem, 2.2vw, 1.6rem);
   font-weight: 600;
-  line-height: 1.3;
-  color: var(--text);
-
-  /* Two lines, then ellipsis — the YouTube clamp. */
-  display: -webkit-box;
-  -webkit-line-clamp: 2;
-  line-clamp: 2;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
-
-  /* Hold two lines' worth of height even for short titles, so the contributor
-     and date rows stay aligned across the grid. */
-  min-height: calc(2 * 1.3em);
-  transition: color 160ms ease;
+  letter-spacing: -0.028em;
+  line-height: 1.15;
+  color: var(--ink);
+  text-wrap: balance;
 }
 
-.yt-channel,
-.yt-sub {
-  margin: 0;
-  font-size: 0.85rem;
-  line-height: 1.45;
-  color: var(--muted);
+/* Collapse with grid rather than max-height: 0fr -> 1fr animates to the
+   content's real height, so a two-line blurb and a five-line one both open
+   at the same speed and neither is clipped. */
+.row__reveal {
+  display: grid;
+  grid-template-rows: 0fr;
+  opacity: 0;
+  transition:
+    grid-template-rows 460ms cubic-bezier(0.22, 1, 0.36, 1),
+    opacity 340ms ease;
+}
+
+.row:hover .row__reveal,
+.row:focus-visible .row__reveal {
+  grid-template-rows: 1fr;
+  opacity: 1;
+}
+
+.row__reveal-inner {
+  display: block;
   overflow: hidden;
-  text-overflow: ellipsis;
+  min-height: 0;
+}
+
+.row__blurb {
+  display: block;
+  padding-top: 10px;
+  max-width: 62ch;
+  font-size: var(--step--1);
+  line-height: 1.65;
+  color: var(--slate);
+}
+
+.row__team {
+  display: block;
+  padding-top: 6px;
+  font-family: var(--font-data);
+  font-size: var(--step--2);
+  letter-spacing: 0.06em;
+  color: var(--forest-soft);
+}
+
+.row__meta {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  font-family: var(--font-data);
+  font-size: var(--step--2);
+  letter-spacing: 0.08em;
+  color: var(--slate);
   white-space: nowrap;
 }
 
-.yt-sub {
-  font-size: 0.82rem;
+.row__lang {
+  padding: 5px 12px;
+  border-radius: 999px;
+  background: rgba(14, 26, 43, 0.05);
+  box-shadow: inset 0 0 0 1px rgba(14, 26, 43, 0.07);
+  color: var(--navy);
 }
 
-.yt__none {
-  color: var(--muted);
-  font-size: 0.95rem;
+.row__go {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  color: var(--slate-soft);
+  transition:
+    color 320ms ease,
+    background 320ms ease,
+    box-shadow 320ms ease,
+    translate 380ms cubic-bezier(0.22, 1, 0.36, 1);
 }
 
-/* ---------- entrance start state ----------
-   Only when motion is allowed: under reduced motion useAnimeScope never
-   creates a scope, so anything hidden here would stay hidden. */
+.row:hover .row__go,
+.row:focus-visible .row__go {
+  color: var(--paper);
+  background: var(--ink);
+  box-shadow: var(--raise-1);
+  translate: 3px -3px;
+}
+
+/* Touch devices have no hover to open the preview with, so the artwork comes
+   back inline — and the row needs the extra column to put it in. */
+.row--thumbed {
+  grid-template-columns: auto minmax(0, 1fr) auto auto auto;
+}
+
+.row__thumb {
+  width: 108px;
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+  box-shadow: var(--raise-1);
+}
+
+.row__thumb img {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+}
+
+.index__none {
+  padding: 48px 0;
+  font-family: var(--font-data);
+  font-size: var(--step--1);
+  letter-spacing: 0.1em;
+  color: var(--slate);
+}
+
 @media (prefers-reduced-motion: no-preference) {
-  .yt-card {
+  .row {
     opacity: 0;
   }
 }
 
-/* ---------- narrow screens ----------
-   Below ~660px the auto-fill minimum would still force 300px tracks, so drop
-   to a single column and let tiles use the full width. */
-@media (max-width: 660px) {
-  .yt {
-    padding: 16px 16px 72px;
+/* ============================================================
+   THE PREVIEW
+
+   Fixed to the viewport and translated to the cursor. pointer-events
+   are off, so it can sit directly under the cursor without ever
+   stealing the hover that is keeping it open.
+   ============================================================ */
+.preview {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 60;
+  width: clamp(240px, 24vw, 340px);
+  border-radius: var(--radius);
+  overflow: hidden;
+  pointer-events: none;
+  opacity: 0;
+  /* Lifted clear of the cursor, not centred on it: at -60% the panel sat
+     straight over the title of the row it was previewing. -118% puts it fully
+     above the hovered row. */
+  translate: calc(var(--x, 0px) + 40px) calc(var(--y, 0px) - 118%);
+  scale: 0.86;
+  rotate: -3deg;
+  box-shadow: var(--raise-3);
+  border: 1px solid rgba(255, 255, 255, 0.8);
+  transition:
+    opacity 300ms ease,
+    scale 460ms cubic-bezier(0.22, 1, 0.36, 1),
+    rotate 460ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.preview.is-on {
+  opacity: 1;
+  scale: 1;
+  rotate: -1.5deg;
+}
+
+.preview img {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .preview {
+    transition: opacity 120ms ease;
+    scale: 1;
+    rotate: 0deg;
+  }
+}
+
+/* ============================================================
+   NARROW
+   ============================================================ */
+@media (max-width: 860px) {
+  .row,
+  .row--thumbed {
+    grid-template-columns: auto minmax(0, 1fr) auto;
+    gap: 12px clamp(12px, 3vw, 20px);
   }
 
-  .yt-grid {
-    grid-template-columns: 1fr;
-    gap: 22px 0;
+  /* Thumb to the right of the title, meta on its own line beneath. */
+  .row__thumb {
+    grid-column: 3;
+    grid-row: 1;
+    width: 96px;
+  }
+
+  .row__meta {
+    grid-column: 2 / -1;
+    gap: 10px;
+  }
+
+  .row__go {
+    display: none;
+  }
+
+  .index__list > .row-wrap {
+    --dx: 70;
+  }
+}
+
+@media (max-width: 520px) {
+  .row,
+  .row--thumbed {
+    grid-template-columns: auto minmax(0, 1fr);
+  }
+
+  .row__thumb {
+    grid-column: 1 / -1;
+    grid-row: auto;
+    width: 100%;
   }
 }

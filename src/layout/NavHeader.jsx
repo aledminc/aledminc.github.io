@@ -1,77 +1,73 @@
 import { useEffect, useState } from 'react'
 import { NavLink, useLocation } from 'react-router-dom'
-import { FaXTwitter, FaInstagram, FaLinkedinIn } from 'react-icons/fa6'
-import { LuMail, LuMenu, LuX } from 'react-icons/lu'
-import { socials, contactEmail } from '../data/socials.js'
+import { LuArrowUpRight, LuMenu, LuX } from 'react-icons/lu'
+import { contactEmail } from '../data/socials.js'
 
-// lucide-react v1 dropped brand icons, so socials come from react-icons/fa6
-// (the alternative the build plan allows) and UI glyphs from its Lucide set.
-const SOCIAL_ICONS = {
-  x: FaXTwitter,
-  instagram: FaInstagram,
-  linkedin: FaLinkedinIn,
-}
-
-function SocialLinks({ size = 20 }) {
-  return socials.map(({ id, label, url }) => {
-    const Icon = SOCIAL_ICONS[id]
-    return (
-      <a
-        key={id}
-        href={url}
-        target="_blank"
-        rel="noopener noreferrer"
-        aria-label={label}
-        className="social"
-      >
-        <Icon size={size} />
-      </a>
-    )
-  })
-}
+// Three routes, in order. The index drives the sliding indicator, so this
+// array is the single source of truth for both the links and the pill.
+const ROUTES = [
+  { to: '/', label: 'Index' },
+  { to: '/projects', label: 'Work' },
+  { to: '/schedule', label: 'Schedule' },
+]
 
 export default function NavHeader() {
   const [open, setOpen] = useState(false)
+  const [lifted, setLifted] = useState(false)
   const { pathname } = useLocation()
 
-  // Navigating from inside the drawer should dismiss it.
+  // Which pill the indicator sits under. Unknown routes fall back to Index,
+  // matching the catch-all route in App.jsx.
+  const activeIndex = Math.max(
+    0,
+    ROUTES.findIndex((r) => (r.to === '/' ? pathname === '/' : pathname.startsWith(r.to))),
+  )
+
   useEffect(() => setOpen(false), [pathname])
 
-  // Escape closes the drawer for keyboard users.
+  // The bar is transparent over the hero and becomes glass once you leave it,
+  // so the top of the page reads as one uninterrupted field.
   useEffect(() => {
-    if (!open) return
-    const onKeyDown = (e) => {
-      if (e.key === 'Escape') setOpen(false)
-    }
+    const onScroll = () => setLifted(window.scrollY > 24)
+    onScroll()
+    window.addEventListener('scroll', onScroll, { passive: true })
+    return () => window.removeEventListener('scroll', onScroll)
+  }, [])
+
+  useEffect(() => {
+    if (!open) return undefined
+    const onKeyDown = (e) => e.key === 'Escape' && setOpen(false)
     window.addEventListener('keydown', onKeyDown)
     return () => window.removeEventListener('keydown', onKeyDown)
   }, [open])
 
   return (
-    <header className="nav">
+    <header className={`nav${lifted ? ' nav--lifted' : ''}`}>
       <div className="nav__inner">
-        {/* LEFT: logo + wordmark, links home */}
-        <NavLink to="/" className="nav__brand">
+        <NavLink to="/" className="nav__brand" aria-label="Xander Minch — home">
           <img src="/assets/logo.svg" alt="" className="nav__logo" />
-          <span className="nav__name">Xander Minch</span>
+          <span className="nav__name">Xander&nbsp;Minch</span>
         </NavLink>
 
-        {/* CENTER: page nav */}
+        {/* Pressed track with a raised pill that slides between routes. The
+            pill is one element translated by index, not three states — so the
+            movement is continuous instead of a cross-fade. */}
         <nav className="nav__links" aria-label="Main">
-          <NavLink to="/" end>
-            Home
-          </NavLink>
-          <NavLink to="/projects">Projects</NavLink>
-          <NavLink to="/schedule">Schedule</NavLink>
+          <span
+            className="nav__pill"
+            aria-hidden="true"
+            style={{ '--i': activeIndex, '--n': ROUTES.length }}
+          />
+          {ROUTES.map((r) => (
+            <NavLink key={r.to} to={r.to} end={r.to === '/'}>
+              {r.label}
+            </NavLink>
+          ))}
         </nav>
 
-        {/* RIGHT: socials, then the contact CTA */}
         <div className="nav__right">
-          <div className="nav__socials">
-            <SocialLinks />
-          </div>
           <a href={`mailto:${contactEmail}`} className="nav__cta">
-            <LuMail size={16} /> Get in touch
+            Get in touch <LuArrowUpRight size={15} />
           </a>
           <button
             type="button"
@@ -80,31 +76,27 @@ export default function NavHeader() {
             aria-controls="mobile-drawer"
             onClick={() => setOpen((v) => !v)}
           >
-            {open ? <LuX size={22} /> : <LuMenu size={22} />}
+            {open ? <LuX size={20} /> : <LuMenu size={20} />}
             <span className="sr-only">{open ? 'Close menu' : 'Open menu'}</span>
           </button>
         </div>
       </div>
 
-      {/* MOBILE: below 768px the center links and socials live here */}
       <div
         id="mobile-drawer"
         className={`nav__drawer${open ? ' nav__drawer--open' : ''}`}
         hidden={!open}
       >
-        <nav className="nav__drawer-links" aria-label="Main (mobile)">
-          <NavLink to="/" end>
-            Home
-          </NavLink>
-          <NavLink to="/projects">Projects</NavLink>
-          <NavLink to="/schedule">Schedule</NavLink>
+        <nav aria-label="Main (mobile)">
+          {ROUTES.map((r) => (
+            <NavLink key={r.to} to={r.to} end={r.to === '/'}>
+              {r.label}
+            </NavLink>
+          ))}
         </nav>
-        <div className="nav__drawer-socials">
-          <SocialLinks size={22} />
-          <a href={`mailto:${contactEmail}`} className="nav__cta">
-            <LuMail size={16} /> Get in touch
-          </a>
-        </div>
+        <a href={`mailto:${contactEmail}`} className="btn nav__drawer-cta">
+          Get in touch <LuArrowUpRight size={15} />
+        </a>
       </div>
     </header>
   )

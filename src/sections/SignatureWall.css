@@ -1,0 +1,298 @@
+/* ============================================================
+   SCENE 04 — THE SHEET
+   ============================================================ */
+.wall__inner {
+  display: grid;
+  justify-items: center;
+  gap: clamp(24px, 3.5vw, 40px);
+}
+
+.wall__head {
+  display: grid;
+  justify-items: center;
+  text-align: center;
+}
+
+.wall__head h2 {
+  margin: 0;
+}
+
+/* ---------- scene intro ---------- */
+@media (prefers-reduced-motion: no-preference) {
+  .wall__head > *,
+  .wall .sheet,
+  .wall__capture,
+  .wall__note {
+    opacity: 0;
+    translate: 0 22px;
+    transition:
+      opacity 720ms ease,
+      translate 720ms cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  .wall.is-in .wall__head > *,
+  .wall.is-in .sheet,
+  .wall.is-in .wall__capture,
+  .wall.is-in .wall__note {
+    opacity: 1;
+    translate: 0 0;
+  }
+
+  .wall.is-in .wall__head > *:nth-child(2) {
+    transition-delay: 90ms;
+  }
+  .wall.is-in .sheet {
+    transition-delay: 190ms;
+  }
+  .wall.is-in .wall__capture {
+    transition-delay: 300ms;
+  }
+  .wall.is-in .wall__note {
+    transition-delay: 380ms;
+  }
+}
+
+/* ============================================================
+   THE SHEET
+
+   A recessed cream plate: paper set into the page. The ruled lines are
+   the same 104px module as the site-wide graph paper, so the sheet
+   reads as a cut-out of the field rather than a separate object.
+   ============================================================ */
+.sheet {
+  position: relative;
+  width: 100%;
+  /* Wide and shallow. At 16:7 this was a 540px expanse holding one signature,
+     which read as an empty panel rather than an invitation. */
+  aspect-ratio: 16 / 5;
+  min-height: 280px;
+  max-height: 60vh;
+  border-radius: var(--radius-lg);
+  background:
+    linear-gradient(to right, rgba(14, 26, 43, 0.045) 1px, transparent 1px) 0 0 / 52px 52px,
+    linear-gradient(to bottom, rgba(14, 26, 43, 0.045) 1px, transparent 1px) 0 0 / 52px 52px,
+    linear-gradient(155deg, var(--paper), var(--bone-deep));
+  box-shadow: var(--well);
+  overflow: hidden;
+}
+
+/* Registration marks at the corners — the one piece of drafting furniture
+   the sheet gets, drawn with a single element. */
+.sheet__ticks {
+  position: absolute;
+  inset: 18px;
+  pointer-events: none;
+  background:
+    linear-gradient(var(--line-hi), var(--line-hi)) 0 0 / 22px 1px,
+    linear-gradient(var(--line-hi), var(--line-hi)) 0 0 / 1px 22px,
+    linear-gradient(var(--line-hi), var(--line-hi)) 100% 0 / 22px 1px,
+    linear-gradient(var(--line-hi), var(--line-hi)) 100% 0 / 1px 22px,
+    linear-gradient(var(--line-hi), var(--line-hi)) 0 100% / 22px 1px,
+    linear-gradient(var(--line-hi), var(--line-hi)) 0 100% / 1px 22px,
+    linear-gradient(var(--line-hi), var(--line-hi)) 100% 100% / 22px 1px,
+    linear-gradient(var(--line-hi), var(--line-hi)) 100% 100% / 1px 22px;
+  background-repeat: no-repeat;
+}
+
+.sheet__empty {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-content: center;
+  margin: 0;
+  font-family: var(--font-data);
+  font-size: var(--step--1);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--slate-soft);
+}
+
+.sheet__marks {
+  position: absolute;
+  inset: 0;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.mark {
+  position: absolute;
+  /* Standalone properties, not `transform`: anime writes inline `transform`
+     on the entrance and would otherwise wipe the placement out. */
+  transform-origin: left top;
+  will-change: transform, opacity;
+}
+
+.mark__ink {
+  display: block;
+  font-size: 30px;
+  line-height: 1.1;
+  white-space: nowrap;
+}
+
+.mark__ink--drawn {
+  width: 168px;
+  mask-size: contain;
+  mask-repeat: no-repeat;
+  mask-position: center;
+  -webkit-mask-size: contain;
+  -webkit-mask-repeat: no-repeat;
+  -webkit-mask-position: center;
+}
+
+/* ============================================================
+   CAPTURE — one switch, one input, one action
+   ============================================================ */
+.wall__capture {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: clamp(12px, 2vw, 20px);
+  flex-wrap: wrap;
+  width: 100%;
+}
+
+.wall__input {
+  flex: 1 1 320px;
+  max-width: 460px;
+}
+
+.wall__typed input {
+  width: 100%;
+  padding: 16px 22px;
+  border: 1px solid transparent;
+  border-radius: 999px;
+  background: var(--bone);
+  box-shadow: var(--press);
+  color: var(--ink);
+  font-family: 'Caveat', var(--font-body), cursive;
+  font-size: 1.5rem;
+  line-height: 1.2;
+  transition:
+    box-shadow 220ms ease,
+    background 220ms ease;
+}
+
+.wall__typed input:focus {
+  outline: none;
+  background: var(--chalk);
+  box-shadow:
+    var(--raise-1),
+    0 0 0 2px rgba(44, 106, 81, 0.5);
+}
+
+.wall__typed input::placeholder {
+  color: var(--slate-soft);
+}
+
+.wall__submit {
+  flex: none;
+}
+
+.wall__note {
+  margin: 0;
+  font-family: var(--font-data);
+  font-size: var(--step--2);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--slate);
+  text-align: center;
+}
+
+/* ============================================================
+   THE PAD
+   ============================================================ */
+.pad {
+  position: relative;
+  border-radius: var(--radius);
+  background: var(--bone);
+  box-shadow: var(--press);
+  padding: 8px 8px 44px;
+}
+
+.pad__canvas {
+  width: 100%;
+  height: auto;
+  aspect-ratio: 3 / 1;
+  border-radius: var(--radius-sm);
+  background: rgba(255, 255, 255, 0.5);
+  touch-action: none;
+  cursor: crosshair;
+}
+
+.pad__hint {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  translate: -50% -70%;
+  font-family: var(--font-data);
+  font-size: var(--step--2);
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--slate-soft);
+  pointer-events: none;
+}
+
+.pad__tools {
+  position: absolute;
+  bottom: 8px;
+  left: 8px;
+  right: 8px;
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+}
+
+.pad__tool {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 13px;
+  border: none;
+  border-radius: 999px;
+  background: linear-gradient(150deg, var(--paper), var(--bone-deep));
+  box-shadow: var(--raise-1);
+  color: var(--slate);
+  font-family: var(--font-data);
+  font-size: 0.7rem;
+  letter-spacing: 0.04em;
+  cursor: pointer;
+  transition:
+    color 200ms ease,
+    box-shadow 200ms ease;
+}
+
+.pad__tool:hover:not(:disabled) {
+  color: var(--ink);
+  box-shadow: var(--raise-2);
+}
+
+.pad__tool:active:not(:disabled) {
+  box-shadow: var(--press);
+}
+
+.pad__tool:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+  box-shadow: none;
+}
+
+@media (max-width: 640px) {
+  .sheet {
+    aspect-ratio: 4 / 5;
+  }
+
+  .wall__capture {
+    justify-content: stretch;
+  }
+
+  .wall__input {
+    flex-basis: 100%;
+    max-width: none;
+  }
+
+  .wall__submit {
+    width: 100%;
+    justify-content: center;
+  }
+}

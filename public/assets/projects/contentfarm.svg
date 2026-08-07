@@ -1,65 +1,16 @@
-<!-- PLACEHOLDER — TODO(xander): replace with real 16:9 artwork. -->
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 360" width="640" height="360" role="img" aria-label="ContentFarm">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 360" width="640" height="360" role="img" aria-label="contentfarm">
   <defs>
-    <linearGradient id="w" x1="1" y1="0" x2="0" y2="1">
-      <stop offset="0" stop-color="#23B5AC" stop-opacity="0.30"/>
-      <stop offset="0.55" stop-color="#23B5AC" stop-opacity="0.06"/>
-      <stop offset="1" stop-color="#23B5AC" stop-opacity="0"/>
+    <linearGradient id="wash" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#faf9f6"/>
+      <stop offset="1" stop-color="#e6eae6"/>
     </linearGradient>
-    <pattern id="g" width="40" height="40" patternUnits="userSpaceOnUse">
-      <path d="M40 0H0V40" fill="none" stroke="#A796E0" stroke-opacity="0.07" stroke-width="1"/>
+    <pattern id="grid" width="32" height="32" patternUnits="userSpaceOnUse">
+      <path d="M32 0H0V32" fill="none" stroke="#17304f" stroke-opacity="0.06" stroke-width="1"/>
     </pattern>
   </defs>
-  <rect width="640" height="360" fill="#0F0C1A"/>
-  <rect width="640" height="360" fill="url(#g)"/>
-  <rect width="640" height="360" fill="url(#w)"/>
-  <circle cx="77.4" cy="168.7" r="3.8" fill="#23B5AC" opacity="0.48"/>
-  <circle cx="437.9" cy="172.9" r="2.9" fill="#23B5AC" opacity="0.58"/>
-  <circle cx="194.8" cy="188.3" r="2.5" fill="#23B5AC" opacity="0.66"/>
-  <circle cx="326" cy="210.3" r="2.1" fill="#23B5AC" opacity="0.7"/>
-  <circle cx="191.6" cy="87.8" r="3.6" fill="#23B5AC" opacity="0.63"/>
-  <circle cx="467.7" cy="216.4" r="4.1" fill="#23B5AC" opacity="0.38"/>
-  <circle cx="169.5" cy="170.9" r="2.3" fill="#23B5AC" opacity="0.33"/>
-  <circle cx="332.3" cy="196" r="2.3" fill="#23B5AC" opacity="0.62"/>
-  <circle cx="99.3" cy="107.1" r="1.6" fill="#23B5AC" opacity="0.46"/>
-  <circle cx="379.9" cy="239.2" r="3.6" fill="#23B5AC" opacity="0.65"/>
-  <circle cx="147.2" cy="76.3" r="4" fill="#23B5AC" opacity="0.68"/>
-  <circle cx="361.3" cy="134.4" r="4.5" fill="#23B5AC" opacity="0.57"/>
-  <circle cx="166.6" cy="196.5" r="3.2" fill="#23B5AC" opacity="0.78"/>
-  <circle cx="411.9" cy="179.1" r="2.6" fill="#23B5AC" opacity="0.47"/>
-  <circle cx="228.8" cy="117.6" r="4.1" fill="#23B5AC" opacity="0.74"/>
-  <circle cx="319.7" cy="152.8" r="2.9" fill="#23B5AC" opacity="0.31"/>
-  <circle cx="163.2" cy="150.8" r="3" fill="#23B5AC" opacity="0.64"/>
-  <circle cx="404.7" cy="238.5" r="2.7" fill="#23B5AC" opacity="0.75"/>
-  <circle cx="153.5" cy="193" r="1.9" fill="#23B5AC" opacity="0.61"/>
-  <circle cx="467.3" cy="122" r="1.3" fill="#23B5AC" opacity="0.49"/>
-  <circle cx="209.3" cy="152.2" r="3.4" fill="#23B5AC" opacity="0.29"/>
-  <circle cx="483.6" cy="167.6" r="1.7" fill="#23B5AC" opacity="0.69"/>
-  <circle cx="236.5" cy="148.2" r="2.9" fill="#23B5AC" opacity="0.77"/>
-  <circle cx="489.7" cy="235.9" r="3.5" fill="#23B5AC" opacity="0.34"/>
-  <circle cx="178.2" cy="141.8" r="1.9" fill="#23B5AC" opacity="0.57"/>
-  <circle cx="421.5" cy="149.5" r="1.6" fill="#23B5AC" opacity="0.67"/>
-  <circle cx="151.9" cy="154.2" r="2.7" fill="#23B5AC" opacity="0.56"/>
-  <circle cx="346" cy="221.6" r="3.3" fill="#23B5AC" opacity="0.73"/>
-  <circle cx="131.1" cy="105.2" r="1.4" fill="#23B5AC" opacity="0.43"/>
-  <circle cx="421.3" cy="163.8" r="2.1" fill="#23B5AC" opacity="0.33"/>
-  <circle cx="148.1" cy="154.4" r="3.8" fill="#23B5AC" opacity="0.72"/>
-  <circle cx="364" cy="188.3" r="4.4" fill="#23B5AC" opacity="0.63"/>
-  <circle cx="100.6" cy="194.6" r="1.3" fill="#23B5AC" opacity="0.33"/>
-  <circle cx="463.8" cy="173.8" r="4.2" fill="#23B5AC" opacity="0.55"/>
-  <circle cx="158.4" cy="179.2" r="3.4" fill="#23B5AC" opacity="0.34"/>
-  <circle cx="479" cy="195.7" r="3.3" fill="#23B5AC" opacity="0.34"/>
-  <circle cx="58.6" cy="144.7" r="3" fill="#23B5AC" opacity="0.56"/>
-  <circle cx="445.3" cy="157.5" r="3.4" fill="#23B5AC" opacity="0.39"/>
-  <circle cx="113.5" cy="196.7" r="1.6" fill="#23B5AC" opacity="0.75"/>
-  <circle cx="394.2" cy="150" r="2.8" fill="#23B5AC" opacity="0.21"/>
-  <circle cx="193.2" cy="156.2" r="2.4" fill="#23B5AC" opacity="0.34"/>
-  <circle cx="436.7" cy="168.9" r="1.4" fill="#23B5AC" opacity="0.2"/>
-  <circle cx="142.2" cy="120.6" r="4" fill="#23B5AC" opacity="0.65"/>
-  <circle cx="434.7" cy="118.6" r="2.3" fill="#23B5AC" opacity="0.78"/>
-  <circle cx="65.9" cy="125.2" r="4" fill="#23B5AC" opacity="0.61"/>
-  <circle cx="487.3" cy="164.3" r="4.6" fill="#23B5AC" opacity="0.79"/>
-  <rect x="0" y="290" width="640" height="70" fill="#0F0C1A" opacity="0.55"/>
-  <text x="34" y="322" font-family="'Anonymous Pro',monospace" font-size="27" font-weight="700" fill="#ECE9F7">ContentFarm</text>
-  <text x="34" y="341" font-family="'Anonymous Pro',monospace" font-size="12" fill="#948CB6">placeholder thumbnail</text>
+  <rect width="640" height="360" fill="#f2f1ec"/>
+  <rect width="640" height="360" fill="url(#wash)"/>
+  <rect width="640" height="360" fill="url(#grid)"/>
+  <g><path d="M40 62 L40 68.46 L60 61.48 L80 54.52 L100 47.93 L120 42.04 L140 37.12 L160 33.43 L180 31.14 L200 30.37 L220 31.16 L240 33.46 L260 37.17 L280 42.09 L300 48 L320 54.6 L340 61.55 L360 68.54 L380 75.2 L400 81.21 L420 86.27 L440 90.15 L460 92.63 L480 93.62 L500 93.04 L520 90.94 L540 87.42 L560 82.65 L580 76.86 L600 70.34" fill="none" stroke="#2c6a51" stroke-opacity="0.46" stroke-width="3" stroke-linecap="round"/><path d="M40 82 L40 61.1 L60 58.46 L80 56.97 L100 56.71 L120 57.7 L140 59.88 L160 63.15 L180 67.35 L200 72.26 L220 77.66 L240 83.27 L260 88.82 L280 94.03 L300 98.65 L320 102.45 L340 105.25 L360 106.9 L380 107.33 L400 106.51 L420 104.49 L440 101.36 L460 97.28 L480 92.44 L500 87.1 L520 81.5 L540 75.93 L560 70.66 L580 65.94 L600 62.01" fill="none" stroke="#17304f" stroke-opacity="0.26" stroke-width="1.7" stroke-linecap="round"/><path d="M40 102 L40 123.48 L60 125.19 L80 125.76 L100 125.17 L120 123.43 L140 120.64 L160 116.93 L180 112.49 L200 107.53 L220 102.3 L240 97.05 L260 92.05 L280 87.54 L300 83.74 L320 80.84 L340 78.97 L360 78.25 L380 78.68 L400 80.27 L420 82.92 L440 86.52 L460 90.87 L480 95.77 L500 100.98 L520 106.24 L540 111.29 L560 115.88 L580 119.79 L600 122.82" fill="none" stroke="#17304f" stroke-opacity="0.26" stroke-width="1.7" stroke-linecap="round"/><path d="M40 122 L40 143.51 L60 143.61 L80 142.64 L100 140.66 L120 137.76 L140 134.09 L160 129.82 L180 125.17 L200 120.36 L220 115.63 L240 111.21 L260 107.33 L280 104.17 L300 101.88 L320 100.59 L340 100.34 L360 101.16 L380 103.01 L400 105.79 L420 109.37 L440 113.57 L460 118.18 L480 122.98 L500 127.74 L520 132.21 L540 136.18 L560 139.45 L580 141.86 L600 143.3" fill="none" stroke="#17304f" stroke-opacity="0.26" stroke-width="1.7" stroke-linecap="round"/><path d="M40 142 L40 123.38 L60 123.43 L80 124.41 L100 126.24 L120 128.85 L140 132.11 L160 135.86 L180 139.9 L200 144.05 L220 148.1 L240 151.85 L260 155.11 L280 157.73 L300 159.58 L320 160.56 L340 160.63 L360 159.78 L380 158.06 L400 155.55 L420 152.37 L440 148.68 L460 144.66 L480 140.51 L500 136.44 L520 132.64 L540 129.3 L560 126.58 L580 124.62 L600 123.52" fill="none" stroke="#2c6a51" stroke-opacity="0.46" stroke-width="3" stroke-linecap="round"/><path d="M40 162 L40 151.04 L60 148.37 L80 146.37 L100 145.14 L120 144.74 L140 145.19 L160 146.46 L180 148.5 L200 151.2 L220 154.43 L240 158.04 L260 161.84 L280 165.65 L300 169.27 L320 172.54 L340 175.3 L360 177.39 L380 178.74 L400 179.25 L420 178.92 L440 177.76 L460 175.82 L480 173.2 L500 170.03 L520 166.47 L540 162.69 L560 158.87 L580 155.21 L600 151.88" fill="none" stroke="#17304f" stroke-opacity="0.26" stroke-width="1.7" stroke-linecap="round"/><path d="M40 182 L40 177.55 L60 179.74 L80 182.05 L100 184.35 L120 186.53 L140 188.49 L160 190.13 L180 191.38 L200 192.16 L220 192.44 L240 192.21 L260 191.48 L280 190.28 L300 188.67 L320 186.73 L340 184.57 L360 182.27 L380 179.97 L400 177.76 L420 175.76 L440 174.07 L460 172.77 L480 171.92 L500 171.57 L520 171.73 L540 172.4 L560 173.53 L580 175.09 L600 176.98" fill="none" stroke="#17304f" stroke-opacity="0.26" stroke-width="1.7" stroke-linecap="round"/><path d="M40 202 L40 215.42 L60 213.94 L80 211.88 L100 209.32 L120 206.41 L140 203.28 L160 200.09 L180 196.99 L200 194.14 L220 191.67 L240 189.71 L260 188.36 L280 187.68 L300 187.7 L320 188.42 L340 189.82 L360 191.81 L380 194.3 L400 197.17 L420 200.28 L440 203.48 L460 206.6 L480 209.49 L500 212.02 L520 214.05 L540 215.49 L560 216.27 L580 216.35 L600 215.72" fill="none" stroke="#17304f" stroke-opacity="0.26" stroke-width="1.7" stroke-linecap="round"/><path d="M40 222 L40 222.21 L60 226.65 L80 230.85 L100 234.61 L120 237.76 L140 240.13 L160 241.61 L180 242.13 L200 241.65 L220 240.21 L240 237.87 L260 234.76 L280 231.01 L300 226.82 L320 222.4 L340 217.95 L360 213.71 L380 209.87 L400 206.63 L420 204.14 L440 202.53 L460 201.88 L480 202.22 L500 203.54 L520 205.76 L540 208.77 L560 212.44 L580 216.58 L600 220.99" fill="none" stroke="#2c6a51" stroke-opacity="0.46" stroke-width="3" stroke-linecap="round"/><path d="M40 242 L40 248.55 L60 251.12 L80 253.24 L100 254.81 L120 255.75 L140 256.01 L160 255.58 L180 254.48 L200 252.77 L220 250.54 L240 247.88 L260 244.93 L280 241.84 L300 238.75 L320 235.83 L340 233.21 L360 231.02 L380 229.37 L400 228.34 L420 227.99 L440 228.32 L460 229.33 L480 230.96 L500 233.13 L520 235.74 L540 238.66 L560 241.74 L580 244.83 L600 247.79" fill="none" stroke="#17304f" stroke-opacity="0.26" stroke-width="1.7" stroke-linecap="round"/><path d="M40 262 L40 264.37 L60 262.52 L80 260.66 L100 258.86 L120 257.21 L140 255.8 L160 254.69 L180 253.95 L200 253.6 L220 253.66 L240 254.13 L260 254.99 L280 256.2 L300 257.69 L320 259.39 L340 261.22 L360 263.09 L380 264.9 L400 266.58 L420 268.02 L440 269.18 L460 269.97 L480 270.38 L500 270.37 L520 269.96 L540 269.15 L560 267.99 L580 266.53 L600 264.85" fill="none" stroke="#17304f" stroke-opacity="0.26" stroke-width="1.7" stroke-linecap="round"/><path d="M40 282 L40 294.44 L60 295.46 L80 295.81 L100 295.48 L120 294.49 L140 292.88 L160 290.74 L180 288.17 L200 285.3 L220 282.26 L240 279.21 L260 276.3 L280 273.67 L300 271.45 L320 269.75 L340 268.65 L360 268.2 L380 268.44 L400 269.34 L420 270.87 L440 272.94 L460 275.46 L480 278.3 L500 281.32 L520 284.37 L540 287.31 L560 289.99 L580 292.28 L600 294.06" fill="none" stroke="#17304f" stroke-opacity="0.26" stroke-width="1.7" stroke-linecap="round"/><path d="M40 302 L40 289.78 L60 287.86 L80 286.64 L100 286.17 L120 286.48 L140 287.55 L160 289.34 L180 291.74 L200 294.66 L220 297.93 L240 301.4 L260 304.9 L280 308.26 L300 311.31 L320 313.9 L340 315.91 L360 317.24 L380 317.81 L400 317.61 L420 316.64 L440 314.95 L460 312.62 L480 309.77 L500 306.54 L520 303.08 L540 299.58 L560 296.19 L580 293.08 L600 290.42" fill="none" stroke="#2c6a51" stroke-opacity="0.46" stroke-width="3" stroke-linecap="round"/></g>
+  <rect x="0.5" y="0.5" width="639" height="359" fill="none" stroke="#0e1a2b" stroke-opacity="0.1"/>
 </svg>

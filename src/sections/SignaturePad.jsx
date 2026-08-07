@@ -6,6 +6,10 @@ import { LuEraser, LuUndo2 } from 'react-icons/lu'
 const CANVAS_W = 600
 const CANVAS_H = 200
 const STROKE_WIDTH = 4
+// Ink, not chalk — the pad sits on a cream sheet now. Only the alpha channel
+// survives into the finished mark (it is used as a mask), so this colour is
+// purely what you see while you are drawing.
+const STROKE = '#17304f'
 const ALPHA_THRESHOLD = 8 // ignore near-transparent antialiasing when trimming
 const TRIM_PADDING = 6
 
@@ -71,7 +75,7 @@ export default function SignaturePad({ apiRef, onStrokesChange }) {
     if (!canvas) return
     const ctx = canvas.getContext('2d')
     ctx.clearRect(0, 0, canvas.width, canvas.height)
-    ctx.strokeStyle = '#ffffff'
+    ctx.strokeStyle = STROKE
     ctx.lineWidth = STROKE_WIDTH
     ctx.lineCap = 'round'
     ctx.lineJoin = 'round'
@@ -82,7 +86,7 @@ export default function SignaturePad({ apiRef, onStrokesChange }) {
       if (stroke.length === 1) {
         // A single tap still deserves a dot.
         ctx.arc(stroke[0].x, stroke[0].y, STROKE_WIDTH / 2, 0, Math.PI * 2)
-        ctx.fillStyle = '#ffffff'
+        ctx.fillStyle = STROKE
         ctx.fill()
         continue
       }

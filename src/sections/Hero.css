@@ -1,0 +1,209 @@
+/* ============================================================
+   SCENE 01 — HERO
+   ============================================================ */
+.hero {
+  display: flex;
+  align-items: center;
+  min-height: calc(100vh - var(--nav-h));
+  padding-top: clamp(40px, 6vh, 80px);
+  padding-bottom: clamp(56px, 9vh, 110px);
+}
+
+.hero__grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.02fr) minmax(0, 0.98fr);
+  align-items: center;
+  gap: clamp(32px, 6vw, 76px);
+}
+
+.hero__copy {
+  max-width: 44rem;
+}
+
+.hero__title {
+  margin: 0 0 26px;
+  /* splitText wraps each word; they need to be block-ish to translate. */
+  max-width: 15ch;
+}
+
+/* splitText sets display:inline-block on each fragment itself and tags it
+   with data-word; this only promotes them for the blur. */
+.hero__title [data-word] {
+  will-change: transform, opacity, filter;
+}
+
+.hero__lede {
+  margin-bottom: 38px;
+}
+
+.hero__cta {
+  /* The scene's only action. */
+  align-self: start;
+}
+
+/* Entrance start states are scoped to the media query on purpose: with
+   reduced motion no anime scope is created, so anything hidden here
+   unconditionally would never come back. */
+@media (prefers-reduced-motion: no-preference) {
+  .hero__eyebrow,
+  .hero__title,
+  .hero__lede,
+  .hero__cta,
+  .disc {
+    opacity: 0;
+  }
+}
+
+/* ============================================================
+   THE MODULE
+
+   A raised bezel around a recessed face — the two neumorphic states
+   used against each other, which is what makes it read as a physical
+   instrument set into the page rather than a circle with a shadow.
+   ============================================================ */
+.disc {
+  position: relative;
+  width: min(100%, 460px);
+  margin-inline: auto;
+}
+
+.disc__bezel {
+  position: relative;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  padding: 5.5%;
+  background: linear-gradient(150deg, var(--paper), var(--bone-deep));
+  box-shadow: var(--raise-3);
+}
+
+/* A thin lit rim, as if the bezel edge catches the same light as everything
+   else on the page. */
+.disc__bezel::after {
+  content: '';
+  position: absolute;
+  inset: 3%;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, 0.85);
+  pointer-events: none;
+}
+
+.disc__face {
+  position: relative;
+  height: 100%;
+  border-radius: 50%;
+  background: radial-gradient(circle at 32% 26%, var(--bone-deep), var(--bone) 70%);
+  box-shadow: var(--well);
+  overflow: hidden;
+}
+
+/* The glass pane over the face. Kept to a soft diagonal sheen so the
+   instrument beneath stays fully readable. */
+.disc__face::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background: linear-gradient(
+    145deg,
+    rgba(255, 255, 255, 0.55),
+    rgba(255, 255, 255, 0.06) 42%,
+    rgba(14, 26, 43, 0.05)
+  );
+  backdrop-filter: blur(0.4px);
+  pointer-events: none;
+}
+
+.disc__svg {
+  width: 100%;
+  height: 100%;
+}
+
+.disc__beam {
+  transform-origin: 200px 200px;
+  animation: disc-sweep var(--sweep) linear infinite;
+}
+
+@keyframes disc-sweep {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Each contact holds a steady dot; the halo is what the beam "wakes". The
+   negative delay set per contact in the JSX offsets this cycle so the flare
+   happens exactly as the beam arrives. */
+.disc__halo {
+  transform-box: fill-box;
+  transform-origin: center;
+  opacity: 0;
+  animation: disc-ping var(--sweep) linear infinite;
+  animation-delay: var(--delay);
+}
+
+@keyframes disc-ping {
+  0% {
+    opacity: 0.95;
+    transform: scale(0.55);
+  }
+  22% {
+    opacity: 0;
+    transform: scale(1.35);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(1.35);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .disc__beam,
+  .disc__halo {
+    animation: none;
+  }
+  .disc__halo {
+    opacity: 0.35;
+  }
+}
+
+/* One readout line beneath the module, set as instrument type. */
+.disc__readout {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  margin: 22px auto 0;
+  padding: 0 6px;
+  max-width: 78%;
+  font-family: var(--font-data);
+  font-size: var(--step--2);
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+  color: var(--slate);
+}
+
+.disc__readout b {
+  font-weight: 500;
+  color: var(--forest-soft);
+}
+
+/* ============================================================
+   NARROW
+   ============================================================ */
+@media (max-width: 940px) {
+  .hero {
+    min-height: 0;
+  }
+
+  .hero__grid {
+    grid-template-columns: 1fr;
+    gap: clamp(40px, 8vw, 64px);
+  }
+
+  .hero__title {
+    max-width: 18ch;
+  }
+
+  .disc {
+    width: min(86%, 380px);
+  }
+}

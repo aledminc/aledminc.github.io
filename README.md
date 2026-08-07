@@ -2,6 +2,32 @@
 
 React + Vite single-page portfolio, deployed to GitHub Pages via GitHub Actions.
 
+## Design system — "Meridian"
+
+A daylight instrument panel: warm cream ground, deep navy for everything
+structural, dark forest green as the only "live" colour (active states, the
+status lamp in `.eyebrow`, the one accent in a chart). Tokens live in
+[src/index.css](src/index.css) and nothing should hard-code a hex outside it.
+
+Three rules the components depend on:
+
+- **Two materials, used against each other.** `.raise` is neumorphic relief
+  (anything pressable, and the stage a scene sits on); `.glass` is translucent
+  and blurred so the site-wide field shows through; `.well` is a recess (tracks,
+  boards, inputs). One light source, upper-left, for the whole site.
+- **One call to action per scene**, and two or three elements on screen at a
+  time. `.switch` is the site's single selector idiom — it filters projects,
+  picks a pursuit, and chooses a signature method.
+- **Scenes never exit upward.** The background ([`MeridianField`](src/layout/MeridianField.jsx))
+  is fixed and continuous, so content is staged on top of it; a `.layer` leaves
+  sideways or dissolves in place. Sliding up would just read as scrolling. The
+  mechanism is [useSceneExit.js](src/hooks/useSceneExit.js) writing one custom
+  property, `--p`, that the `.layer` rules in `index.css` turn into motion.
+
+Type is three roles, do not collapse them: **Space Grotesk** headlines,
+**Inter** prose, **JetBrains Mono** for data only — times, counts, codes,
+labels. Numbers should always look like a readout.
+
 ## Stack
 
 | Concern    | Choice                                     |
@@ -45,13 +71,18 @@ repo would instead need `base: '/<repo-name>/'` plus a matching router
 src/
   main.jsx              entry; mounts <App/> in Router
   App.jsx               route table
-  index.css             global tokens + resets
-  layout/               NavHeader, Footer, Layout (nav + <Outlet/> + footer)
+  index.css             design tokens, materials, .layer/.scene, .switch, .btn
+  layout/               Layout (field + nav + <Outlet/> + footer),
+                        MeridianField — the fixed canvas every page sits on
   pages/                Home, Projects, Schedule
-  sections/             AboutMe, CareerTimeline, HobbiesRolodex, SignatureCollage
-  hooks/                useAnimeScope.js — reusable anime.js scope hook
-  data/                 JSON content: projects, schedule, hobbies, timeline
-  assets/               logo, thumbnails, hobby media
+  sections/             Hero + SensorDisc, Trajectory, Pursuits,
+                        SignatureWall + SignaturePad
+  hooks/                useAnimeScope  — anime.js scope, reduced-motion aware
+                        useSceneExit   — writes --p for the sideways exits
+                        useInView      — latches when a scene is reached
+                        useMediaQuery
+  data/                 content: projects, schedule, hobbies, timeline, socials
+public/assets/          logo, project thumbnails, hobby plates (all SVG)
 public/
   CNAME                 only if a custom domain is used
 ```

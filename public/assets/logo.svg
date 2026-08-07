@@ -1,16 +1,8 @@
-<!-- PLACEHOLDER LOGO — TODO(xander): replace with your real mark.
-     Until then this is a miniature of the hero's cluster plot, so the identity
-     is at least consistent. Keep the path (public/assets/logo.svg) and both the
-     nav mark and the favicon update together. -->
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="32" height="32" role="img" aria-label="Xander Minch">
-  <rect width="32" height="32" rx="9" fill="#14111F"/>
-  <rect x="0.5" y="0.5" width="31" height="31" rx="8.5" fill="none" stroke="#7C5CFF" stroke-opacity="0.45"/>
-  <circle cx="9.5" cy="10" r="2.6" fill="#7C5CFF"/>
-  <circle cx="21" cy="8.5" r="1.7" fill="#4C6FD4"/>
-  <circle cx="10" cy="22" r="1.9" fill="#23B5AC"/>
-  <circle cx="17.5" cy="16.5" r="1.35" fill="#E86FBE"/>
-  <circle cx="23" cy="22.5" r="2.3" fill="#FF9E4A"/>
-  <circle cx="14.5" cy="6.5" r="0.9" fill="#7C5CFF" fill-opacity="0.6"/>
-  <circle cx="6" cy="16" r="0.9" fill="#23B5AC" fill-opacity="0.6"/>
-  <circle cx="26" cy="15" r="0.9" fill="#4C6FD4" fill-opacity="0.6"/>
+  <rect width="32" height="32" rx="9" fill="#0e1a2b"/>
+  <rect x="0.5" y="0.5" width="31" height="31" rx="8.5" fill="none" stroke="#f1efe8" stroke-opacity="0.22"/>
+  <circle cx="16" cy="16" r="9.5" fill="none" stroke="#f1efe8" stroke-opacity="0.28" stroke-width="1"/>
+  <path d="M9.5 9.5L22.5 22.5M22.5 9.5L9.5 22.5" stroke="#f1efe8" stroke-width="2.2" stroke-linecap="round"/>
+  <circle cx="16" cy="16" r="3.6" fill="#0e1a2b"/>
+  <circle cx="16" cy="16" r="2.1" fill="#4f9a7a"/>
 </svg>
