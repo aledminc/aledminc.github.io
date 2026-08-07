@@ -1,6 +1,8 @@
 import { useMemo, useRef, useState } from 'react'
 import emailjs from '@emailjs/browser'
+import { animate, stagger } from 'animejs'
 import { useMediaQuery } from '../hooks/useMediaQuery.js'
+import { useAnimeScope } from '../hooks/useAnimeScope.js'
 import { events, days, kindLabels, semester } from '../data/schedule.js'
 import { contactEmail } from '../data/socials.js'
 import './Schedule.css'
@@ -44,6 +46,15 @@ function localNowForInput() {
 
 export default function Schedule() {
   const isNarrow = useMediaQuery('(max-width: 820px)')
+  const { root } = useAnimeScope(() => {
+    animate('.sched__reveal', {
+      opacity: [0, 1],
+      translateY: [28, 0],
+      delay: stagger(110),
+      duration: 780,
+      ease: 'out(3)',
+    })
+  })
 
   // Grid bounds come from the data, so adding an evening club meeting extends
   // the timetable rather than overflowing it.
@@ -59,6 +70,14 @@ export default function Schedule() {
   }, [])
 
   const totalSlots = (dayEnd - dayStart) / SLOT_MINUTES
+  const weeklyHours = useMemo(
+    () => events.reduce((sum, event) => sum + toMinutes(event.end) - toMinutes(event.start), 0) / 60,
+    [],
+  )
+  const busiestDay = useMemo(() => {
+    const counts = days.map((day) => ({ day, count: events.filter((event) => event.day === day).length }))
+    return counts.sort((a, b) => b.count - a.count)[0]?.day ?? '—'
+  }, [])
 
   // Colour by COURSE, not by kind. Every entry this semester is a class, so a
   // class/club legend would be one grey swatch telling you nothing — whereas
@@ -141,15 +160,20 @@ export default function Schedule() {
   }
 
   return (
-    <div className="sched container page">
-      <header className="sched__head">
-        <p className="eyebrow">{semester} · Indiana University</p>
-        <h1>Where I am each week</h1>
+    <div ref={root} className="sched container page">
+      <header className="sched__head sched__reveal">
+        <p className="eyebrow">{semester} · Live weekly system</p>
+        <h1>My week,<br /><em>mapped.</em></h1>
         <p className="sched__sub">
-          My fixed commitments this semester — classes and club, not an
-          availability calendar. Everything outside these blocks is fair game;
-          send a request and I'll confirm.
+          Fixed commitments at Indiana University. The dark space is where new
+          conversations, ambitious builds, and recruiter calls fit.
         </p>
+
+        <dl className="sched__metrics">
+          <div><dt>Weekly load</dt><dd>{weeklyHours.toFixed(1)}h</dd></div>
+          <div><dt>Busiest day</dt><dd>{busiestDay}</dd></div>
+          <div><dt>Open to</dt><dd>2027 roles</dd></div>
+        </dl>
 
         <ul className="sched__legend">
           {courses.map((c) => (
@@ -166,6 +190,11 @@ export default function Schedule() {
         </ul>
       </header>
 
+      <section className="sched__board sched__reveal" aria-label="Weekly commitments">
+        <div className="sched__board-top">
+          <div><span className="sched__pulse" /> Live semester view</div>
+          <span>Eastern time · Bloomington, IN</span>
+        </div>
       {/* ---------- weekly view ---------- */}
       {isNarrow ? (
         // A timetable is unreadable on a phone, so narrow screens get the
@@ -279,9 +308,10 @@ export default function Schedule() {
           })}
         </div>
       )}
+      </section>
 
       {/* ---------- meeting request ---------- */}
-      <section className="meet" aria-labelledby="meet-heading">
+      <section className="meet sched__reveal" aria-labelledby="meet-heading">
         <div className="meet__intro">
           <h2 id="meet-heading">Request a meeting</h2>
           <p>

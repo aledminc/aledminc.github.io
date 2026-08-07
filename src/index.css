@@ -12,16 +12,16 @@
    ============================================================ */
 :root {
   /* ---- ground & surfaces ---- */
-  --ground: #0b0912;
-  --panel: #14111f;
-  --panel-hi: #1c1830;
-  --paper: #ece9f7;
-  --dim: #948cb6;
+  --ground: #05050b;
+  --panel: #10101a;
+  --panel-hi: #171727;
+  --paper: #f5f3ff;
+  --dim: #aaa5c0;
 
   /* ---- viridis / plasma ramp ---- */
-  --v-violet: #7c5cff;
+  --v-violet: #8f72ff;
   --v-indigo: #4c6fd4;
-  --v-teal: #23b5ac;
+  --v-teal: #42e8d4;
   --v-green: #5ec962;
   --v-amber: #ff9e4a;
   --v-magenta: #e86fbe;
@@ -36,9 +36,9 @@
   --accent-2: var(--v-teal);
   --highlight: var(--v-citron);
 
-  --border: rgba(167, 150, 224, 0.13);
-  --border-hi: rgba(167, 150, 224, 0.26);
-  --surface-translucent: rgba(14, 11, 24, 0.72);
+  --border: rgba(205, 198, 255, 0.12);
+  --border-hi: rgba(205, 198, 255, 0.28);
+  --surface-translucent: rgba(5, 5, 11, 0.7);
   --focus: var(--v-citron);
 
   /* ---- timeline tag colors ---- */
@@ -88,7 +88,9 @@ html {
 }
 
 body {
-  background: var(--bg);
+  background:
+    radial-gradient(circle at 76% -10%, rgba(86, 57, 185, .22), transparent 32rem),
+    var(--bg);
   color: var(--text);
   font-family: var(--font-body);
   font-size: var(--step-0);
@@ -106,15 +108,24 @@ body::before {
   inset: 0;
   z-index: 0;
   pointer-events: none;
-  background-image:
-    linear-gradient(to right, rgba(167, 150, 224, 0.035) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(167, 150, 224, 0.035) 1px, transparent 1px);
-  background-size: 88px 88px;
+  background-image: linear-gradient(to right, rgba(190, 180, 255, 0.025) 1px, transparent 1px);
+  background-size: 8.333vw 100%;
+  mask-image: linear-gradient(to bottom, black, transparent 92%);
 }
 
 #root {
   position: relative;
   z-index: 1;
+}
+
+.ambient-field {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  opacity: .9;
 }
 
 a {
@@ -183,6 +194,11 @@ p {
 .page {
   padding-top: 56px;
   padding-bottom: 104px;
+}
+
+::selection {
+  background: var(--v-violet);
+  color: #fff;
 }
 
 .sr-only {

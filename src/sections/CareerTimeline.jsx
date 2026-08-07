@@ -127,14 +127,15 @@ export default function CareerTimeline() {
 
   return (
     <section ref={root} className="tl" aria-labelledby="career-heading">
-      <div className="container">
+      <div className="container tl__layout">
         <div className="section-head tl__heading">
-          <p className="eyebrow">Trajectory · 2023 — 2027</p>
-          <h2 id="career-heading">Where I've been</h2>
+          <p className="eyebrow">Trajectory · 2023—2027</p>
+          <h2 id="career-heading">Building toward<br /><em>what's next.</em></h2>
           <p>
-            Coursework, the lab, the internship, and the rover — in the order
+            Coursework, the lab, the internship, and the rover—in the order
             they happened.
           </p>
+          <span className="tl__scroll-hint">Scroll to trace the path ↓</span>
         </div>
 
         <div className="tl__track">
@@ -162,7 +163,10 @@ export default function CareerTimeline() {
                 </time>
 
                 <article className="tl__card" data-tag={entry.tag}>
-                  <span className="tl__tag">{entry.tag}</span>
+                  <div className="tl__meta">
+                    <span className="tl__tag">{entry.tag}</span>
+                    <span className="tl__index">0{i + 1}</span>
+                  </div>
                   <h3>{entry.title}</h3>
                   <p className="tl__org">{entry.org}</p>
                   <p className="tl__blurb">{entry.blurb}</p>

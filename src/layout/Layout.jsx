@@ -1,11 +1,13 @@
 import { Outlet } from 'react-router-dom'
 import NavHeader from './NavHeader.jsx'
 import Footer from './Footer.jsx'
+import AmbientField from './AmbientField.jsx'
 import './Layout.css'
 
 export default function Layout() {
   return (
     <div className="shell">
+      <AmbientField />
       <NavHeader />
       {/* No padding-top here on purpose: the nav is position:sticky, so it
           still occupies flow space and cannot overlap content — padding would
