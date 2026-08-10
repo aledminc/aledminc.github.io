@@ -1,50 +1,71 @@
-import { FaXTwitter, FaInstagram, FaLinkedinIn, FaGithub } from 'react-icons/fa6'
-import { LuArrowUpRight } from 'react-icons/lu'
+import { FaGithub, FaInstagram, FaLinkedinIn, FaXTwitter } from 'react-icons/fa6'
+import { LuArrowUp, LuArrowUpRight } from 'react-icons/lu'
 import { socials, contactEmail } from '../data/socials.js'
 
-const SOCIAL_ICONS = {
-  x: FaXTwitter,
-  instagram: FaInstagram,
-  linkedin: FaLinkedinIn,
+const SOCIAL_META = {
+  github: { icon: FaGithub, handle: '@aledminc' },
+  linkedin: { icon: FaLinkedinIn, handle: '/in/xander-minch' },
+  instagram: { icon: FaInstagram, handle: '@xandererr' },
+  x: { icon: FaXTwitter, handle: '@XanderMinch' },
 }
 
-// The socials live here and nowhere else. They used to sit in the nav too,
-// which meant six competing targets in a bar that should hold one.
+const socialById = Object.fromEntries(socials.map((social) => [social.id, social]))
 const LINKS = [
-  ...socials,
   { id: 'github', label: 'GitHub', url: 'https://github.com/aledminc' },
-]
+  socialById.linkedin,
+  socialById.instagram,
+  socialById.x,
+].filter(Boolean)
 
 export default function Footer() {
   return (
     <footer className="footer">
-      <div className="container footer__inner">
-        <p className="eyebrow">Open to 2027 roles</p>
+      <div className="container">
+        <div className="footer__panel">
+          <div className="footer__signal">
+            <span className="footer__signal-dot" aria-hidden="true" />
+            Open to 2027 engineering roles
+          </div>
 
-        {/* The whole footer is one call to action. Nothing else competes. */}
-        <a className="footer__mail" href={`mailto:${contactEmail}`}>
-          <span>{contactEmail}</span>
-          <LuArrowUpRight size={28} />
-        </a>
+          <div className="footer__hero">
+            <div>
+              <p className="footer__kicker">Have a hard problem?</p>
+              <h2>Let’s build what’s<br />not obvious yet.</h2>
+            </div>
 
-        <div className="footer__base">
-          <small>© {new Date().getFullYear()} Xander Minch · Bloomington, IN</small>
-          <div className="footer__socials">
+            <a className="footer__contact" href={`mailto:${contactEmail}`}>
+              <span className="footer__contact-copy">
+                <small>Start a conversation</small>
+                <strong>{contactEmail}</strong>
+              </span>
+              <span className="footer__contact-arrow" aria-hidden="true">
+                <LuArrowUpRight size={25} />
+              </span>
+            </a>
+          </div>
+
+          <nav className="footer__socials" aria-label="Social profiles">
             {LINKS.map(({ id, label, url }) => {
-              const Icon = SOCIAL_ICONS[id] ?? FaGithub
+              const { icon: Icon, handle } = SOCIAL_META[id]
               return (
-                <a
-                  key={id}
-                  href={url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  aria-label={label}
-                  className="footer__social"
-                >
-                  <Icon size={16} />
+                <a key={id} href={url} target="_blank" rel="noopener noreferrer">
+                  <span className="footer__social-icon"><Icon size={18} /></span>
+                  <span className="footer__social-copy">
+                    <strong>{label}</strong>
+                    <small>{handle}</small>
+                  </span>
+                  <LuArrowUpRight className="footer__social-arrow" size={17} />
                 </a>
               )
             })}
+          </nav>
+
+          <div className="footer__base">
+            <small>© {new Date().getFullYear()} Xander Minch</small>
+            <span>Built in Bloomington, Indiana</span>
+            <button type="button" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>
+              Back to top <LuArrowUp size={15} />
+            </button>
           </div>
         </div>
       </div>
