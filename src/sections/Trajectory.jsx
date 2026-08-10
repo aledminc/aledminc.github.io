@@ -68,16 +68,22 @@ export default function Trajectory() {
       className={`scene traj${reached ? ' is-in' : ''}`}
       aria-labelledby="traj-heading"
     >
-      <div className="container" ref={root}>
-        <header className="layer layer--left layer--soft traj__head">
+      {/* Flipped: the heading sits on the RIGHT and the mechanism on the left,
+          mirroring the hero so the eye crosses the page instead of running
+          straight down it. */}
+      <div className="container split split--flip traj__grid" ref={root}>
+        <header className="layer layer--right layer--soft split__aside traj__head">
           <p className="eyebrow">Trajectory</p>
           <h2 id="traj-heading">Building toward what&apos;s next.</h2>
+          <p className="lede">
+            Six stops between starting a CS degree and finishing a master&apos;s.
+            Move the carriage.
+          </p>
         </header>
 
-        {/* Dissolves in place rather than drifting — after the heading has
-            already left sideways, a second horizontal exit would read as the
-            same gesture twice. */}
-        <div className="layer traj__stage">
+        {/* Closes like a shutter on the way out — horizontally, from both
+            edges — so no two consecutive scenes leave by the same gesture. */}
+        <div className="layer layer--iris split__main traj__stage">
           <div
             className="rail"
             role="tablist"

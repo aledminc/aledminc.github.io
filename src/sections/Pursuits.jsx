@@ -42,7 +42,7 @@ export default function Pursuits() {
 
       animate('.pursuit__line', {
         opacity: [0, 1],
-        translateY: [14, 0],
+        translateX: [24, 0],
         delay: stagger(80, { start: 90 }),
         duration: 520,
         ease: 'out(2)',
@@ -86,15 +86,16 @@ export default function Pursuits() {
       className={`scene pursuits${reached ? ' is-in' : ''}`}
       aria-labelledby="pursuits-heading"
     >
-      <div className="container" ref={root}>
-        <header className="layer layer--right layer--soft pursuits__head">
+      {/* Back to text-left, mirroring the trajectory above it. */}
+      <div className="container split pursuits__grid" ref={root}>
+        <header className="layer layer--left layer--soft split__aside pursuits__head">
           <p className="eyebrow">Off the clock</p>
           <h2 id="pursuits-heading">What I do otherwise.</h2>
-        </header>
+          <p className="lede">Same instinct to measure things. Pick one.</p>
 
-        <div className="layer layer--left pursuits__stage">
           {/* Selector: a pressed track, same idiom as the nav, so the site
-              only ever teaches you one control. */}
+              only ever teaches you one control. It belongs beside the heading,
+              not above the card — that keeps the card a single clean object. */}
           <div className="switch" role="tablist" aria-label="Pursuits">
             {hobbies.map((h, i) => (
               <button
@@ -112,7 +113,11 @@ export default function Pursuits() {
               </button>
             ))}
           </div>
+        </header>
 
+        {/* Leans and slides out to the right — a third distinct exit, after
+            the hero's split and the trajectory's shutter. */}
+        <div className="layer layer--shear split__main pursuits__stage">
           <div
             className="pursuit glass"
             id="pursuit-panel"

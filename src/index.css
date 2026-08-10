@@ -55,11 +55,11 @@
   --shade: rgba(14, 26, 43, 0.17);
   --shade-deep: rgba(14, 26, 43, 0.24);
 
-  --raise-1: -4px -4px 10px var(--lit), 5px 6px 14px var(--shade);
-  --raise-2: -8px -8px 20px var(--lit), 10px 14px 30px var(--shade);
-  --raise-3: -12px -12px 32px var(--lit), 18px 24px 52px var(--shade-deep);
-  --press: inset 3px 3px 7px var(--shade), inset -3px -3px 7px var(--lit);
-  --well: inset 5px 5px 13px var(--shade), inset -4px -4px 10px var(--lit);
+  --raise-1: -3px -3px 8px var(--lit), 4px 5px 11px var(--shade);
+  --raise-2: -6px -6px 16px var(--lit), 8px 11px 24px var(--shade);
+  --raise-3: -9px -9px 25px var(--lit), 14px 19px 40px var(--shade-deep);
+  --press: inset 2px 2px 6px var(--shade), inset -2px -2px 6px var(--lit);
+  --well: inset 4px 4px 10px var(--shade), inset -3px -3px 8px var(--lit);
 
   /* ---- type ----
      Space Grotesk carries every headline: geometric, slightly technical,
@@ -70,23 +70,30 @@
   --font-body: 'Inter', system-ui, sans-serif;
   --font-data: 'JetBrains Mono', ui-monospace, 'Courier New', monospace;
 
-  /* ---- type scale ---- */
-  --step--2: clamp(0.66rem, 0.64rem + 0.08vw, 0.72rem);
-  --step--1: clamp(0.78rem, 0.76rem + 0.1vw, 0.84rem);
-  --step-0: clamp(0.97rem, 0.94rem + 0.15vw, 1.05rem);
-  --step-1: clamp(1.14rem, 1.06rem + 0.34vw, 1.34rem);
-  --step-2: clamp(1.5rem, 1.3rem + 0.9vw, 2.1rem);
-  --step-3: clamp(2rem, 1.55rem + 2vw, 3.2rem);
-  --step-4: clamp(2.7rem, 1.6rem + 4.8vw, 5.8rem);
+  /* ---- type scale ----
+     Rebuilt at roughly 0.75x of the first pass: at 100% browser zoom that
+     version read as though it were already zoomed in, and the display sizes
+     stopped fitting the screen. Display type took the full reduction; body
+     copy stops at ~15px, because 12px (a literal 0.75x) is below the size
+     prose should ever be shipped at. */
+  --step--2: clamp(0.62rem, 0.6rem + 0.06vw, 0.66rem);
+  --step--1: clamp(0.72rem, 0.7rem + 0.08vw, 0.77rem);
+  --step-0: clamp(0.88rem, 0.86rem + 0.1vw, 0.94rem);
+  --step-1: clamp(1rem, 0.95rem + 0.22vw, 1.12rem);
+  --step-2: clamp(1.22rem, 1.08rem + 0.58vw, 1.58rem);
+  --step-3: clamp(1.6rem, 1.26rem + 1.4vw, 2.35rem);
+  --step-4: clamp(2rem, 1.3rem + 3.1vw, 4rem);
 
   /* ---- geometry ----
-     Radii are generous. Neumorphism needs room for the highlight and
-     the shadow to curve around an edge; tight corners just look muddy. */
-  --radius-lg: 30px;
-  --radius: 20px;
-  --radius-sm: 13px;
-  --maxw: 1180px;
-  --nav-h: 78px;
+     Radii stay generous relative to the new sizes: neumorphism needs room
+     for the highlight and the shadow to curve around an edge. --maxw goes UP
+     as the type comes down, so the page reads wide and airy rather than
+     small-and-cramped. */
+  --radius-lg: 24px;
+  --radius: 16px;
+  --radius-sm: 10px;
+  --maxw: 1240px;
+  --nav-h: 62px;
 }
 
 * {
@@ -128,7 +135,7 @@ body::before {
   background-image:
     linear-gradient(to right, rgba(14, 26, 43, 0.045) 1px, transparent 1px),
     linear-gradient(to bottom, rgba(14, 26, 43, 0.045) 1px, transparent 1px);
-  background-size: 104px 104px;
+  background-size: 84px 84px;
   mask-image: radial-gradient(ellipse 120% 90% at 50% 0%, #000 20%, transparent 78%);
   -webkit-mask-image: radial-gradient(ellipse 120% 90% at 50% 0%, #000 20%, transparent 78%);
 }
@@ -168,9 +175,9 @@ h1 {
   letter-spacing: -0.045em;
 }
 
-/* Only the hero earns display size. On an interior page a 5.8rem title just
-   pushes the actual content — the project list, the timetable — below the
-   fold, which is the opposite of what a heading is for. */
+/* Only the hero earns display size. On an interior page a full-scale title
+   just pushes the actual content — the project list, the timetable — below
+   the fold, which is the opposite of what a heading is for. */
 .page h1 {
   font-size: var(--step-3);
 }
@@ -229,12 +236,12 @@ p {
   width: 100%;
   max-width: var(--maxw);
   margin: 0 auto;
-  padding: 0 clamp(20px, 4vw, 40px);
+  padding: 0 clamp(16px, 3vw, 34px);
 }
 
 .page {
-  padding-top: clamp(48px, 7vw, 88px);
-  padding-bottom: clamp(72px, 10vw, 128px);
+  padding-top: clamp(34px, 5vw, 62px);
+  padding-bottom: clamp(54px, 7vw, 94px);
 }
 
 /* ============================================================
@@ -252,7 +259,7 @@ p {
    ============================================================ */
 .scene {
   position: relative;
-  padding: clamp(72px, 11vh, 132px) 0;
+  padding: clamp(56px, 9vh, 104px) 0;
 }
 
 @media (prefers-reduced-motion: no-preference) {
@@ -282,6 +289,25 @@ p {
   }
   /* --dx 0: dissolves where it stands. */
 
+  /* IRIS — the panel closes on itself horizontally, like a shutter. The
+     -34px on every side is not decoration: clip-path clips the element's
+     shadows too, so at rest the window has to sit OUTSIDE the border box or
+     the neumorphic relief gets a hard edge cut through it. */
+  .layer--iris {
+    clip-path: inset(
+      -34px calc(var(--p) * 56% - 34px) -34px calc(var(--p) * 56% - 34px)
+    );
+  }
+
+  /* SHEAR — leans out of frame as it goes, the way a card pulled off a deck
+     rotates before it clears. `transform` is safe on a layer: nothing here is
+     an anime target, and it composes after translate/scale anyway. */
+  .layer--shear {
+    --dx: 150;
+    transform: skewX(calc(var(--p) * -7deg));
+    transform-origin: left center;
+  }
+
   /* Once the layout stacks there is no column for a layer to drift toward,
      and a full-width block sliding 170px reads as a glitch rather than a
      scene change. Shorten the throw instead of dropping it — the sideways
@@ -290,9 +316,83 @@ p {
     .layer--left {
       --dx: -68;
     }
-    .layer--right {
+    .layer--right,
+    .layer--shear {
       --dx: 68;
     }
+  }
+}
+
+/* ============================================================
+   SPLIT
+
+   Every scene on the home page is two columns: a narrow text side
+   and a wide content side, alternating which side the text is on
+   down the page. Stacking the heading on top of the content is what
+   made the old build read as a normal scrolling site — the eye had
+   nowhere to go but down.
+   ============================================================ */
+.split {
+  display: grid;
+  grid-template-columns: minmax(0, 0.78fr) minmax(0, 1.22fr);
+  align-items: center;
+  gap: clamp(26px, 4.5vw, 62px);
+}
+
+/* Text on the right, content on the left. Explicit placement rather than
+   `direction` or `order` so the DOM order — heading first — is what a screen
+   reader and the tab sequence still get. */
+.split--flip {
+  grid-template-columns: minmax(0, 1.22fr) minmax(0, 0.78fr);
+}
+
+.split--flip > .split__aside {
+  grid-column: 2;
+  grid-row: 1;
+}
+
+.split--flip > .split__main {
+  grid-column: 1;
+  grid-row: 1;
+}
+
+.split--flip .split__aside {
+  text-align: right;
+}
+
+/* The eyebrow's status lamp follows the text to the outside edge. */
+.split--flip .split__aside .eyebrow {
+  flex-direction: row-reverse;
+}
+
+.split__aside h1,
+.split__aside h2 {
+  margin: 0;
+}
+
+.split__aside .lede {
+  margin-top: 16px;
+}
+
+@media (max-width: 900px) {
+  .split,
+  .split--flip {
+    grid-template-columns: minmax(0, 1fr);
+    gap: clamp(22px, 5vw, 34px);
+  }
+
+  .split--flip > .split__aside,
+  .split--flip > .split__main {
+    grid-column: 1;
+    grid-row: auto;
+  }
+
+  .split--flip .split__aside {
+    text-align: left;
+  }
+
+  .split--flip .split__aside .eyebrow {
+    flex-direction: row;
   }
 }
 
@@ -317,8 +417,8 @@ p {
     rgba(255, 255, 255, 0.86),
     rgba(255, 255, 255, 0.48)
   );
-  backdrop-filter: blur(22px) saturate(140%);
-  -webkit-backdrop-filter: blur(22px) saturate(140%);
+  backdrop-filter: blur(18px) saturate(140%);
+  -webkit-backdrop-filter: blur(18px) saturate(140%);
   border: 1px solid rgba(255, 255, 255, 0.8);
   box-shadow:
     var(--raise-2),
@@ -342,29 +442,29 @@ p {
 .eyebrow {
   display: inline-flex;
   align-items: center;
-  gap: 11px;
+  gap: 9px;
   font-family: var(--font-data);
   font-size: var(--step--2);
   font-weight: 500;
   text-transform: uppercase;
-  letter-spacing: 0.22em;
+  letter-spacing: 0.2em;
   color: var(--slate);
-  margin: 0 0 20px;
+  margin: 0 0 15px;
 }
 
 .eyebrow::before {
   content: '';
-  width: 7px;
-  height: 7px;
+  width: 6px;
+  height: 6px;
   border-radius: 50%;
   background: var(--forest-soft);
-  box-shadow: 0 0 0 4px rgba(44, 106, 81, 0.14);
+  box-shadow: 0 0 0 3px rgba(44, 106, 81, 0.14);
   flex: none;
 }
 
 .lede {
   margin: 0;
-  max-width: 46ch;
+  max-width: 44ch;
   color: var(--slate);
   font-size: var(--step-1);
   line-height: 1.55;
@@ -380,8 +480,8 @@ p {
 .btn {
   display: inline-flex;
   align-items: center;
-  gap: 10px;
-  padding: 15px 26px;
+  gap: 8px;
+  padding: 11px 20px;
   border: 1px solid transparent;
   border-radius: 999px;
   background: var(--ink);
@@ -451,14 +551,14 @@ p {
 .switch {
   display: inline-flex;
   flex-wrap: wrap;
-  padding: 5px;
+  padding: 4px;
   border-radius: 999px;
   background: linear-gradient(150deg, var(--bone-deep), var(--paper));
   box-shadow: var(--press);
 }
 
 .switch__opt {
-  padding: 10px 22px;
+  padding: 8px 17px;
   border: none;
   border-radius: 999px;
   background: transparent;
@@ -486,8 +586,8 @@ p {
 
 @media (max-width: 460px) {
   .switch__opt {
-    padding: 9px 15px;
-    font-size: 0.74rem;
+    padding: 7px 12px;
+    font-size: 0.7rem;
   }
 }
 
@@ -501,7 +601,7 @@ p {
 
 .field__label {
   display: block;
-  margin-bottom: 9px;
+  margin-bottom: 7px;
   font-family: var(--font-data);
   font-size: var(--step--2);
   text-transform: uppercase;
@@ -512,7 +612,7 @@ p {
 .field input,
 .field textarea {
   width: 100%;
-  padding: 14px 18px;
+  padding: 11px 15px;
   border: 1px solid transparent;
   border-radius: var(--radius-sm);
   background: var(--bone);
@@ -527,7 +627,7 @@ p {
 
 .field textarea {
   resize: vertical;
-  min-height: 120px;
+  min-height: 96px;
 }
 
 .field input:focus,

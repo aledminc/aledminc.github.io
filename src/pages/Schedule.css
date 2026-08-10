@@ -68,11 +68,11 @@
    object, so it gets one surface and no internal cards.
    ============================================================ */
 .sched__board {
-  margin-bottom: clamp(46px, 7vw, 84px);
+  margin-bottom: clamp(34px, 5vw, 62px);
 }
 
 .board__shell {
-  padding: clamp(14px, 2vw, 22px);
+  padding: clamp(11px, 1.5vw, 17px);
   border-radius: var(--radius-lg);
   background: linear-gradient(155deg, var(--paper), var(--bone-deep));
   box-shadow: var(--raise-2);
@@ -84,7 +84,7 @@
   justify-content: space-between;
   gap: 16px;
   flex-wrap: wrap;
-  padding: 4px 8px 16px;
+  padding: 3px 6px 12px;
   font-family: var(--font-data);
   font-size: var(--step--2);
   letter-spacing: 0.14em;
@@ -122,10 +122,13 @@
   display: grid;
   /* One gutter column, then one per day. Rows are 5-minute slots — see the
      SLOT_MINUTES comment in Schedule.jsx for why not 15. */
-  grid-template-columns: 62px repeat(5, minmax(0, 1fr));
-  grid-template-rows: auto repeat(var(--tt-slots), 5px);
-  gap: 0 6px;
-  padding: 10px;
+  grid-template-columns: 52px repeat(5, minmax(0, 1fr));
+  /* 4.6px per 5-minute slot: a 75-minute class gets 69px, which is what its
+     three lines of content actually measure. At 4px they overflowed and the
+     time stamp printed straight through the title. */
+  grid-template-rows: auto repeat(var(--tt-slots), 4.6px);
+  gap: 0 5px;
+  padding: 8px;
   border-radius: var(--radius);
   background: var(--bone);
   box-shadow: var(--well);
@@ -133,7 +136,7 @@
 
 .tt__dayhead {
   grid-row: 1;
-  padding: 4px 0 12px;
+  padding: 3px 0 9px;
   text-align: center;
   font-family: var(--font-data);
   font-size: var(--step--2);
@@ -168,10 +171,10 @@
   position: relative;
   display: flex;
   flex-direction: column;
-  gap: 2px;
+  gap: 1px;
   margin: 1px 0;
-  padding: 9px 11px;
-  border-radius: 11px;
+  padding: 7px 9px;
+  border-radius: 9px;
   overflow: hidden;
   /* Tinted glass rather than a solid fill: the ruled grid stays faintly
      visible through every block, so the week still reads as a grid. */
@@ -204,19 +207,21 @@
 
 .tt__event-code {
   font-family: var(--font-data);
-  font-size: 0.72rem;
+  font-size: 0.68rem;
   font-weight: 700;
   letter-spacing: 0.03em;
 }
 
 .tt__event-title {
-  font-size: 0.82rem;
+  font-size: 0.76rem;
   line-height: 1.25;
   color: var(--ink);
   opacity: 0.78;
   overflow: hidden;
   display: -webkit-box;
-  -webkit-line-clamp: 2;
+  /* One line, always. Every course title fits a column at this size, and a
+     second line is what pushed the block past its own row span. */
+  -webkit-line-clamp: 1;
   -webkit-box-orient: vertical;
 }
 
@@ -228,13 +233,9 @@
   opacity: 0.72;
 }
 
-/* Under an hour there is no room for three lines at 5px per slot. */
+/* Under an hour there is no room for the third line. */
 .tt__event--short {
-  padding: 6px 9px;
-}
-
-.tt__event--short .tt__event-title {
-  -webkit-line-clamp: 1;
+  padding: 5px 9px;
 }
 
 .tt__event--short .tt__event-time {
@@ -328,7 +329,7 @@
   display: inline-flex;
   align-items: center;
   gap: 9px;
-  padding: 7px 15px;
+  padding: 5px 12px;
   border-radius: 999px;
   background: linear-gradient(150deg, var(--paper), var(--bone-deep));
   box-shadow: var(--raise-1);
@@ -354,12 +355,12 @@
    scene 3 — THE FORM
    ============================================================ */
 .meet__card {
-  padding: clamp(28px, 4vw, 54px);
+  padding: clamp(20px, 3vw, 38px);
   border-radius: var(--radius-lg);
 }
 
 .meet__card h2 {
-  margin: 0 0 30px;
+  margin: 0 0 22px;
   max-width: 18ch;
 }
 
@@ -385,13 +386,13 @@
 
 .meet__form {
   display: grid;
-  gap: 20px;
+  gap: 15px;
 }
 
 .meet__row {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 20px;
+  gap: 15px;
 }
 
 .meet__error {

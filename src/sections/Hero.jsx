@@ -22,13 +22,15 @@ export default function Hero() {
     // being stated.
     const split = splitText('.hero__title', { words: true, accessible: true })
 
+    // Nothing on this site enters on the vertical axis. The words sweep in
+    // from the left in reading order, resolving out of blur as they arrive —
+    // a line being scanned in rather than a page scrolling up.
     animate(split.words, {
       opacity: [0, 1],
-      translateY: [64, 0],
-      rotate: [3, 0],
-      filter: ['blur(9px)', 'blur(0px)'],
-      delay: stagger(58, { start: 120 }),
-      duration: 900,
+      translateX: [-56, 0],
+      filter: ['blur(11px)', 'blur(0px)'],
+      delay: stagger(52, { start: 110 }),
+      duration: 880,
       ease: 'out(3)',
     })
     animate('.hero__title', { opacity: 1, duration: 1 })
@@ -42,8 +44,8 @@ export default function Hero() {
 
     animate(['.hero__lede', '.hero__cta'], {
       opacity: [0, 1],
-      translateY: [18, 0],
-      delay: stagger(110, { start: 520 }),
+      translateX: [-34, 0],
+      delay: stagger(110, { start: 500 }),
       duration: 700,
       ease: 'out(2)',
     })
@@ -69,11 +71,11 @@ export default function Hero() {
 
   return (
     <section ref={scene} className="scene hero" aria-labelledby="hero-title">
-      <div className="container hero__grid" ref={root}>
+      <div className="container split hero__grid" ref={root}>
         {/* Exits to the left; the module exits to the right. The stage parts
             down the middle as you leave, which is why the two layers move
             in opposite directions rather than together. */}
-        <div className="layer layer--left layer--soft hero__copy">
+        <div className="layer layer--left layer--soft split__aside hero__copy">
           <p className="eyebrow hero__eyebrow">Xander Minch · Indiana University</p>
 
           <h1 id="hero-title" className="hero__title">
@@ -87,7 +89,7 @@ export default function Hero() {
           </Link>
         </div>
 
-        <div className="layer layer--right hero__disc">
+        <div className="layer layer--right split__main hero__disc">
           <SensorDisc />
         </div>
       </div>

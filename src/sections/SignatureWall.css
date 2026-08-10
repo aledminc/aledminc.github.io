@@ -1,54 +1,68 @@
 /* ============================================================
    SCENE 04 — THE SHEET
    ============================================================ */
-.wall__inner {
-  display: grid;
-  justify-items: center;
-  gap: clamp(24px, 3.5vw, 40px);
-}
-
-.wall__head {
-  display: grid;
-  justify-items: center;
-  text-align: center;
-}
-
 .wall__head h2 {
   margin: 0;
 }
 
-/* ---------- scene intro ---------- */
-@media (prefers-reduced-motion: no-preference) {
-  .wall__head > *,
-  .wall .sheet,
-  .wall__capture,
-  .wall__note {
-    opacity: 0;
-    translate: 0 22px;
-    transition:
-      opacity 720ms ease,
-      translate 720ms cubic-bezier(0.22, 1, 0.36, 1);
+/* The controls hang off the same right edge as the heading above them, so the
+   column resolves to one line instead of two competing ones. Their internal
+   text still reads left — only the blocks are right-aligned. */
+.wall__side .wall__capture {
+  justify-items: end;
+}
+
+.wall__side .wall__submit {
+  justify-self: end;
+}
+
+.wall__side .wall__note {
+  text-align: right;
+}
+
+@media (max-width: 900px) {
+  .wall__side .wall__capture,
+  .wall__side .wall__submit {
+    justify-items: start;
+    justify-self: start;
   }
 
-  .wall.is-in .wall__head > *,
-  .wall.is-in .sheet,
-  .wall.is-in .wall__capture,
-  .wall.is-in .wall__note {
+  .wall__side .wall__note {
+    text-align: left;
+  }
+}
+
+/* ---------- scene intro ----------
+   Text column in from the right; the sheet irises open from its centre. */
+@media (prefers-reduced-motion: no-preference) {
+  .wall__side > * {
+    opacity: 0;
+    translate: 44px 0;
+    transition:
+      opacity 700ms ease,
+      translate 700ms cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  .wall .sheet {
+    clip-path: inset(-30px 50% -30px 50%);
+    transition: clip-path 900ms cubic-bezier(0.22, 1, 0.36, 1);
+    transition-delay: 120ms;
+  }
+
+  .wall.is-in .wall__side > * {
     opacity: 1;
     translate: 0 0;
   }
 
-  .wall.is-in .wall__head > *:nth-child(2) {
-    transition-delay: 90ms;
-  }
   .wall.is-in .sheet {
-    transition-delay: 190ms;
+    clip-path: inset(-30px -30px -30px -30px);
   }
-  .wall.is-in .wall__capture {
-    transition-delay: 300ms;
+
+  .wall.is-in .wall__side > *:nth-child(2) {
+    transition-delay: 110ms;
   }
-  .wall.is-in .wall__note {
-    transition-delay: 380ms;
+  .wall.is-in .wall__side > *:nth-child(3) {
+    transition-delay: 200ms;
   }
 }
 
@@ -62,15 +76,14 @@
 .sheet {
   position: relative;
   width: 100%;
-  /* Wide and shallow. At 16:7 this was a 540px expanse holding one signature,
-     which read as an empty panel rather than an invitation. */
-  aspect-ratio: 16 / 5;
-  min-height: 280px;
-  max-height: 60vh;
+  /* Sized for the wide column of the split rather than the full page band. */
+  aspect-ratio: 3 / 2;
+  min-height: 260px;
+  max-height: 62vh;
   border-radius: var(--radius-lg);
   background:
-    linear-gradient(to right, rgba(14, 26, 43, 0.045) 1px, transparent 1px) 0 0 / 52px 52px,
-    linear-gradient(to bottom, rgba(14, 26, 43, 0.045) 1px, transparent 1px) 0 0 / 52px 52px,
+    linear-gradient(to right, rgba(14, 26, 43, 0.045) 1px, transparent 1px) 0 0 / 42px 42px,
+    linear-gradient(to bottom, rgba(14, 26, 43, 0.045) 1px, transparent 1px) 0 0 / 42px 42px,
     linear-gradient(155deg, var(--paper), var(--bone-deep));
   box-shadow: var(--well);
   overflow: hidden;
@@ -80,7 +93,7 @@
    the sheet gets, drawn with a single element. */
 .sheet__ticks {
   position: absolute;
-  inset: 18px;
+  inset: 14px;
   pointer-events: none;
   background:
     linear-gradient(var(--line-hi), var(--line-hi)) 0 0 / 22px 1px,
@@ -144,29 +157,27 @@
    CAPTURE — one switch, one input, one action
    ============================================================ */
 .wall__capture {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: clamp(12px, 2vw, 20px);
-  flex-wrap: wrap;
+  display: grid;
+  justify-items: start;
+  gap: 14px;
   width: 100%;
+  margin-top: 26px;
 }
 
 .wall__input {
-  flex: 1 1 320px;
-  max-width: 460px;
+  width: 100%;
 }
 
 .wall__typed input {
   width: 100%;
-  padding: 16px 22px;
+  padding: 12px 18px;
   border: 1px solid transparent;
   border-radius: 999px;
   background: var(--bone);
   box-shadow: var(--press);
   color: var(--ink);
   font-family: 'Caveat', var(--font-body), cursive;
-  font-size: 1.5rem;
+  font-size: 1.25rem;
   line-height: 1.2;
   transition:
     box-shadow 220ms ease,
@@ -186,7 +197,7 @@
 }
 
 .wall__submit {
-  flex: none;
+  justify-self: start;
 }
 
 .wall__note {
@@ -196,7 +207,7 @@
   letter-spacing: 0.12em;
   text-transform: uppercase;
   color: var(--slate);
-  text-align: center;
+  margin-top: 16px;
 }
 
 /* ============================================================
@@ -207,7 +218,7 @@
   border-radius: var(--radius);
   background: var(--bone);
   box-shadow: var(--press);
-  padding: 8px 8px 44px;
+  padding: 7px 7px 36px;
 }
 
 .pad__canvas {
@@ -235,9 +246,9 @@
 
 .pad__tools {
   position: absolute;
-  bottom: 8px;
-  left: 8px;
-  right: 8px;
+  bottom: 7px;
+  left: 7px;
+  right: 7px;
   display: flex;
   justify-content: flex-end;
   gap: 8px;
@@ -247,7 +258,7 @@
   display: inline-flex;
   align-items: center;
   gap: 6px;
-  padding: 6px 13px;
+  padding: 5px 11px;
   border: none;
   border-radius: 999px;
   background: linear-gradient(150deg, var(--paper), var(--bone-deep));
@@ -277,18 +288,15 @@
   box-shadow: none;
 }
 
-@media (max-width: 640px) {
+@media (max-width: 900px) {
+  .sheet {
+    aspect-ratio: 16 / 9;
+  }
+}
+
+@media (max-width: 560px) {
   .sheet {
     aspect-ratio: 4 / 5;
-  }
-
-  .wall__capture {
-    justify-content: stretch;
-  }
-
-  .wall__input {
-    flex-basis: 100%;
-    max-width: none;
   }
 
   .wall__submit {

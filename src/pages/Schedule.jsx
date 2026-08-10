@@ -54,7 +54,7 @@ export default function Schedule() {
     () => {
       animate('.sched__head > *', {
         opacity: [0, 1],
-        translateY: [22, 0],
+        translateX: [-30, 0],
         delay: stagger(90),
         duration: 640,
         ease: 'out(2)',
@@ -70,10 +70,11 @@ export default function Schedule() {
         ease: 'out(3)',
       })
 
-      // Blocks drop into their columns, ordered left to right across the week.
+      // Blocks slide into their columns from the left, ordered across the
+      // week. Nothing on this site enters on the vertical axis.
       animate('.tt__event, .sched__row', {
         opacity: [0, 1],
-        translateY: [-10, 0],
+        translateX: [-18, 0],
         delay: stagger(38, { start: 380 }),
         duration: 420,
         ease: 'out(2)',

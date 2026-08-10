@@ -183,65 +183,18 @@ export default function SignatureWall() {
       className={`scene wall${reached ? ' is-in' : ''}`}
       aria-labelledby="wall-heading"
     >
-      <div className="container">
-        {/* Dissolves where it stands. By this point in the page two scenes
-            have already left sideways; holding this one in place is what
-            makes the footer feel like an arrival rather than another exit. */}
-        <div className="layer wall__inner">
+      {/* Flipped again: text right, sheet left. Four scenes, four different
+          arrangements of the same two columns. */}
+      <div className="container split split--flip wall__grid">
+        <div className="layer layer--right layer--soft split__aside wall__side">
           <header className="wall__head">
             <p className="eyebrow">Visitors</p>
             <h2 id="wall-heading">Sign the sheet.</h2>
+            <p className="lede">
+              Draw it or type it. It gets inked on in a random hand and stays
+              for your visit.
+            </p>
           </header>
-
-          <div className="sheet" ref={sheetRef}>
-            <span className="sheet__ticks" aria-hidden="true" />
-
-            {marks.length === 0 && <p className="sheet__empty">The sheet is clean. Go on.</p>}
-
-            <ul className="sheet__marks">
-              {marks.map((m) => (
-                <li
-                  key={m.id}
-                  data-mark-id={m.id}
-                  className={`mark mark--${m.kind}`}
-                  style={{
-                    left: `${m.style.box.left}%`,
-                    top: `${m.style.box.top}%`,
-                    scale: m.style.scale,
-                    rotate: `${m.style.rotate}deg`,
-                  }}
-                >
-                  {m.kind === 'drawn' ? (
-                    // Tinted through mask-image rather than drawn directly, so
-                    // one white-stroke PNG can take any ink colour.
-                    <span
-                      className="mark__ink mark__ink--drawn"
-                      style={{
-                        backgroundColor: m.style.color,
-                        opacity: m.style.inkOpacity,
-                        maskImage: `url(${m.payload})`,
-                        WebkitMaskImage: `url(${m.payload})`,
-                        aspectRatio: m.aspect,
-                      }}
-                      role="img"
-                      aria-label="A visitor's signature"
-                    />
-                  ) : (
-                    <span
-                      className="mark__ink"
-                      style={{
-                        color: m.style.color,
-                        fontFamily: `'${m.style.font}', cursive`,
-                        opacity: m.style.inkOpacity,
-                      }}
-                    >
-                      {m.payload}
-                    </span>
-                  )}
-                </li>
-              ))}
-            </ul>
-          </div>
 
           <form className="wall__capture" onSubmit={submit}>
             <div className="switch" role="group" aria-label="Signature method">
@@ -295,6 +248,61 @@ export default function SignatureWall() {
           <p className="wall__note" role="status">
             {error || `${marks.length} of ${MAX_MARKS} signed — yours stays for this visit.`}
           </p>
+        </div>
+
+        {/* Opens and closes as a horizontal shutter — see .layer--iris. */}
+        <div className="layer layer--iris split__main wall__stage">
+          <div className="sheet" ref={sheetRef}>
+            <span className="sheet__ticks" aria-hidden="true" />
+
+            {marks.length === 0 && (
+              <p className="sheet__empty">The sheet is clean. Go on.</p>
+            )}
+
+            <ul className="sheet__marks">
+              {marks.map((m) => (
+                <li
+                  key={m.id}
+                  data-mark-id={m.id}
+                  className={`mark mark--${m.kind}`}
+                  style={{
+                    left: `${m.style.box.left}%`,
+                    top: `${m.style.box.top}%`,
+                    scale: m.style.scale,
+                    rotate: `${m.style.rotate}deg`,
+                  }}
+                >
+                  {m.kind === 'drawn' ? (
+                    // Tinted through mask-image rather than drawn directly, so
+                    // one white-stroke PNG can take any ink colour.
+                    <span
+                      className="mark__ink mark__ink--drawn"
+                      style={{
+                        backgroundColor: m.style.color,
+                        opacity: m.style.inkOpacity,
+                        maskImage: `url(${m.payload})`,
+                        WebkitMaskImage: `url(${m.payload})`,
+                        aspectRatio: m.aspect,
+                      }}
+                      role="img"
+                      aria-label="A visitor's signature"
+                    />
+                  ) : (
+                    <span
+                      className="mark__ink"
+                      style={{
+                        color: m.style.color,
+                        fontFamily: `'${m.style.font}', cursive`,
+                        opacity: m.style.inkOpacity,
+                      }}
+                    >
+                      {m.payload}
+                    </span>
+                  )}
+                </li>
+              ))}
+            </ul>
+          </div>
         </div>
       </div>
     </section>

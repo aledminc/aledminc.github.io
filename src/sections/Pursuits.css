@@ -1,72 +1,63 @@
 /* ============================================================
    SCENE 03 — PURSUITS
    ============================================================ */
-/* rem, not ch — see the note in Trajectory.css. */
-.pursuits__head {
-  max-width: 30rem;
-  margin-bottom: clamp(30px, 5vw, 48px);
-  /* The heading sits right, opposite the trajectory heading, so consecutive
-     scenes do not enter and leave along the same axis. */
-  margin-left: auto;
-  text-align: right;
-}
-
-.pursuits__head .eyebrow {
-  flex-direction: row-reverse;
-}
-
-.pursuits__head h2 {
-  margin: 0;
-}
-
-.pursuits__stage {
-  display: grid;
-  gap: clamp(22px, 3vw, 34px);
-  justify-items: start;
+.pursuits__head .switch {
+  margin-top: 24px;
 }
 
 /* The selector itself is the shared `.switch` in index.css. */
 
 /* ---------- scene intro ----------
    CSS, not anime: the anime scope here re-runs on every pursuit change, and
-   a reverted scope would hide the heading and selector along with it. */
+   a reverted scope would hide the heading and selector along with it.
+
+   Text column arrives from the left, card is uncovered right-to-left — the
+   mirror of the trajectory above, and again nothing on the Y axis. */
 @media (prefers-reduced-motion: no-preference) {
-  .pursuits__head > *,
-  .pursuits .switch,
-  .pursuits .pursuit {
+  .pursuits__head > * {
     opacity: 0;
-    translate: 0 22px;
+    translate: -44px 0;
     transition:
-      opacity 720ms ease,
-      translate 720ms cubic-bezier(0.22, 1, 0.36, 1);
+      opacity 700ms ease,
+      translate 700ms cubic-bezier(0.22, 1, 0.36, 1);
   }
 
-  .pursuits.is-in .pursuits__head > *,
-  .pursuits.is-in .switch,
-  .pursuits.is-in .pursuit {
+  .pursuits .pursuit {
+    /* Clip window sits outside the border box on the three static sides so
+       the card's shadow is not sliced. */
+    clip-path: inset(-28px -28px -28px 100%);
+    transition: clip-path 840ms cubic-bezier(0.22, 1, 0.36, 1);
+    transition-delay: 200ms;
+  }
+
+  .pursuits.is-in .pursuits__head > * {
     opacity: 1;
     translate: 0 0;
   }
 
-  .pursuits.is-in .pursuits__head > *:nth-child(2) {
-    transition-delay: 90ms;
-  }
-  .pursuits.is-in .switch {
-    transition-delay: 200ms;
-  }
   .pursuits.is-in .pursuit {
-    transition-delay: 300ms;
+    clip-path: inset(-28px -28px -28px -28px);
+  }
+
+  .pursuits.is-in .pursuits__head > *:nth-child(2) {
+    transition-delay: 80ms;
+  }
+  .pursuits.is-in .pursuits__head > *:nth-child(3) {
+    transition-delay: 160ms;
+  }
+  .pursuits.is-in .pursuits__head > *:nth-child(4) {
+    transition-delay: 240ms;
   }
 }
 
 /* ---------- the card ---------- */
 .pursuit {
   display: grid;
-  grid-template-columns: minmax(0, 0.92fr) minmax(0, 1.08fr);
+  grid-template-columns: minmax(0, 0.82fr) minmax(0, 1.18fr);
   align-items: stretch;
-  gap: clamp(24px, 4vw, 46px);
+  gap: clamp(16px, 2.2vw, 28px);
   width: 100%;
-  padding: clamp(20px, 3vw, 30px);
+  padding: clamp(14px, 1.8vw, 20px);
   border-radius: var(--radius-lg);
 }
 
@@ -89,17 +80,17 @@
 .pursuit__body {
   display: flex;
   flex-direction: column;
-  padding: clamp(4px, 1.4vw, 16px) clamp(4px, 1.4vw, 16px) clamp(4px, 1.4vw, 12px) 0;
+  padding: clamp(4px, 1vw, 10px) clamp(4px, 1vw, 10px) clamp(2px, 0.6vw, 6px) 0;
 }
 
 .pursuit__title {
-  margin: 0 0 10px;
+  margin: 0 0 7px;
   font-size: var(--step-2);
 }
 
 .pursuit__note {
   margin: 0 0 auto;
-  padding-bottom: 26px;
+  padding-bottom: 20px;
   max-width: 42ch;
   color: var(--slate);
 }
@@ -107,9 +98,9 @@
 /* ---------- figures ---------- */
 .pursuit__figures {
   display: flex;
-  gap: clamp(18px, 4vw, 42px);
-  margin: 0 0 26px;
-  padding-top: 22px;
+  gap: clamp(14px, 3vw, 30px);
+  margin: 0 0 20px;
+  padding-top: 16px;
   border-top: 1px solid var(--line);
 }
 
@@ -124,7 +115,7 @@
 .figure dd {
   margin: 6px 0 0;
   font-family: var(--font-title);
-  font-size: clamp(1.5rem, 3vw, 2.1rem);
+  font-size: clamp(1.2rem, 2.2vw, 1.6rem);
   font-weight: 600;
   letter-spacing: -0.035em;
   line-height: 1;
@@ -154,7 +145,7 @@
 }
 
 .meter__track {
-  height: 12px;
+  height: 9px;
   border-radius: 999px;
   background: var(--bone);
   box-shadow: var(--press);
@@ -170,20 +161,7 @@
   transform-origin: left center;
 }
 
-@media (max-width: 860px) {
-  .pursuits__head {
-    margin-left: 0;
-    text-align: left;
-  }
-
-  .pursuits__head .eyebrow {
-    flex-direction: row;
-  }
-
-  .pursuits__stage {
-    justify-items: stretch;
-  }
-
+@media (max-width: 900px) {
   .pursuit {
     grid-template-columns: 1fr;
   }
@@ -196,7 +174,4 @@
     padding: 0 4px 8px;
   }
 
-  .pursuits__stage .switch {
-    justify-self: start;
-  }
 }

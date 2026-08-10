@@ -5,24 +5,18 @@
   display: flex;
   align-items: center;
   min-height: calc(100vh - var(--nav-h));
-  padding-top: clamp(40px, 6vh, 80px);
-  padding-bottom: clamp(56px, 9vh, 110px);
+  padding-top: clamp(28px, 5vh, 56px);
+  padding-bottom: clamp(40px, 7vh, 84px);
 }
 
+/* The hero is the one split whose text column is the WIDER of the two — the
+   headline is the largest type on the site and needs the measure. */
 .hero__grid {
-  display: grid;
-  grid-template-columns: minmax(0, 1.02fr) minmax(0, 0.98fr);
-  align-items: center;
-  gap: clamp(32px, 6vw, 76px);
-}
-
-.hero__copy {
-  max-width: 44rem;
+  grid-template-columns: minmax(0, 1.04fr) minmax(0, 0.96fr);
 }
 
 .hero__title {
-  margin: 0 0 26px;
-  /* splitText wraps each word; they need to be block-ish to translate. */
+  margin: 0 0 20px;
   max-width: 15ch;
 }
 
@@ -33,7 +27,7 @@
 }
 
 .hero__lede {
-  margin-bottom: 38px;
+  margin-bottom: 28px;
 }
 
 .hero__cta {
@@ -63,7 +57,7 @@
    ============================================================ */
 .disc {
   position: relative;
-  width: min(100%, 460px);
+  width: min(100%, 380px);
   margin-inline: auto;
 }
 
@@ -171,9 +165,9 @@
   align-items: center;
   justify-content: space-between;
   gap: 14px;
-  margin: 22px auto 0;
+  margin: 16px auto 0;
   padding: 0 6px;
-  max-width: 78%;
+  max-width: 80%;
   font-family: var(--font-data);
   font-size: var(--step--2);
   text-transform: uppercase;
@@ -189,14 +183,9 @@
 /* ============================================================
    NARROW
    ============================================================ */
-@media (max-width: 940px) {
+@media (max-width: 900px) {
   .hero {
     min-height: 0;
-  }
-
-  .hero__grid {
-    grid-template-columns: 1fr;
-    gap: clamp(40px, 8vw, 64px);
   }
 
   .hero__title {
@@ -204,6 +193,6 @@
   }
 
   .disc {
-    width: min(86%, 380px);
+    width: min(80%, 320px);
   }
 }
