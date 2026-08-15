@@ -1,133 +1,96 @@
 /**
- * The hero's one visual: a perception module.
+ * A small, legible inference instrument for the hero.
  *
- * Concentric range rings, a beam sweeping once every SWEEP seconds, and a
- * handful of contacts that light up as the beam crosses them. Each contact's
- * animation-delay is derived from its own bearing, so the pulse is *caused*
- * by the beam rather than merely coincident with it — that is the whole
- * illusion, and it costs nothing at runtime.
- *
- * Pure SVG + CSS: no canvas, no rAF, crisp at any size, and it stops dead
- * under prefers-reduced-motion.
+ * The three signals are drawn from the work named in the hero copy. Animated
+ * packets converge on one model, then leave as a decision. The motion now
+ * explains "systems that sense and decide" instead of acting as an unrelated
+ * radar ornament.
  */
-
-const SWEEP = 7 // seconds per revolution — slow enough to read as instrument
-
-// Bearings in degrees clockwise from 12 o'clock, radius as a fraction of the
-// outermost ring. Hand-placed so the module never looks evenly spaced.
-const CONTACTS = [
-  { a: 34, r: 0.82, size: 5 },
-  { a: 108, r: 0.46, size: 7 },
-  { a: 163, r: 0.9, size: 4 },
-  { a: 214, r: 0.63, size: 6 },
-  { a: 287, r: 0.34, size: 5 },
-  { a: 322, r: 0.76, size: 4.5 },
+const INPUTS = [
+  { y: 72, code: 'RNA', label: 'cell profile', delay: '0s' },
+  { y: 168, code: 'TXT', label: 'clinical note', delay: '-1.6s' },
+  { y: 264, code: 'RGB·D', label: 'rover vision', delay: '-3.2s' },
 ]
-
-const R = 152 // outer ring radius in viewBox units
-const C = 200 // centre
-
-const polar = (deg, radius) => {
-  const rad = ((deg - 90) * Math.PI) / 180
-  return [C + Math.cos(rad) * radius, C + Math.sin(rad) * radius]
-}
 
 export default function SensorDisc() {
   return (
-    <div className="disc">
-      <div className="disc__bezel">
-        <div className="disc__face">
-          <svg className="disc__svg" viewBox="0 0 400 400" aria-hidden="true">
-            <defs>
-              {/* The beam: opaque at the leading edge, gone by the tail. */}
-              <linearGradient id="beam" x1="0" y1="1" x2="0.9" y2="0">
-                <stop offset="0" stopColor="#2c6a51" stopOpacity="0" />
-                <stop offset="1" stopColor="#2c6a51" stopOpacity="0.34" />
-              </linearGradient>
-              <radialGradient id="core" cx="0.5" cy="0.5" r="0.5">
-                <stop offset="0" stopColor="#3f8a68" stopOpacity="0.55" />
-                <stop offset="1" stopColor="#3f8a68" stopOpacity="0" />
-              </radialGradient>
-            </defs>
-
-            {/* range rings */}
-            <g className="disc__rings" fill="none" stroke="#17304f">
-              <circle cx={C} cy={C} r={R} strokeOpacity="0.2" />
-              <circle cx={C} cy={C} r={R * 0.72} strokeOpacity="0.14" />
-              <circle cx={C} cy={C} r={R * 0.44} strokeOpacity="0.11" />
-              <circle cx={C} cy={C} r={R * 0.18} strokeOpacity="0.09" />
-              <path
-                d={`M${C - R} ${C}H${C + R}M${C} ${C - R}V${C + R}`}
-                strokeOpacity="0.09"
-              />
-            </g>
-
-            {/* bearing ticks — every 6°, longer every 30° */}
-            <g stroke="#0e1a2b" strokeOpacity="0.26">
-              {Array.from({ length: 60 }, (_, i) => {
-                const deg = i * 6
-                const long = i % 5 === 0
-                const [x1, y1] = polar(deg, R + 8)
-                const [x2, y2] = polar(deg, R + (long ? 20 : 14))
-                return (
-                  <line
-                    key={deg}
-                    x1={x1}
-                    y1={y1}
-                    x2={x2}
-                    y2={y2}
-                    strokeWidth={long ? 1.6 : 1}
-                    strokeOpacity={long ? 0.4 : 0.2}
-                  />
-                )
-              })}
-            </g>
-
-            {/* the sweep */}
-            <g className="disc__beam" style={{ '--sweep': `${SWEEP}s` }}>
-              <path
-                d={`M${C} ${C} L${C} ${C - R} A${R} ${R} 0 0 1 ${polar(64, R)[0]} ${polar(64, R)[1]} Z`}
-                fill="url(#beam)"
-              />
-              <line
-                x1={C}
-                y1={C}
-                x2={C}
-                y2={C - R}
-                stroke="#2c6a51"
-                strokeOpacity="0.7"
-                strokeWidth="1.6"
-              />
-            </g>
-
-            {/* contacts — delay maps each one onto the beam's arrival */}
-            {CONTACTS.map((c) => {
-              const [x, y] = polar(c.a, R * c.r)
-              const delay = `${(-(c.a / 360) * SWEEP).toFixed(3)}s`
-              return (
-                <g
-                  key={c.a}
-                  className="disc__contact"
-                  style={{ '--sweep': `${SWEEP}s`, '--delay': delay }}
-                >
-                  <circle cx={x} cy={y} r={c.size * 3.4} fill="url(#core)" className="disc__halo" />
-                  <circle cx={x} cy={y} r={c.size} fill="#1c4335" />
-                </g>
-              )
-            })}
-
-            {/* hub */}
-            <circle cx={C} cy={C} r="7" fill="#17304f" />
-            <circle cx={C} cy={C} r="14" fill="none" stroke="#17304f" strokeOpacity="0.3" />
-          </svg>
-        </div>
+    <div className="disc system-map">
+      <div className="system-map__bar">
+        <span><i aria-hidden="true" /> Live inference</span>
+        <b>03 channels</b>
       </div>
 
-      {/* One readout, not a dashboard. */}
-      <p className="disc__readout">
-        <span>perception</span>
-        <b>sweep · 360°</b>
-      </p>
+      <div className="system-map__stage">
+        <svg className="system-map__svg" viewBox="0 0 560 336" role="img" aria-label="Three data signals converging through a model into a decision">
+          <defs>
+            <linearGradient id="signal-path" x1="0" y1="0" x2="1" y2="0">
+              <stop offset="0" stopColor="#33507a" stopOpacity=".2" />
+              <stop offset=".62" stopColor="#17304f" stopOpacity=".72" />
+              <stop offset="1" stopColor="#2c6a51" stopOpacity=".55" />
+            </linearGradient>
+            <radialGradient id="packet-glow">
+              <stop offset="0" stopColor="#65b58c" stopOpacity="1" />
+              <stop offset="1" stopColor="#65b58c" stopOpacity="0" />
+            </radialGradient>
+            <filter id="soft-glow" x="-200%" y="-200%" width="400%" height="400%">
+              <feGaussianBlur stdDeviation="4" />
+            </filter>
+          </defs>
+
+          <g className="system-map__grid" aria-hidden="true">
+            {Array.from({ length: 7 }, (_, i) => <line key={`v${i}`} x1={40 + i * 80} y1="20" x2={40 + i * 80} y2="316" />)}
+            {Array.from({ length: 4 }, (_, i) => <line key={`h${i}`} x1="18" y1={48 + i * 80} x2="542" y2={48 + i * 80} />)}
+          </g>
+
+          {INPUTS.map((input) => {
+            const path = `M132 ${input.y} C220 ${input.y}, 214 168, 294 168`
+            return (
+              <g key={input.code}>
+                <path className="system-map__path" d={path} />
+                <g className="system-map__packet" style={{ '--packet-delay': input.delay }}>
+                  <circle r="12" fill="url(#packet-glow)" filter="url(#soft-glow)" />
+                  <circle r="3.5" fill="#2c6a51" />
+                  <animateMotion dur="4.8s" begin={input.delay} repeatCount="indefinite" path={path} />
+                </g>
+              </g>
+            )
+          })}
+
+          <path className="system-map__path system-map__path--out" d="M366 168 C410 168, 426 168, 468 168" />
+          <g className="system-map__packet system-map__packet--out">
+            <circle r="15" fill="url(#packet-glow)" filter="url(#soft-glow)" />
+            <circle r="4" fill="#1c4335" />
+            <animateMotion dur="2.4s" begin="-1.2s" repeatCount="indefinite" path="M366 168 C410 168, 426 168, 468 168" />
+          </g>
+
+          {INPUTS.map((input) => (
+            <g className="system-map__input" key={`label-${input.code}`} transform={`translate(30 ${input.y - 26})`}>
+              <rect width="102" height="52" rx="12" />
+              <text className="system-map__code" x="13" y="21">{input.code}</text>
+              <text className="system-map__label" x="13" y="38">{input.label}</text>
+              <circle cx="92" cy="26" r="3" />
+            </g>
+          ))}
+
+          <g className="system-map__core" transform="translate(294 106)">
+            <rect width="72" height="124" rx="22" />
+            <circle cx="36" cy="62" r="23" />
+            <path d="M24 62h24M36 50v24" />
+            <text x="36" y="98">MODEL</text>
+          </g>
+
+          <g className="system-map__decision" transform="translate(468 124)">
+            <rect width="72" height="88" rx="15" />
+            <text x="36" y="24">DECIDE</text>
+            <path d="M21 50l10 10 21-24" />
+            <text className="system-map__ready" x="36" y="76">READY</text>
+          </g>
+        </svg>
+      </div>
+
+      <div className="system-map__readout">
+        <span>Sense</span><i aria-hidden="true" /><span>Interpret</span><i aria-hidden="true" /><strong>Act</strong>
+      </div>
     </div>
   )
 }

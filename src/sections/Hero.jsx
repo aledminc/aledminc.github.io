@@ -59,9 +59,9 @@ export default function Hero() {
     // exit fade at fully-opaque.
     animate('.disc', {
       opacity: [0, 1],
-      scale: [0.86, 1],
-      rotate: [-9, 0],
-      duration: 1200,
+      scale: [0.94, 1],
+      translateX: [42, 0],
+      duration: 1050,
       delay: 180,
       ease: 'out(4)',
     })

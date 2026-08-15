@@ -181,6 +181,102 @@
 }
 
 /* ============================================================
+   SIGNAL MAP
+
+   A compact data-flow instrument: three real inputs from the portfolio move
+   through one model and resolve as a decision. The rectangular glass chassis
+   belongs to the same panel system as the rest of the site and gives the hero
+   visual a reason to exist beyond decoration.
+   ============================================================ */
+.system-map {
+  width: min(100%, 510px);
+  padding: 12px;
+  border: 1px solid rgba(255,255,255,.86);
+  border-radius: clamp(20px, 3vw, 30px);
+  background: linear-gradient(145deg, rgba(255,255,255,.78), rgba(239,238,233,.56));
+  backdrop-filter: blur(18px) saturate(140%);
+  box-shadow: var(--raise-3), inset 0 1px 0 rgba(255,255,255,.95);
+}
+
+.system-map__bar,
+.system-map__readout {
+  display: flex;
+  align-items: center;
+  font-family: var(--font-data);
+  text-transform: uppercase;
+  letter-spacing: .12em;
+}
+
+.system-map__bar {
+  justify-content: space-between;
+  padding: 3px 7px 11px;
+  color: var(--slate);
+  font-size: .59rem;
+}
+
+.system-map__bar span { display: inline-flex; align-items: center; gap: 8px; }
+.system-map__bar i { width: 6px; height: 6px; border-radius: 50%; background: var(--forest-lit); box-shadow: 0 0 0 4px rgba(63,138,104,.12); animation: system-live 2.2s ease-in-out infinite; }
+.system-map__bar b { color: var(--navy); font-weight: 500; }
+
+@keyframes system-live { 50% { opacity: .46; scale: .72; } }
+
+.system-map__stage {
+  overflow: hidden;
+  border-radius: 19px;
+  background:
+    radial-gradient(circle at 60% 50%, rgba(44,106,81,.09), transparent 34%),
+    linear-gradient(145deg, rgba(228,226,220,.72), rgba(250,249,246,.84));
+  box-shadow: var(--well);
+}
+
+.system-map__svg { width: 100%; height: auto; }
+.system-map__grid line { stroke: var(--ink); stroke-width: .7; opacity: .055; }
+.system-map__path { fill: none; stroke: url(#signal-path); stroke-width: 1.6; stroke-dasharray: 5 6; animation: system-flow 12s linear infinite; }
+.system-map__path--out { stroke-width: 2.2; stroke-dasharray: 7 5; }
+
+@keyframes system-flow { to { stroke-dashoffset: -132; } }
+
+.system-map__input rect,
+.system-map__decision rect {
+  fill: rgba(250,249,246,.78);
+  stroke: rgba(14,26,43,.13);
+  filter: drop-shadow(3px 5px 5px rgba(14,26,43,.1));
+}
+.system-map__input circle { fill: var(--navy-soft); }
+.system-map__input:nth-of-type(2) circle,
+.system-map__input:nth-of-type(3) circle { fill: var(--forest-soft); }
+.system-map__input text,
+.system-map__core text,
+.system-map__decision text { font-family: var(--font-data); }
+.system-map__code { fill: var(--ink); font-size: 11px; font-weight: 700; letter-spacing: .08em; }
+.system-map__label { fill: var(--slate); font-size: 8px; letter-spacing: .03em; }
+
+.system-map__core rect { fill: var(--ink); filter: drop-shadow(7px 10px 10px rgba(14,26,43,.2)); }
+.system-map__core circle { fill: none; stroke: rgba(115,209,165,.62); stroke-width: 1; animation: system-core 2.8s ease-in-out infinite; }
+.system-map__core path { fill: none; stroke: #73d1a5; stroke-width: 1.8; stroke-linecap: round; }
+.system-map__core text { fill: rgba(255,255,255,.64); font-size: 8px; letter-spacing: .16em; text-anchor: middle; }
+@keyframes system-core { 50% { r: 27px; opacity: .45; } }
+
+.system-map__decision text { fill: var(--slate); font-size: 8px; font-weight: 600; letter-spacing: .1em; text-anchor: middle; }
+.system-map__decision path { fill: none; stroke: var(--forest-soft); stroke-width: 3; stroke-linecap: round; stroke-linejoin: round; }
+.system-map__decision .system-map__ready { fill: var(--forest-soft); font-size: 7px; }
+
+.system-map__readout {
+  justify-content: center;
+  gap: 10px;
+  padding: 11px 4px 1px;
+  color: var(--slate);
+  font-size: .57rem;
+}
+.system-map__readout i { width: clamp(18px, 4vw, 42px); height: 1px; background: linear-gradient(90deg, var(--line-hi), var(--forest-soft)); }
+.system-map__readout strong { color: var(--forest-soft); font-weight: 600; }
+
+@media (prefers-reduced-motion: reduce) {
+  .system-map__packet { display: none; }
+  .system-map__path, .system-map__core circle, .system-map__bar i { animation: none; }
+}
+
+/* ============================================================
    NARROW
    ============================================================ */
 @media (max-width: 900px) {
@@ -194,5 +290,9 @@
 
   .disc {
     width: min(80%, 320px);
+  }
+
+  .system-map {
+    width: min(92%, 430px);
   }
 }

@@ -7,16 +7,24 @@ import './Layout.css'
 
 export default function Layout() {
   const { pathname } = useLocation()
+  const isHome = pathname === '/'
 
   return (
-    <div className="shell">
+    <div className={`shell${isHome ? ' shell--deck' : ''}`}>
       {/* Fixed, behind everything, shared by every route — see MeridianField. */}
-      <MeridianField />
+      <MeridianField variant={isHome ? 'home' : 'standard'} />
       <NavHeader />
-      <SceneDeck routeKey={pathname}>
-        <Outlet />
-        <Footer />
-      </SceneDeck>
+      {isHome ? (
+        <SceneDeck routeKey={pathname}>
+          <Outlet />
+          <Footer />
+        </SceneDeck>
+      ) : (
+        <>
+          <main className="shell__main"><Outlet /></main>
+          <Footer />
+        </>
+      )}
     </div>
   )
 }

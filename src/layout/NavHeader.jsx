@@ -29,9 +29,17 @@ export default function NavHeader() {
   // material change the old vertical page got from window.scrollY.
   useEffect(() => {
     const onScene = (event) => setLifted(event.detail.index > 0)
-    setLifted(false)
+    const onScroll = () => {
+      if (pathname !== '/') setLifted(window.scrollY > 24)
+    }
+    if (pathname === '/') setLifted(false)
+    else onScroll()
     window.addEventListener('scenechange', onScene)
-    return () => window.removeEventListener('scenechange', onScene)
+    window.addEventListener('scroll', onScroll, { passive: true })
+    return () => {
+      window.removeEventListener('scenechange', onScene)
+      window.removeEventListener('scroll', onScroll)
+    }
   }, [pathname])
 
   useEffect(() => {
