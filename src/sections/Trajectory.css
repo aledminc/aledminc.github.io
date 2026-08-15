@@ -60,7 +60,7 @@
   }
 
   .stop__line,
-  .stop__index {
+  .stop__artifact {
     opacity: 0;
   }
 }
@@ -213,12 +213,28 @@
    ============================================================ */
 .stop {
   position: relative;
-  padding: clamp(22px, 3vw, 36px);
+  padding: clamp(15px, 2vw, 22px);
   border-radius: var(--radius-lg);
   overflow: hidden;
   /* Entries differ in length; a floor stops the panel resizing under the
      rail every time the carriage moves. */
-  min-height: 15.5rem;
+  min-height: 19rem;
+}
+
+.stop__layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1.04fr) minmax(220px, .96fr);
+  align-items: stretch;
+  gap: clamp(16px, 2.2vw, 24px);
+  min-height: 16.25rem;
+}
+
+.stop__copy {
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+  justify-content: center;
+  padding: clamp(5px, 1vw, 12px);
 }
 
 .stop__index {
@@ -288,6 +304,131 @@
   line-height: 1.7;
 }
 
+/* ---------- evidence artifact ----------
+   Every stop gets the same raised frame: a preview in a recessed well and a
+   compact readout below it. Documents and external organizations therefore
+   feel like one system even though their source material differs. */
+.stop__artifact {
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+  padding: 7px;
+  border: 1px solid rgba(255,255,255,.84);
+  border-radius: calc(var(--radius) + 3px);
+  background: linear-gradient(150deg, var(--paper), var(--bone-deep));
+  box-shadow: var(--raise-2);
+  color: var(--ink);
+  transition:
+    translate 320ms cubic-bezier(.22,1,.36,1),
+    box-shadow 320ms ease;
+}
+
+.stop__artifact:hover,
+.stop__artifact:focus-visible {
+  translate: 0 -4px;
+  box-shadow: var(--raise-3);
+}
+
+.artifact__preview {
+  position: relative;
+  display: grid;
+  flex: 1;
+  min-height: 188px;
+  place-items: center;
+  overflow: hidden;
+  border-radius: var(--radius-sm);
+  background:
+    linear-gradient(to right, rgba(14,26,43,.045) 1px, transparent 1px) 0 0 / 28px 28px,
+    linear-gradient(to bottom, rgba(14,26,43,.045) 1px, transparent 1px) 0 0 / 28px 28px,
+    var(--bone);
+  box-shadow: var(--well);
+}
+
+.artifact__preview img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.artifact--document .artifact__preview img {
+  object-position: center top;
+}
+
+.artifact--portrait .artifact__preview img {
+  object-position: center 8%;
+}
+
+.artifact--brand .artifact__preview {
+  padding: clamp(30px, 5vw, 58px);
+  background: linear-gradient(145deg, rgba(255,255,255,.9), rgba(250,249,246,.62));
+}
+
+.artifact--brand .artifact__preview img {
+  max-width: 84%;
+  max-height: 108px;
+  object-fit: contain;
+}
+
+.artifact--brand .artifact__preview img[src*='iu-trident'] {
+  max-width: 70px;
+  max-height: 84px;
+}
+
+.artifact__document-badge {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 5px 8px;
+  border-radius: 999px;
+  background: rgba(14,26,43,.86);
+  backdrop-filter: blur(8px);
+  color: var(--paper);
+  font: 500 .55rem var(--font-data);
+  letter-spacing: .08em;
+}
+
+.artifact__caption {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 10px 8px 4px;
+}
+
+.artifact__caption > span {
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.artifact__caption strong {
+  overflow: hidden;
+  font: 600 .72rem/1.2 var(--font-title);
+  letter-spacing: -.015em;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.artifact__caption small {
+  color: var(--slate);
+  font: 500 .54rem var(--font-data);
+  letter-spacing: .05em;
+}
+
+.artifact__arrow {
+  flex: none;
+  color: var(--forest-soft);
+  transition: translate 260ms cubic-bezier(.22,1,.36,1);
+}
+
+.stop__artifact:hover .artifact__arrow {
+  translate: 3px -3px;
+}
+
 @media (max-width: 640px) {
   .rail {
     padding-inline: 8px;
@@ -311,4 +452,28 @@
     height: 38px;
     margin: -19px 0 0 -19px;
   }
+
+  .stop {
+    min-height: 0;
+    padding: 12px;
+  }
+
+  .stop__layout {
+    grid-template-columns: minmax(0, 1.08fr) minmax(118px, .72fr);
+    gap: 10px;
+    min-height: 15.5rem;
+  }
+
+  .stop__copy { padding: 3px; }
+  .stop__meta { gap: 6px; margin-bottom: 8px; font-size: .62rem; }
+  .stop__tag { padding: 2px 6px; font-size: .5rem; }
+  .stop__title { font-size: .88rem; }
+  .stop__org { margin-bottom: 7px; font-size: .57rem; }
+  .stop__blurb { font-size: .68rem; line-height: 1.42; }
+  .stop__artifact { padding: 5px; }
+  .artifact__preview { min-height: 170px; }
+  .artifact--brand .artifact__preview { padding: 20px; }
+  .artifact__caption { padding: 7px 3px 2px; }
+  .artifact__caption strong { font-size: .58rem; white-space: normal; }
+  .artifact__caption small { font-size: .46rem; }
 }

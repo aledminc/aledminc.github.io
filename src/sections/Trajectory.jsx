@@ -1,5 +1,6 @@
 import { useCallback, useState } from 'react'
 import { animate, stagger } from 'animejs'
+import { LuArrowUpRight, LuFileText } from 'react-icons/lu'
 import { useAnimeScope } from '../hooks/useAnimeScope.js'
 import { useSceneExit } from '../hooks/useSceneExit.js'
 import { useInView } from '../hooks/useInView.js'
@@ -29,7 +30,7 @@ export default function Trajectory() {
       // Panel contents restate themselves on every stop. The wipe runs on the
       // inner .stop element, never on the .layer wrapper — anime would leave
       // an inline opacity there and kill the scene exit.
-      animate('.stop__line', {
+      animate('.stop__line, .stop__artifact', {
         opacity: [0, 1],
         translateX: [26, 0],
         delay: stagger(70),
@@ -37,15 +38,6 @@ export default function Trajectory() {
         ease: 'out(3)',
       })
 
-      // Lands on 0.07, the watermark's resting opacity in CSS — anime writes
-      // the end value inline, so overshooting here would leave the numeral
-      // permanently at full strength.
-      animate('.stop__index', {
-        opacity: [0, 0.07],
-        scale: [0.82, 1],
-        duration: 700,
-        ease: 'out(3)',
-      })
     },
     [active, reached],
   )
@@ -129,20 +121,47 @@ export default function Trajectory() {
             aria-labelledby={`stop-tab-${entry.id}`}
             key={entry.id}
           >
-            <span className="stop__index" aria-hidden="true">
-              {String(active + 1).padStart(2, '0')}
-            </span>
+            <div className="stop__layout">
+              <div className="stop__copy">
+                <p className="stop__line stop__meta">
+                  <time>{entry.date}</time>
+                  <span className="stop__tag" data-tag={entry.tag}>
+                    {entry.upcoming ? 'Expected' : entry.tag}
+                  </span>
+                </p>
 
-            <p className="stop__line stop__meta">
-              <time>{entry.date}</time>
-              <span className="stop__tag" data-tag={entry.tag}>
-                {entry.upcoming ? 'Expected' : entry.tag}
-              </span>
-            </p>
+                <h3 className="stop__line stop__title">{entry.title}</h3>
+                <p className="stop__line stop__org">{entry.org}</p>
+                <p className="stop__line stop__blurb">{entry.blurb}</p>
+              </div>
 
-            <h3 className="stop__line stop__title">{entry.title}</h3>
-            <p className="stop__line stop__org">{entry.org}</p>
-            <p className="stop__line stop__blurb">{entry.blurb}</p>
+              <a
+                className={`stop__artifact ${entry.artifact.kind
+                  .split(' ')
+                  .map((kind) => `artifact--${kind}`)
+                  .join(' ')}`}
+                href={entry.artifact.href}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label={`${entry.artifact.title} — opens in a new tab`}
+              >
+                <span className="artifact__preview">
+                  <img src={entry.artifact.preview} alt={entry.artifact.alt} />
+                  {entry.artifact.kind.includes('document') && (
+                    <span className="artifact__document-badge" aria-hidden="true">
+                      <LuFileText size={14} /> PDF
+                    </span>
+                  )}
+                </span>
+                <span className="artifact__caption">
+                  <span>
+                    <strong>{entry.artifact.title}</strong>
+                    <small>{entry.artifact.meta}</small>
+                  </span>
+                  <LuArrowUpRight className="artifact__arrow" size={17} aria-hidden="true" />
+                </span>
+              </a>
+            </div>
           </article>
         </div>
       </div>

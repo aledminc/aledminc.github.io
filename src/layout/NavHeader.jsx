@@ -54,7 +54,10 @@ export default function NavHeader() {
       <div className="nav__inner">
         <NavLink to="/" className="nav__brand" aria-label="Xander Minch — home">
           <img src="/assets/logo.svg" alt="" className="nav__logo" />
-          <span className="nav__name">Xander&nbsp;Minch</span>
+          <span className="nav__name">
+            <strong>Xander Minch</strong>
+            <small>CS · Intelligent systems</small>
+          </span>
         </NavLink>
 
         {/* Pressed track with a raised pill that slides between routes. The

@@ -1,8 +1,15 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="32" height="32" role="img" aria-label="Xander Minch">
-  <rect width="32" height="32" rx="9" fill="#0e1a2b"/>
-  <rect x="0.5" y="0.5" width="31" height="31" rx="8.5" fill="none" stroke="#f1efe8" stroke-opacity="0.22"/>
-  <circle cx="16" cy="16" r="9.5" fill="none" stroke="#f1efe8" stroke-opacity="0.28" stroke-width="1"/>
-  <path d="M9.5 9.5L22.5 22.5M22.5 9.5L9.5 22.5" stroke="#f1efe8" stroke-width="2.2" stroke-linecap="round"/>
-  <circle cx="16" cy="16" r="3.6" fill="#0e1a2b"/>
-  <circle cx="16" cy="16" r="2.1" fill="#4f9a7a"/>
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="192" height="120" viewBox="0 0 192 120" role="img" aria-labelledby="title desc">
+  <title id="title">Vectorized logo</title>
+  <desc id="desc">A stylized green and navy x-m logo on a transparent background.</desc>
+  <defs>
+    <linearGradient id="logoGradient" gradientUnits="userSpaceOnUse" x1="40" y1="103" x2="73" y2="70">
+      <stop offset="0" stop-color="#254c3a"/>
+      <stop offset="1" stop-color="#1e2b3d"/>
+    </linearGradient>
+  </defs>
+
+  <path fill="#224439" d="M26.5 29.5H50.5L68 48.5 56 61.5Z"/>
+  <path fill="#23453a" d="M84 66.5l34.5 38H95.5L73 79.5Z"/>
+  <path fill="url(#logoGradient)" d="M29.5 104.5H50l23.5-25L101.5 48c4-2.7 7.3-3.5 10-3.5 5.3 0 14 6.2 14 14.5v45.5H141V59c0-8.3 7.5-14.5 14.5-14.5S171 50.7 171 59v45.5h14.5V53c0-13.5-11.7-23.5-25-23.5-9.3 0-18.3 3.7-25 9.9-5.9-6.4-13.8-9.9-22.5-9.9-9.2 0-16.8 3.7-24.2 10.8Z"/>
 </svg>

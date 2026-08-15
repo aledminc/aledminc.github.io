@@ -1,19 +1,22 @@
-// Career timeline entries, oldest first — the section animates top to bottom.
-// Content pulled from the 2026 resume. Edit here, never in the JSX.
-//
-// tag       -> visual grouping; each maps to a --tag-* color token in index.css
-// upcoming  -> renders as "Expected" with a hollow node (not yet completed)
+// Career timeline entries, oldest first. Each stop carries one inspectable
+// artifact so the timeline reads as evidence, not only biography.
 export const timeline = [
   {
     id: 'iu-bs-start',
-    // TODO(xander): the resume lists only the May 2027 completion date, so this
-    // start date is inferred from a four-year track. Confirm or correct.
     date: 'Aug 2023',
     title: 'Started B.S. in Computer Science',
     org: 'Indiana University, Bloomington',
     blurb:
       'Specializing in Artificial Intelligence, with minors in Data Science, Mathematics, and Business.',
     tag: 'education',
+    artifact: {
+      title: 'B.S. Computer Science at IU',
+      meta: 'Luddy School · Program',
+      preview: '/assets/timeline/iu-trident.png',
+      href: 'https://luddy.iu.edu/academics/undergraduate/bs-computer-science.html',
+      alt: 'Indiana University trident',
+      kind: 'brand',
+    },
   },
   {
     id: 'saama',
@@ -23,6 +26,14 @@ export const timeline = [
     blurb:
       'Designed an AI-powered clinical protocol review system built on LLM summarization pipelines, cutting manual document review time by 40–60%.',
     tag: 'industry',
+    artifact: {
+      title: 'Saama Technologies',
+      meta: 'Company website',
+      preview: '/assets/timeline/saama-logo.svg',
+      href: 'https://www.saama.com/',
+      alt: 'Saama Technologies logo',
+      kind: 'brand',
+    },
   },
   {
     id: 'bioinformatics',
@@ -32,6 +43,14 @@ export const timeline = [
     blurb:
       'Built an end-to-end pipeline for single-cell RNA expression data across 30k+ genes and millions of cells, reaching 0.065 reconstruction loss on the main task.',
     tag: 'research',
+    artifact: {
+      title: 'CIGS-TTVAE Research Poster',
+      meta: 'PDF · Research artifact',
+      preview: '/assets/timeline/poster-preview.webp',
+      href: '/assets/timeline/cigs-ttvae-poster.pdf',
+      alt: 'Preview of the CIGS-TTVAE research poster',
+      kind: 'document',
+    },
   },
   {
     id: 'robotics',
@@ -41,6 +60,14 @@ export const timeline = [
     blurb:
       'Leading a competition rover build across mechanical, hardware, and software subteams — sensors, firmware, controls, and autonomous navigation.',
     tag: 'leadership',
+    artifact: {
+      title: 'University Rover Competition (URC)',
+      meta: 'Mars Society · Competition',
+      preview: '/assets/timeline/urc-rover.webp',
+      href: 'https://urc.marssociety.org/',
+      alt: 'A competition rover operating in desert terrain',
+      kind: 'image',
+    },
   },
   {
     id: 'iu-bs',
@@ -50,6 +77,14 @@ export const timeline = [
     blurb: 'GPA 3.7. AI specialization.',
     tag: 'education',
     upcoming: true,
+    artifact: {
+      title: 'Undergraduate Transcript',
+      meta: 'PDF · 2 pages',
+      preview: '/assets/timeline/transcript-preview.webp',
+      href: '/assets/timeline/undergraduate-transcript.pdf',
+      alt: 'Preview of Xander Minch’s undergraduate transcript',
+      kind: 'document portrait',
+    },
   },
   {
     id: 'iu-ms',
@@ -59,5 +94,13 @@ export const timeline = [
     blurb: 'Specializing in Cyber-Physical Systems.',
     tag: 'education',
     upcoming: true,
+    artifact: {
+      title: 'M.S. Intelligent Systems Engineering',
+      meta: 'Luddy School · Program',
+      preview: '/assets/timeline/iu-trident.png',
+      href: 'https://luddy.iu.edu/academics/masters/ise.html',
+      alt: 'Indiana University trident',
+      kind: 'brand',
+    },
   },
 ]
