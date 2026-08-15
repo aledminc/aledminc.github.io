@@ -104,7 +104,8 @@ html,
 body,
 #root {
   margin: 0;
-  min-height: 100%;
+  width: 100%;
+  height: 100%;
 }
 
 html {
@@ -121,7 +122,8 @@ body {
   text-rendering: optimizeLegibility;
   /* The scene exit drifts content sideways on its way out; without this a
      leaving layer would widen the document and flash a scrollbar. */
-  overflow-x: hidden;
+  overflow: hidden;
+  overscroll-behavior: none;
 }
 
 /* The measurement field. Fixed, so it never scrolls — the whole site is one

@@ -33,6 +33,13 @@ export function useInView(ref, margin = 0.85) {
     }
     function check() {
       if (done) return
+      if (el.dataset.sceneState === 'active' || el.closest('[data-scene-state="active"]')) {
+        done = true
+        stop()
+        el.removeEventListener('scene:active', check)
+        setReached(true)
+        return
+      }
       // A negative top is "already behind us" and satisfies this too.
       if (el.getBoundingClientRect().top < window.innerHeight * margin) {
         done = true
@@ -44,7 +51,11 @@ export function useInView(ref, margin = 0.85) {
     check() // covers loading already scrolled down
     window.addEventListener('scroll', check, { passive: true })
     window.addEventListener('resize', check, { passive: true })
-    return stop
+    el.addEventListener('scene:active', check)
+    return () => {
+      stop()
+      el.removeEventListener('scene:active', check)
+    }
   }, [ref, margin, reached])
 
   return reached

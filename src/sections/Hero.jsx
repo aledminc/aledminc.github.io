@@ -70,7 +70,7 @@ export default function Hero() {
   })
 
   return (
-    <section ref={scene} className="scene hero" aria-labelledby="hero-title">
+    <section ref={scene} className="scene hero" data-scene data-scene-label="Signal" aria-labelledby="hero-title">
       <div className="container split hero__grid" ref={root}>
         {/* Exits to the left; the module exits to the right. The stage parts
             down the middle as you leave, which is why the two layers move

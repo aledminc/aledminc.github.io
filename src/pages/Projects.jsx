@@ -87,7 +87,7 @@ export default function Projects() {
   const active = hovered ? projects.find((p) => p.id === hovered) : null
 
   return (
-    <div className="index page" ref={scene}>
+    <div className="index page" ref={scene} data-scene data-scene-label="Work index">
       <div className="container" ref={root}>
         <header className="layer layer--left layer--soft index__head">
           <p className="eyebrow">

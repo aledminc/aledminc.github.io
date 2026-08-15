@@ -19,7 +19,7 @@ const LINKS = [
 
 export default function Footer() {
   return (
-    <footer className="footer">
+    <footer className="footer" data-scene data-scene-label="Contact">
       <div className="container">
         <div className="footer__panel">
           <div className="footer__signal">
@@ -63,8 +63,8 @@ export default function Footer() {
           <div className="footer__base">
             <small>© {new Date().getFullYear()} Xander Minch</small>
             <span>Built in Bloomington, Indiana</span>
-            <button type="button" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>
-              Back to top <LuArrowUp size={15} />
+            <button type="button" onClick={() => window.dispatchEvent(new CustomEvent('scene:go', { detail: 'first' }))}>
+              Back to start <LuArrowUp size={15} />
             </button>
           </div>
         </div>

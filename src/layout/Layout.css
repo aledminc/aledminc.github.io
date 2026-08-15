@@ -5,13 +5,207 @@
   z-index: 1;
   display: flex;
   flex-direction: column;
-  min-height: 100vh;
+  height: 100dvh;
+  overflow: hidden;
 }
 
 .shell__main {
   flex: 1 0 auto;
   /* The nav is fixed so it can float over the field; main reserves its band. */
   padding-top: var(--nav-h);
+}
+
+/* ============================================================
+   SCENE DECK
+
+   The document never travels. Wheel, touch, and key input change which
+   instrument surface occupies this fixed stage; the transition itself is a
+   horizontal shutter and optical refocus. This is intentionally not scroll
+   snapping: there is no vertical strip hiding behind the viewport.
+   ============================================================ */
+.scene-deck {
+  position: relative;
+  flex: 1 1 auto;
+  min-height: 0;
+  height: 100dvh;
+  padding-top: var(--nav-h);
+  overflow: hidden;
+  isolation: isolate;
+  touch-action: pan-x pan-y;
+}
+
+.scene-deck__content {
+  position: relative;
+  height: 100%;
+  overflow: hidden;
+}
+
+.scene-deck [data-scene] {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  overflow: hidden;
+  will-change: transform, opacity, filter, clip-path;
+  contain: layout paint;
+}
+
+.scene-deck [data-scene][hidden] {
+  display: none !important;
+}
+
+/* Schedule scenes live inside the page's old container. Pulling them onto the
+   common stage preserves that markup while giving each one a full viewport. */
+.scene-deck .sched > .container > [data-scene] {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  max-width: none;
+  padding: clamp(20px, 4vh, 46px) max(clamp(16px, 3vw, 34px), calc((100vw - var(--maxw)) / 2 + 34px));
+}
+
+.scene-deck .sched__head {
+  margin: 0;
+}
+
+.scene-deck .sched__board,
+.scene-deck .meet {
+  margin: 0;
+}
+
+/* A fast luminous registration line sells the change as the panel rebuilding
+   itself, rather than two pages sliding past one another. */
+.scene-deck__scan {
+  position: absolute;
+  z-index: 75;
+  top: var(--nav-h);
+  bottom: 0;
+  left: 0;
+  width: 18vw;
+  pointer-events: none;
+  opacity: 0;
+  translate: -120% 0;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,.55), rgba(63,138,104,.18), transparent);
+  filter: blur(10px);
+  mix-blend-mode: screen;
+}
+
+.scene-deck.is-transitioning .scene-deck__scan {
+  animation: scene-scan 760ms cubic-bezier(.5,0,.2,1) both;
+}
+
+@keyframes scene-scan {
+  0% { opacity: 0; translate: -120% 0; }
+  28% { opacity: .9; }
+  100% { opacity: 0; translate: 650% 0; }
+}
+
+.scene-nav {
+  position: absolute;
+  z-index: 80;
+  right: clamp(14px, 2.4vw, 32px);
+  bottom: clamp(12px, 2.2vh, 22px);
+  display: grid;
+  grid-template-columns: 34px auto minmax(74px, 9vw) 34px;
+  align-items: center;
+  gap: 10px;
+  padding: 7px;
+  border: 1px solid rgba(255,255,255,.82);
+  border-radius: 999px;
+  background: rgba(250,249,246,.72);
+  backdrop-filter: blur(18px) saturate(145%);
+  box-shadow: var(--raise-2), inset 0 1px 0 rgba(255,255,255,.9);
+}
+
+.scene-nav button {
+  display: grid;
+  width: 34px;
+  height: 34px;
+  padding: 0;
+  place-items: center;
+  border: 0;
+  border-radius: 50%;
+  background: linear-gradient(150deg, var(--paper), var(--bone-deep));
+  box-shadow: var(--raise-1);
+  color: var(--ink);
+  cursor: pointer;
+}
+
+.scene-nav button:disabled { opacity: .32; cursor: default; box-shadow: none; }
+.scene-nav__readout { display: flex; flex-direction: column; min-width: 86px; line-height: 1.1; }
+.scene-nav__readout span { color: var(--forest-soft); font: 600 .57rem var(--font-data); letter-spacing: .1em; }
+.scene-nav__readout strong { overflow: hidden; max-width: 18ch; color: var(--ink); font: 500 .65rem var(--font-data); text-overflow: ellipsis; white-space: nowrap; }
+.scene-nav__track { display: flex; align-items: center; gap: 4px; }
+.scene-nav__track i { flex: 1; height: 2px; border-radius: 2px; background: rgba(14,26,43,.14); transition: background 260ms ease, scale 260ms ease; }
+.scene-nav__track i.is-active { background: var(--forest-soft); scale: 1 2; }
+
+/* The index has nine dense rows. Tightening their idle state lets the complete
+   recruiter-scan view remain visible even on a short laptop screen. */
+.scene-deck .index.page { padding: clamp(14px, 2.4vh, 28px) 0 76px; }
+.scene-deck .index__head { margin-bottom: clamp(10px, 1.8vh, 20px); }
+.scene-deck .index__filter { margin-bottom: clamp(10px, 1.8vh, 20px); }
+.scene-deck .row { padding-block: clamp(6px, 1.05vh, 12px); }
+.scene-deck .row__reveal { display: none; }
+.scene-deck .field textarea { resize: none; }
+
+/* The dark contact scene is now an actual closing shot, sized to the stage. */
+.scene-deck .footer {
+  display: grid;
+  place-items: center;
+  padding: clamp(12px, 2vh, 24px) 0 74px;
+}
+.scene-deck .footer__hero { padding-block: clamp(30px, 6vh, 68px); }
+
+@media (max-width: 900px) {
+  .scene-deck .scene { padding: clamp(20px, 4vh, 42px) 0 76px; }
+  .scene-deck .hero { padding-top: 20px; }
+  .scene-deck .split { gap: clamp(14px, 2.5vh, 24px); }
+  .scene-deck .pursuit__frame { max-height: 24vh; }
+  .scene-deck .sheet { max-height: 34vh; min-height: 180px; }
+  .scene-deck .wall__capture { margin-top: 12px; gap: 9px; }
+  .scene-deck .pad { max-height: 18vh; }
+}
+
+@media (max-width: 640px) {
+  .scene-nav {
+    left: 50%;
+    right: auto;
+    width: calc(100% - 28px);
+    max-width: 430px;
+    translate: -50% 0;
+    grid-template-columns: 34px auto minmax(54px, 1fr) 34px;
+  }
+  .scene-deck .index.page { padding-top: 10px; }
+  .scene-deck .index__head .lede { display: none; }
+  .scene-deck .index__head h1 { margin-bottom: 6px; }
+  .scene-deck .index__filter { margin-bottom: 8px; }
+  .scene-deck .row__thumb { display: none; }
+  .scene-deck .row, .scene-deck .row--thumbed { grid-template-columns: auto minmax(0, 1fr) auto; padding-block: 5px; }
+  .scene-deck .row__meta { grid-column: auto; }
+  .scene-deck .sched > .container > [data-scene] { padding-top: 12px; padding-bottom: 76px; }
+  .scene-deck .sched__list { grid-template-columns: 1fr 1fr; gap: 8px; }
+  .scene-deck .sched__day-items { gap: 4px; }
+  .scene-deck .sched__row { padding: 7px 9px 7px 13px; }
+  .scene-deck .sched__row-title { display: none; }
+  .scene-deck .legend { display: none; }
+}
+
+@media (max-width: 640px) and (max-height: 760px) {
+  .scene-deck .hero__title { font-size: clamp(2rem, 9.5vw, 3rem); margin-bottom: 10px; }
+  .scene-deck .hero__lede { margin-bottom: 14px; font-size: .78rem; line-height: 1.42; }
+  .scene-deck .hero__disc .disc { width: min(52vw, 205px); }
+  .scene-deck .disc__readout { margin-top: 7px; }
+  .scene-deck .hero { padding-top: 8px; }
+}
+
+@media (min-width: 641px) and (max-height: 820px) {
+  .scene-deck .tt { grid-template-rows: auto repeat(var(--tt-slots), 4px); }
+  .scene-deck .sched > .container > [data-scene] { padding-top: 18px; padding-bottom: 70px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .scene-deck__scan { display: none; }
 }
 
 /* The site-wide canvas. Fixed and behind everything — see MeridianField.jsx.

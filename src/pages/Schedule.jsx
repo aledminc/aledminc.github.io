@@ -185,7 +185,7 @@ export default function Schedule() {
     <div ref={scene} className="sched page">
       <div className="container" ref={root}>
         {/* ---------- scene 1: the ask ---------- */}
-        <header className="layer layer--left layer--soft sched__head">
+        <header className="layer layer--left layer--soft sched__head" data-scene data-scene-label="Open channel">
           <p className="eyebrow">{semester} · Bloomington, IN</p>
           <h1>My week, mapped.</h1>
           <p className="lede">
@@ -198,7 +198,7 @@ export default function Schedule() {
         </header>
 
         {/* ---------- scene 2: the board ---------- */}
-        <section className="layer sched__board" aria-label="Weekly commitments">
+        <section className="layer sched__board" data-scene data-scene-label="Weekly map" aria-label="Weekly commitments">
           <div className="board__shell">
             <div className="board__top">
               <span className="board__live">
@@ -333,7 +333,7 @@ export default function Schedule() {
         </section>
 
         {/* ---------- scene 3: the form ---------- */}
-        <section className="layer layer--right meet" id="meet" aria-labelledby="meet-heading">
+        <section className="layer layer--right meet" data-scene data-scene-label="Request meeting" id="meet" aria-labelledby="meet-heading">
           <div className="meet__card glass">
             <p className="eyebrow">Get in touch</p>
             <h2 id="meet-heading">Request a meeting.</h2>

@@ -84,6 +84,8 @@ export default function Pursuits() {
     <section
       ref={scene}
       className={`scene pursuits${reached ? ' is-in' : ''}`}
+      data-scene
+      data-scene-label="Pursuits"
       aria-labelledby="pursuits-heading"
     >
       {/* Back to text-left, mirroring the trajectory above it. */}

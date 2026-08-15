@@ -181,6 +181,8 @@ export default function SignatureWall() {
     <section
       ref={scene}
       className={`scene wall${reached ? ' is-in' : ''}`}
+      data-scene
+      data-scene-label="Signature"
       aria-labelledby="wall-heading"
     >
       {/* Flipped again: text right, sheet left. Four scenes, four different

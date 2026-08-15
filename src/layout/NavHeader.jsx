@@ -25,14 +25,14 @@ export default function NavHeader() {
 
   useEffect(() => setOpen(false), [pathname])
 
-  // The bar is transparent over the hero and becomes glass once you leave it,
-  // so the top of the page reads as one uninterrupted field.
+  // The deck has no scroll offset. Its scene event now drives the same lifted
+  // material change the old vertical page got from window.scrollY.
   useEffect(() => {
-    const onScroll = () => setLifted(window.scrollY > 24)
-    onScroll()
-    window.addEventListener('scroll', onScroll, { passive: true })
-    return () => window.removeEventListener('scroll', onScroll)
-  }, [])
+    const onScene = (event) => setLifted(event.detail.index > 0)
+    setLifted(false)
+    window.addEventListener('scenechange', onScene)
+    return () => window.removeEventListener('scenechange', onScene)
+  }, [pathname])
 
   useEffect(() => {
     if (!open) return undefined

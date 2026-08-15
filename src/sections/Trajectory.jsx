@@ -66,6 +66,8 @@ export default function Trajectory() {
     <section
       ref={scene}
       className={`scene traj${reached ? ' is-in' : ''}`}
+      data-scene
+      data-scene-label="Trajectory"
       aria-labelledby="traj-heading"
     >
       {/* Flipped: the heading sits on the RIGHT and the mechanism on the left,
