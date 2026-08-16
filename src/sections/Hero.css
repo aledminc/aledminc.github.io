@@ -43,9 +43,13 @@
   .hero__title,
   .hero__lede,
   .hero__cta,
-  .disc {
+  .hero-rotator {
     opacity: 0;
   }
+}
+
+.hero__rotator {
+  min-width: 0;
 }
 
 /* ============================================================

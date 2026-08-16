@@ -3,7 +3,8 @@ import { animate, stagger, splitText } from 'animejs'
 import { LuArrowRight } from 'react-icons/lu'
 import { useAnimeScope } from '../hooks/useAnimeScope.js'
 import { useSceneExit } from '../hooks/useSceneExit.js'
-import SensorDisc from './SensorDisc.jsx'
+import HeroRotator from '../components/HeroRotator.jsx'
+import ContributionGraph from '../components/ContributionGraph.jsx'
 import './Hero.css'
 
 // Copy is drawn from the 2026 resume and is accurate. One statement, one
@@ -12,6 +13,14 @@ const TITLE = 'Systems that sense and decide.'
 const LEDE = `Computer science and an accelerated master's in intelligent systems at
 Indiana University. Single-cell RNA pipelines, LLM summarization for clinical
 review, and an autonomous rover I lead the build on.`
+
+const HERO_SLIDES = [
+  {
+    id: 'github-activity',
+    label: 'GitHub activity',
+    render: () => <ContributionGraph />,
+  },
+]
 
 export default function Hero() {
   const scene = useSceneExit()
@@ -57,7 +66,7 @@ export default function Hero() {
     // an inline `opacity: 1` on whatever it animates, and inline style beats
     // the stylesheet — so animating the layer here would permanently pin its
     // exit fade at fully-opaque.
-    animate('.disc', {
+    animate('.hero-rotator', {
       opacity: [0, 1],
       scale: [0.94, 1],
       translateX: [42, 0],
@@ -89,8 +98,8 @@ export default function Hero() {
           </Link>
         </div>
 
-        <div className="layer layer--right split__main hero__disc">
-          <SensorDisc />
+        <div className="layer layer--right split__main hero__rotator">
+          <HeroRotator slides={HERO_SLIDES} durationMs={8000} />
         </div>
       </div>
     </section>

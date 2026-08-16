@@ -41,9 +41,24 @@ export default function SceneDeck({ children, routeKey }) {
       const incoming = all[next]
       const direction = next > current ? 1 : -1
       const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+      const incomingStart = {
+        opacity: 0,
+        transform: `translateX(${direction * 8}vw) scale(1.055)`,
+        filter: 'blur(18px)',
+        clipPath: 'inset(-5% 50% -5% 50%)',
+      }
       locked.current = !instant && !reduced
       root.current?.classList.toggle('is-transitioning', locked.current)
 
+      // Pre-stage the incoming scene before revealing it. The animation has a
+      // deliberate delay, and without these values the browser can paint the
+      // scene in its final state for that delay on its first visit.
+      if (!instant && !reduced && Element.prototype.animate) {
+        incoming.style.opacity = String(incomingStart.opacity)
+        incoming.style.transform = incomingStart.transform
+        incoming.style.filter = incomingStart.filter
+        incoming.style.clipPath = incomingStart.clipPath
+      }
       incoming.hidden = false
       incoming.inert = false
       incoming.setAttribute('aria-hidden', 'false')
@@ -90,16 +105,11 @@ export default function SceneDeck({ children, routeKey }) {
       incoming
         .animate(
           [
-            {
-              opacity: 0,
-              transform: `translateX(${direction * 8}vw) scale(1.055)`,
-              filter: 'blur(18px)',
-              clipPath: 'inset(-5% 50% -5% 50%)',
-            },
+            incomingStart,
             { opacity: 0.15, offset: 0.22 },
             { opacity: 1, transform: 'translateX(0) scale(1)', filter: 'blur(0px)', clipPath: 'inset(-5% -5% -5% -5%)' },
           ],
-          { duration: TRANSITION_MS, delay: 90, easing: 'cubic-bezier(.22,1,.36,1)', fill: 'forwards' },
+          { duration: TRANSITION_MS, delay: 90, easing: 'cubic-bezier(.22,1,.36,1)', fill: 'both' },
         )
         .finished.then(finish)
         .catch(finish)

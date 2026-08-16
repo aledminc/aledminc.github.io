@@ -1,0 +1,46 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630" role="img" aria-labelledby="title desc">
+  <title id="title">Xander Minch — Systems that sense and decide</title>
+  <desc id="desc">Warm cream portfolio card with navy typography and a forest green systems diagram.</desc>
+  <defs>
+    <pattern id="grid" width="70" height="70" patternUnits="userSpaceOnUse">
+      <path d="M70 0H0V70" fill="none" stroke="#0e1a2b" stroke-opacity=".055"/>
+    </pattern>
+    <radialGradient id="wash" cx="82%" cy="12%" r="85%">
+      <stop offset="0" stop-color="#17304f" stop-opacity=".13"/>
+      <stop offset="1" stop-color="#17304f" stop-opacity="0"/>
+    </radialGradient>
+    <filter id="shadow" x="-30%" y="-30%" width="160%" height="180%">
+      <feDropShadow dx="12" dy="18" stdDeviation="18" flood-color="#0e1a2b" flood-opacity=".15"/>
+    </filter>
+  </defs>
+
+  <rect width="1200" height="630" fill="#ecead9"/>
+  <rect width="1200" height="630" fill="url(#grid)"/>
+  <rect width="1200" height="630" fill="url(#wash)"/>
+
+  <g transform="translate(78 56) scale(.55)">
+    <path fill="#224439" d="M26.5 29.5H50.5L68 48.5 56 61.5Z"/>
+    <path fill="#23453a" d="M84 66.5l34.5 38H95.5L73 79.5Z"/>
+    <path fill="#15263b" d="M29.5 104.5H50l23.5-25L101.5 48c4-2.7 7.3-3.5 10-3.5 5.3 0 14 6.2 14 14.5v45.5H141V59c0-8.3 7.5-14.5 14.5-14.5S171 50.7 171 59v45.5h14.5V53c0-13.5-11.7-23.5-25-23.5-9.3 0-18.3 3.7-25 9.9-5.9-6.4-13.8-9.9-22.5-9.9-9.2 0-16.8 3.7-24.2 10.8Z"/>
+  </g>
+  <text x="190" y="106" fill="#0e1a2b" font-family="Arial, sans-serif" font-size="27" font-weight="700">Xander Minch</text>
+  <text x="190" y="132" fill="#2c6a51" font-family="monospace" font-size="12" letter-spacing="3">CS · INTELLIGENT SYSTEMS</text>
+
+  <text x="82" y="310" fill="#0e1a2b" font-family="Arial, sans-serif" font-size="76" font-weight="700" letter-spacing="-4">
+    <tspan x="82" dy="0">Systems that sense</tspan>
+    <tspan x="82" dy="82">and decide.</tspan>
+  </text>
+  <text x="86" y="476" fill="#526274" font-family="Arial, sans-serif" font-size="25">Computer science · AI/ML · autonomous systems</text>
+
+  <g transform="translate(825 220)" filter="url(#shadow)">
+    <rect width="280" height="210" rx="30" fill="#f8f7ef" fill-opacity=".9" stroke="#fff"/>
+    <path d="M42 64C105 64 102 105 145 105M42 105H145M42 146C105 146 102 105 145 105M145 105H232" fill="none" stroke="#33507a" stroke-width="3" stroke-dasharray="7 9"/>
+    <g fill="#2c6a51">
+      <circle cx="42" cy="64" r="7"/><circle cx="42" cy="105" r="7"/><circle cx="42" cy="146" r="7"/><circle cx="145" cy="105" r="10"/><circle cx="232" cy="105" r="8"/>
+    </g>
+    <circle cx="145" cy="105" r="31" fill="none" stroke="#2c6a51" stroke-opacity=".35"/>
+  </g>
+
+  <rect x="82" y="554" width="1040" height="2" rx="1" fill="#0e1a2b" fill-opacity=".1"/>
+  <text x="82" y="590" fill="#33507a" font-family="monospace" font-size="14" letter-spacing="2">ALEDMINC.GITHUB.IO</text>
+</svg>

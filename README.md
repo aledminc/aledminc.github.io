@@ -74,14 +74,16 @@ src/
   index.css             design tokens, materials, .layer/.scene, .switch, .btn
   layout/               Layout (field + nav + <Outlet/> + footer),
                         MeridianField — the fixed canvas every page sits on
+  components/           HeroRotator and the build-fed ContributionGraph
   pages/                Home, Projects, Schedule
-  sections/             Hero + SensorDisc, Trajectory, Pursuits,
+  sections/             Hero, Trajectory, Pursuits,
                         SignatureWall + SignaturePad
   hooks/                useAnimeScope  — anime.js scope, reduced-motion aware
                         useSceneExit   — writes --p for the sideways exits
                         useInView      — latches when a scene is reached
                         useMediaQuery
-  data/                 content: projects, schedule, hobbies, timeline, socials
+  data/                 content: projects, schedule, hobbies, timeline, socials,
+                        and the local contribution-data fallback
 public/assets/          logo, project thumbnails, hobby plates (all SVG)
 public/
   CNAME                 only if a custom domain is used
@@ -92,3 +94,45 @@ public/
 Pushes to `main` trigger [.github/workflows/deploy.yml](.github/workflows/deploy.yml).
 Repo **Settings → Pages → Build and deployment → Source** must be set to
 **GitHub Actions**. The workflow can also be re-run manually from the Actions tab.
+
+### Required Actions secrets
+
+The build expects these repository secrets under **Settings → Secrets and
+variables → Actions**:
+
+- `GH_CONTRIB_TOKEN` — a read-only GitHub token used only inside Actions to
+  fetch the contribution calendar. It is never included in client JavaScript.
+- `VITE_EMAILJS_SERVICE_ID`
+- `VITE_EMAILJS_TEMPLATE_ID`
+- `VITE_EMAILJS_PUBLIC_KEY`
+
+The GitHub username is set to `aledminc` in the workflow. The contribution job
+runs before Vite builds, daily at `06:17 UTC`, on pushes to `main`, and through
+manual workflow dispatch. It writes fresh data to `src/data/contributions.json`
+inside the ephemeral Actions checkout; it does not commit generated data back.
+
+## GitHub activity pipeline
+
+The fetch implementation lives at
+[`.github/scripts/fetch-contributions.mjs`](.github/scripts/fetch-contributions.mjs).
+GitHub limits contribution-calendar queries to roughly one year, so the script
+chunks the anchor-to-today range into 364-day windows, joins the responses,
+removes padded/overlapping days, and bakes the exact date range into the deploy.
+
+Local development uses the committed placeholder contribution file. The graph
+fills every missing date from its fixed Sunday anchor (`2026-06-28`) with zero,
+so the calendar remains structurally accurate without requiring a local token.
+Do not put `GH_CONTRIB_TOKEN` in a `VITE_*` variable or `.env`: Vite variables
+are public by design.
+
+For an optional local real-data refresh, expose the token only to the script
+process and run:
+
+```bash
+GH_CONTRIB_TOKEN=... GH_USERNAME=aledminc node .github/scripts/fetch-contributions.mjs
+```
+
+The hero rotator currently has one slide, so its segmented timer is correctly
+hidden. Adding another entry to `HERO_SLIDES` in `src/sections/Hero.jsx`
+automatically enables the eight-second timer, keyboard tabs, and hover/focus
+pause behavior.
