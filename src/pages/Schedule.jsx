@@ -1,10 +1,7 @@
-import { useMemo, useRef, useState } from 'react'
+import { useEffect, useMemo, useRef, useState } from 'react'
 import emailjs from '@emailjs/browser'
-import { animate, stagger } from 'animejs'
-import { LuArrowRight } from 'react-icons/lu'
+import { LuArrowRight, LuX } from 'react-icons/lu'
 import { useMediaQuery } from '../hooks/useMediaQuery.js'
-import { useAnimeScope } from '../hooks/useAnimeScope.js'
-import { useSceneExit } from '../hooks/useSceneExit.js'
 import { events, days, kindLabels, semester } from '../data/schedule.js'
 import { contactEmail } from '../data/socials.js'
 import './Schedule.css'
@@ -48,40 +45,6 @@ function localNowForInput() {
 
 export default function Schedule() {
   const isNarrow = useMediaQuery('(max-width: 860px)')
-  const scene = useSceneExit([isNarrow])
-
-  const { root } = useAnimeScope(
-    () => {
-      animate('.sched__head > *', {
-        opacity: [0, 1],
-        translateX: [-30, 0],
-        delay: stagger(90),
-        duration: 640,
-        ease: 'out(2)',
-      })
-
-      // The board resolves rather than slides: it is a grid, so it should
-      // assemble in place.
-      animate('.board__shell', {
-        opacity: [0, 1],
-        scale: [0.985, 1],
-        duration: 720,
-        delay: 220,
-        ease: 'out(3)',
-      })
-
-      // Blocks slide into their columns from the left, ordered across the
-      // week. Nothing on this site enters on the vertical axis.
-      animate('.tt__event, .sched__row', {
-        opacity: [0, 1],
-        translateX: [-18, 0],
-        delay: stagger(38, { start: 380 }),
-        duration: 420,
-        ease: 'out(2)',
-      })
-    },
-    [isNarrow],
-  )
 
   // Grid bounds come from the data, so adding an evening club meeting extends
   // the timetable rather than overflowing it.
@@ -140,10 +103,49 @@ export default function Schedule() {
 
   // ---------- meeting request ----------
   const formRef = useRef(null)
+  const requestButtonRef = useRef(null)
+  const closeButtonRef = useRef(null)
+  const dialogRef = useRef(null)
+  const [meetingOpen, setMeetingOpen] = useState(false)
   const [status, setStatus] = useState('idle') // idle | sending | sent | error
   const [when, setWhen] = useState('')
   const [dateError, setDateError] = useState('')
   const minDateTime = useMemo(() => localNowForInput(), [])
+
+  useEffect(() => {
+    if (!meetingOpen) return undefined
+    const previousOverflow = document.body.style.overflow
+    document.body.style.overflow = 'hidden'
+    const frame = requestAnimationFrame(() => closeButtonRef.current?.focus())
+    const onKeyDown = (event) => {
+      if (event.key === 'Escape') {
+        setMeetingOpen(false)
+        return
+      }
+      if (event.key !== 'Tab') return
+
+      const focusable = dialogRef.current?.querySelectorAll(
+        'button:not([disabled]), input:not([disabled]), textarea:not([disabled]), a[href]',
+      )
+      if (!focusable?.length) return
+      const first = focusable[0]
+      const last = focusable[focusable.length - 1]
+      if (event.shiftKey && document.activeElement === first) {
+        event.preventDefault()
+        last.focus()
+      } else if (!event.shiftKey && document.activeElement === last) {
+        event.preventDefault()
+        first.focus()
+      }
+    }
+    window.addEventListener('keydown', onKeyDown)
+    return () => {
+      cancelAnimationFrame(frame)
+      document.body.style.overflow = previousOverflow
+      window.removeEventListener('keydown', onKeyDown)
+      requestButtonRef.current?.focus()
+    }
+  }, [meetingOpen])
 
   const onSubmit = async (e) => {
     e.preventDefault()
@@ -182,23 +184,31 @@ export default function Schedule() {
   }
 
   return (
-    <div ref={scene} className="sched page">
-      <div className="container" ref={root}>
+    <div className="sched page">
+      <div className="container">
         {/* ---------- scene 1: the ask ---------- */}
-        <header className="layer layer--left layer--soft sched__head">
+        <header className="sched__head">
           <p className="eyebrow">{semester} · Bloomington, IN</p>
           <h1>My week, mapped.</h1>
           <p className="lede">
             Fixed commitments below. Everything around them is open — that is
             where a call fits.
           </p>
-          <a className="btn" href="#meet">
-            Request a meeting <LuArrowRight size={16} />
-          </a>
         </header>
 
         {/* ---------- scene 2: the board ---------- */}
-        <section className="layer sched__board" aria-label="Weekly commitments">
+        <section className="sched__board" aria-label="Weekly commitments">
+          <div className="sched__board-actions">
+            <button
+              ref={requestButtonRef}
+              className="btn"
+              type="button"
+              onClick={() => setMeetingOpen(true)}
+              aria-haspopup="dialog"
+            >
+              Request a meeting <LuArrowRight size={16} />
+            </button>
+          </div>
           <div className="board__shell">
             <div className="board__top">
               <span className="board__live">
@@ -332,9 +342,31 @@ export default function Schedule() {
           </ul>
         </section>
 
-        {/* ---------- scene 3: the form ---------- */}
-        <section className="layer layer--right meet" id="meet" aria-labelledby="meet-heading">
-          <div className="meet__card glass">
+        {meetingOpen && (
+          <div
+            className="meet-modal"
+            onMouseDown={(event) => {
+              if (event.target === event.currentTarget) setMeetingOpen(false)
+            }}
+          >
+            <section
+              ref={dialogRef}
+              className="meet"
+              id="meet"
+              role="dialog"
+              aria-modal="true"
+              aria-labelledby="meet-heading"
+            >
+              <div className="meet__card glass">
+                <button
+                  ref={closeButtonRef}
+                  className="meet__close"
+                  type="button"
+                  onClick={() => setMeetingOpen(false)}
+                  aria-label="Close meeting request"
+                >
+                  <LuX size={19} />
+                </button>
             <p className="eyebrow">Get in touch</p>
             <h2 id="meet-heading">Request a meeting.</h2>
 
@@ -422,8 +454,10 @@ export default function Schedule() {
                 )}
               </div>
             </form>
+              </div>
+            </section>
           </div>
-        </section>
+        )}
       </div>
     </div>
   )

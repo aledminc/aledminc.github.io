@@ -3,19 +3,20 @@
 export const timeline = [
   {
     id: 'iu-bs-start',
-    date: 'Aug 2023',
-    title: 'Started B.S. in Computer Science',
+    date: 'Aug 2023 – May 2027 (expected)',
+    title: 'B.S. in Computer Science',
     org: 'Indiana University, Bloomington',
     blurb:
       'Specializing in Artificial Intelligence, with minors in Data Science, Mathematics, and Business.',
     tag: 'education',
+    icon: 'education',
     artifact: {
-      title: 'B.S. Computer Science at IU',
-      meta: 'Luddy School · Program',
-      preview: '/assets/timeline/iu-trident.png',
-      href: 'https://luddy.iu.edu/academics/undergraduate/bs-computer-science.html',
-      alt: 'Indiana University trident',
-      kind: 'brand',
+      title: 'Undergraduate Transcript',
+      meta: 'PDF · 2 pages',
+      preview: '/assets/timeline/transcript-preview.webp',
+      href: '/assets/timeline/undergraduate-transcript.pdf',
+      alt: 'Cropped preview of Xander Minch’s undergraduate transcript',
+      kind: 'document portrait compact',
     },
   },
   {
@@ -26,6 +27,7 @@ export const timeline = [
     blurb:
       'Designed an AI-powered clinical protocol review system built on LLM summarization pipelines, cutting manual document review time by 40–60%.',
     tag: 'industry',
+    icon: 'industry',
     artifact: {
       title: 'Saama Technologies',
       meta: 'Company website',
@@ -43,6 +45,7 @@ export const timeline = [
     blurb:
       'Built an end-to-end pipeline for single-cell RNA expression data across 30k+ genes and millions of cells, reaching 0.065 reconstruction loss on the main task.',
     tag: 'research',
+    icon: 'research',
     artifact: {
       title: 'CIGS-TTVAE Research Poster',
       meta: 'PDF · Research artifact',
@@ -60,6 +63,7 @@ export const timeline = [
     blurb:
       'Leading a competition rover build across mechanical, hardware, and software subteams — sensors, firmware, controls, and autonomous navigation.',
     tag: 'leadership',
+    icon: 'robotics',
     artifact: {
       title: 'University Rover Competition (URC)',
       meta: 'Mars Society · Competition',
@@ -70,30 +74,14 @@ export const timeline = [
     },
   },
   {
-    id: 'iu-bs',
-    date: 'May 2027',
-    title: 'B.S. Computer Science',
-    org: 'Indiana University, Bloomington',
-    blurb: 'GPA 3.7. AI specialization.',
-    tag: 'education',
-    upcoming: true,
-    artifact: {
-      title: 'Undergraduate Transcript',
-      meta: 'PDF · 2 pages',
-      preview: '/assets/timeline/transcript-preview.webp',
-      href: '/assets/timeline/undergraduate-transcript.pdf',
-      alt: 'Preview of Xander Minch’s undergraduate transcript',
-      kind: 'document portrait',
-    },
-  },
-  {
     id: 'iu-ms',
-    date: 'Dec 2027',
-    title: 'Accelerated M.S., Intelligent Systems Engineering',
+    date: 'Aug 2026 – Dec 2027',
+    title: 'Accelerated M.S. in Intelligent Systems Engineering',
     org: 'Indiana University, Bloomington',
-    blurb: 'Specializing in Cyber-Physical Systems.',
+    blurb:
+      'Accelerated Master of Science program specializing in Cyber-Physical Systems. Start: Aug 2026. Expected completion: Dec 2027.',
     tag: 'education',
-    upcoming: true,
+    icon: 'education',
     artifact: {
       title: 'M.S. Intelligent Systems Engineering',
       meta: 'Luddy School · Program',

@@ -75,7 +75,7 @@
    ============================================================ */
 .rail {
   position: relative;
-  padding: 21px clamp(12px, 2.4vw, 22px);
+  padding: 17px clamp(12px, 2.4vw, 22px);
   border-radius: 999px;
   background: linear-gradient(150deg, var(--bone-deep), var(--paper));
   box-shadow: var(--well);
@@ -118,12 +118,14 @@
   position: absolute;
   top: 0;
   left: calc((var(--i) + 0.5) / var(--n) * 100%);
-  width: 38px;
-  height: 38px;
-  margin: -19px 0 0 -19px;
-  border-radius: 50%;
-  background: linear-gradient(150deg, var(--paper), var(--bone-deep));
-  box-shadow: var(--raise-2);
+  width: 50px;
+  height: 50px;
+  margin: -25px 0 0 -25px;
+  border-radius: 16px;
+  background: rgba(63, 138, 104, 0.08);
+  box-shadow:
+    inset 0 0 0 1px rgba(63, 138, 104, 0.18),
+    0 8px 24px rgba(44, 106, 81, 0.13);
   transition: left 520ms cubic-bezier(0.22, 1, 0.36, 1);
 }
 
@@ -135,53 +137,65 @@
 
 .rail__node {
   position: relative;
+  z-index: 1;
   justify-self: center;
-  width: 22px;
-  height: 22px;
+  display: grid;
+  width: 44px;
+  height: 44px;
   padding: 0;
+  place-items: center;
   border: none;
-  border-radius: 50%;
+  border-radius: 14px;
   background: transparent;
+  color: var(--slate);
   cursor: pointer;
 }
 
-/* The dot itself, drawn on the button so the hit area can stay generous. */
-.rail__node::after {
-  content: '';
-  position: absolute;
-  inset: 7px;
-  border-radius: 50%;
-  background: var(--slate-soft);
-  box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.5);
+/* Each milestone is a small tactile instrument key. The moving carriage sits
+   behind the active key, preserving the rail's mechanism without reducing the
+   stops to anonymous dots. */
+.rail__icon {
+  display: grid;
+  width: 36px;
+  height: 36px;
+  place-items: center;
+  border-radius: 12px;
+  background: linear-gradient(145deg, var(--paper), var(--bone-deep));
+  box-shadow:
+    var(--raise-1),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.66);
   transition:
-    inset 300ms cubic-bezier(0.22, 1, 0.36, 1),
+    color 260ms ease,
+    translate 300ms cubic-bezier(0.22, 1, 0.36, 1),
+    box-shadow 300ms ease,
     background 300ms ease;
 }
 
-.rail__node:hover::after {
-  inset: 5px;
-  background: var(--navy-soft);
+.rail__node:hover .rail__icon {
+  color: var(--navy);
+  translate: 0 -2px;
 }
 
-.rail__node.is-active::after {
-  inset: 4px;
-  background: var(--forest-soft);
-  box-shadow: 0 0 0 3px rgba(63, 138, 104, 0.22);
+.rail__node:focus-visible {
+  outline: none;
 }
 
-/* Not yet happened: hollow. */
-.rail__node.is-upcoming::after {
-  background: transparent;
-  box-shadow: inset 0 0 0 2px var(--slate-soft);
-}
-
-.rail__node.is-upcoming.is-active::after {
+.rail__node:focus-visible .rail__icon {
   box-shadow:
-    inset 0 0 0 2px var(--forest-soft),
-    0 0 0 3px rgba(63, 138, 104, 0.22);
+    var(--raise-1),
+    0 0 0 3px rgba(63, 138, 104, 0.26);
 }
 
-/* Date on hover/focus, so the rail itself stays six dots and a carriage. */
+.rail__node.is-active .rail__icon {
+  color: var(--forest);
+  translate: 0 0;
+  background: linear-gradient(145deg, var(--bone-deep), var(--paper));
+  box-shadow:
+    var(--press),
+    0 0 0 1px rgba(63, 138, 104, 0.26);
+}
+
+/* Date on hover/focus keeps the rail itself focused on icons and carriage. */
 .rail__tip {
   position: absolute;
   bottom: calc(100% + 14px);
@@ -227,6 +241,15 @@
   align-items: stretch;
   gap: clamp(16px, 2.2vw, 24px);
   min-height: 16.25rem;
+}
+
+.stop--compact {
+  min-height: 0;
+}
+
+.stop--compact .stop__layout {
+  min-height: 0;
+  align-items: center;
 }
 
 .stop__copy {
@@ -358,6 +381,22 @@
   object-position: center 8%;
 }
 
+/* The transcript is supporting evidence, not the visual subject of the stop.
+   Show a legible slice of its first page while letting the copy set height. */
+.artifact--compact {
+  align-self: center;
+}
+
+.artifact--compact .artifact__preview {
+  flex: none;
+  min-height: 0;
+  height: 104px;
+}
+
+.artifact--compact .artifact__preview img {
+  object-position: center 12%;
+}
+
 .artifact--brand .artifact__preview {
   padding: clamp(30px, 5vw, 58px);
   background: linear-gradient(145deg, rgba(255,255,255,.9), rgba(250,249,246,.62));
@@ -448,9 +487,9 @@
   }
 
   .rail__carriage::before {
-    width: 38px;
-    height: 38px;
-    margin: -19px 0 0 -19px;
+    width: 48px;
+    height: 48px;
+    margin: -24px 0 0 -24px;
   }
 
   .stop {
@@ -472,6 +511,7 @@
   .stop__blurb { font-size: .68rem; line-height: 1.42; }
   .stop__artifact { padding: 5px; }
   .artifact__preview { min-height: 170px; }
+  .artifact--compact .artifact__preview { min-height: 0; height: 86px; }
   .artifact--brand .artifact__preview { padding: 20px; }
   .artifact__caption { padding: 7px 3px 2px; }
   .artifact__caption strong { font-size: .58rem; white-space: normal; }

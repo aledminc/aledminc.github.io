@@ -1,9 +1,5 @@
 /* ============================================================
-   PROJECTS — an index, not a gallery
-
-   Nine thumbnails competing at once was the old page. Here the list
-   is type only; the artwork lives in one panel that follows the
-   cursor, so exactly one project is ever illustrated.
+   PROJECTS — a quiet, type-led vertical index
    ============================================================ */
 /* rem, not ch: `ch` here resolves against the body font-size, not the h1's. */
 .index__head {
@@ -32,13 +28,6 @@
 
 .row-wrap {
   border-bottom: 1px solid var(--line);
-}
-
-/* Rows leave along the list's own axis, one after another as each reaches
-   the top — a conveyor rather than a page scrolling away. Shorter throw than
-   a full scene layer, because nine of them are doing it in sequence. */
-.index__list > .row-wrap {
-  --dx: 120;
 }
 
 /* ---------- a row ---------- */
@@ -182,25 +171,6 @@
   translate: 3px -3px;
 }
 
-/* Touch devices have no hover to open the preview with, so the artwork comes
-   back inline — and the row needs the extra column to put it in. */
-.row--thumbed {
-  grid-template-columns: auto minmax(0, 1fr) auto auto auto;
-}
-
-.row__thumb {
-  width: 92px;
-  border-radius: var(--radius-sm);
-  overflow: hidden;
-  box-shadow: var(--raise-1);
-}
-
-.row__thumb img {
-  width: 100%;
-  aspect-ratio: 16 / 9;
-  object-fit: cover;
-}
-
 .index__none {
   padding: 48px 0;
   font-family: var(--font-data);
@@ -209,78 +179,13 @@
   color: var(--slate);
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .row {
-    opacity: 0;
-  }
-}
-
-/* ============================================================
-   THE PREVIEW
-
-   Fixed to the viewport and translated to the cursor. pointer-events
-   are off, so it can sit directly under the cursor without ever
-   stealing the hover that is keeping it open.
-   ============================================================ */
-.preview {
-  position: fixed;
-  top: 0;
-  left: 0;
-  z-index: 60;
-  width: clamp(210px, 20vw, 290px);
-  border-radius: var(--radius);
-  overflow: hidden;
-  pointer-events: none;
-  opacity: 0;
-  /* Lifted clear of the cursor, not centred on it: at -60% the panel sat
-     straight over the title of the row it was previewing. -118% puts it fully
-     above the hovered row. */
-  translate: calc(var(--x, 0px) + 40px) calc(var(--y, 0px) - 118%);
-  scale: 0.86;
-  rotate: -3deg;
-  box-shadow: var(--raise-3);
-  border: 1px solid rgba(255, 255, 255, 0.8);
-  transition:
-    opacity 300ms ease,
-    scale 460ms cubic-bezier(0.22, 1, 0.36, 1),
-    rotate 460ms cubic-bezier(0.22, 1, 0.36, 1);
-}
-
-.preview.is-on {
-  opacity: 1;
-  scale: 1;
-  rotate: -1.5deg;
-}
-
-.preview img {
-  width: 100%;
-  aspect-ratio: 16 / 9;
-  object-fit: cover;
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .preview {
-    transition: opacity 120ms ease;
-    scale: 1;
-    rotate: 0deg;
-  }
-}
-
 /* ============================================================
    NARROW
    ============================================================ */
 @media (max-width: 860px) {
-  .row,
-  .row--thumbed {
+  .row {
     grid-template-columns: auto minmax(0, 1fr) auto;
     gap: 12px clamp(12px, 3vw, 20px);
-  }
-
-  /* Thumb to the right of the title, meta on its own line beneath. */
-  .row__thumb {
-    grid-column: 3;
-    grid-row: 1;
-    width: 96px;
   }
 
   .row__meta {
@@ -291,21 +196,10 @@
   .row__go {
     display: none;
   }
-
-  .index__list > .row-wrap {
-    --dx: 70;
-  }
 }
 
 @media (max-width: 520px) {
-  .row,
-  .row--thumbed {
+  .row {
     grid-template-columns: auto minmax(0, 1fr);
-  }
-
-  .row__thumb {
-    grid-column: 1 / -1;
-    grid-row: auto;
-    width: 100%;
   }
 }

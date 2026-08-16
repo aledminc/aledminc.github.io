@@ -57,6 +57,23 @@
   contain: layout paint;
 }
 
+/* Homepage scenes share one composition rule: vertically centered content on
+   a strict one-third / two-thirds horizontal grid. */
+.scene-deck .scene {
+  display: grid;
+  align-items: center;
+  padding: clamp(24px, 4vh, 48px) 0 76px;
+}
+
+.scene-deck .split {
+  grid-template-columns: minmax(0, 1fr) minmax(0, 2fr);
+  gap: clamp(28px, 4.5vw, 64px);
+}
+
+.scene-deck .split--flip {
+  grid-template-columns: minmax(0, 2fr) minmax(0, 1fr);
+}
+
 .scene-deck [data-scene][hidden] {
   display: none !important;
 }
@@ -167,6 +184,13 @@
   .scene-deck .scene { padding: clamp(20px, 4vh, 42px) 0 76px; }
   .scene-deck .hero { padding-top: 20px; }
   .scene-deck .split { gap: clamp(14px, 2.5vh, 24px); }
+  .scene-deck .split,
+  .scene-deck .split--flip { grid-template-columns: minmax(0, 1fr); }
+  .scene-deck .split--flip > .split__aside,
+  .scene-deck .split--flip > .split__main {
+    grid-column: 1;
+    grid-row: auto;
+  }
   .scene-deck .pursuit__frame { max-height: 24vh; }
   .scene-deck .sheet { max-height: 34vh; min-height: 180px; }
   .scene-deck .wall__capture { margin-top: 12px; gap: 9px; }

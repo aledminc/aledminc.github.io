@@ -1,17 +1,51 @@
 import { useCallback, useState } from 'react'
 import { animate, stagger } from 'animejs'
-import { LuArrowUpRight, LuFileText } from 'react-icons/lu'
+import {
+  LuArrowUpRight,
+  LuBriefcaseBusiness,
+  LuFileText,
+  LuGraduationCap,
+  LuMicroscope,
+} from 'react-icons/lu'
 import { useAnimeScope } from '../hooks/useAnimeScope.js'
 import { useSceneExit } from '../hooks/useSceneExit.js'
 import { useInView } from '../hooks/useInView.js'
 import { timeline } from '../data/timeline.js'
 import './Trajectory.css'
 
+const stopIcons = {
+  education: LuGraduationCap,
+  industry: LuBriefcaseBusiness,
+  research: LuMicroscope,
+  robotics: RobotArmIcon,
+}
+
+function RobotArmIcon({ size = 18, ...props }) {
+  return (
+    <svg
+      width={size}
+      height={size}
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="1.8"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      {...props}
+    >
+      <path d="M4 20h12M6 20v-3h8v3M10 17l1.5-5.2M11.5 11.8l4-3.8M15.5 8l2.8 2.7" />
+      <circle cx="11.5" cy="11.8" r="1.7" />
+      <circle cx="15.5" cy="8" r="1.7" />
+      <path d="M18.3 10.7l1.8-1.8M18.3 10.7l1.8 1.8" />
+    </svg>
+  )
+}
+
 /**
  * Scene 02.
  *
- * The old version put all six entries on screen at once in a two-column
- * zigzag, which is six headings, six blurbs and a spine competing for the
+ * The old version put every entry on screen at once in a two-column
+ * zigzag, which made the headings, blurbs, and spine compete for the
  * same glance. This shows ONE — you move a carriage along a rail and the
  * panel reports what is at that stop. Same content, one thing to read.
  */
@@ -20,7 +54,9 @@ export default function Trajectory() {
   // Gate the first run on arrival: an entrance that has already played by the
   // time you scroll to it is just a static section.
   const reached = useInView(scene)
-  const [active, setActive] = useState(timeline.length - 3)
+  const [active, setActive] = useState(() =>
+    Math.max(0, timeline.findIndex((item) => item.id === 'robotics')),
+  )
   const entry = timeline[active]
 
   const { root } = useAnimeScope(
@@ -70,7 +106,7 @@ export default function Trajectory() {
           <p className="eyebrow">Trajectory</p>
           <h2 id="traj-heading">Building toward what&apos;s next.</h2>
           <p className="lede">
-            Six stops between starting a CS degree and finishing a master&apos;s.
+            Five stops between starting a CS degree and finishing a master&apos;s.
             Move the carriage.
           </p>
         </header>
@@ -91,31 +127,37 @@ export default function Trajectory() {
             <span className="rail__carriage" aria-hidden="true" />
 
             <div className="rail__nodes">
-              {timeline.map((item, i) => (
-                <button
-                  key={item.id}
-                  type="button"
-                  role="tab"
-                  id={`stop-tab-${item.id}`}
-                  aria-selected={i === active}
-                  aria-controls="stop-panel"
-                  tabIndex={i === active ? 0 : -1}
-                  className={`rail__node${i === active ? ' is-active' : ''}${
-                    item.upcoming ? ' is-upcoming' : ''
-                  }`}
-                  onClick={() => setActive(i)}
-                >
-                  <span className="sr-only">{item.title}</span>
-                  <span className="rail__tip" aria-hidden="true">
-                    {item.date}
-                  </span>
-                </button>
-              ))}
+              {timeline.map((item, i) => {
+                const StopIcon = stopIcons[item.icon] ?? LuGraduationCap
+                return (
+                  <button
+                    key={item.id}
+                    type="button"
+                    role="tab"
+                    id={`stop-tab-${item.id}`}
+                    aria-selected={i === active}
+                    aria-controls="stop-panel"
+                    tabIndex={i === active ? 0 : -1}
+                    className={`rail__node${i === active ? ' is-active' : ''}`}
+                    onClick={() => setActive(i)}
+                  >
+                    <span className="sr-only">{item.title}</span>
+                    <span className="rail__icon" aria-hidden="true">
+                      <StopIcon size={18} />
+                    </span>
+                    <span className="rail__tip" aria-hidden="true">
+                      {item.date}
+                    </span>
+                  </button>
+                )
+              })}
             </div>
           </div>
 
           <article
-            className="stop glass"
+            className={`stop glass${
+              entry.artifact.kind.includes('compact') ? ' stop--compact' : ''
+            }`}
             id="stop-panel"
             role="tabpanel"
             aria-labelledby={`stop-tab-${entry.id}`}
@@ -126,7 +168,7 @@ export default function Trajectory() {
                 <p className="stop__line stop__meta">
                   <time>{entry.date}</time>
                   <span className="stop__tag" data-tag={entry.tag}>
-                    {entry.upcoming ? 'Expected' : entry.tag}
+                    {entry.tag}
                   </span>
                 </p>
 
