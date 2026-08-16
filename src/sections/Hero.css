@@ -35,6 +35,10 @@
   align-self: start;
 }
 
+.hero__rotator {
+  min-width: 0;
+}
+
 /* Entrance start states are scoped to the media query on purpose: with
    reduced motion no anime scope is created, so anything hidden here
    unconditionally would never come back. */
@@ -43,7 +47,7 @@
   .hero__title,
   .hero__lede,
   .hero__cta,
-  .disc {
+  .hero-rotator {
     opacity: 0;
   }
 }

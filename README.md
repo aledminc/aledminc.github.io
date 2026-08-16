@@ -92,3 +92,18 @@ public/
 Pushes to `main` trigger [.github/workflows/deploy.yml](.github/workflows/deploy.yml).
 Repo **Settings → Pages → Build and deployment → Source** must be set to
 **GitHub Actions**. The workflow can also be re-run manually from the Actions tab.
+
+### GitHub activity deploy checklist
+
+Before pushing the contribution graph workflow:
+
+- Add the repository Actions secret `GH_CONTRIB_TOKEN` with read-only profile/contribution access.
+- Confirm `GH_USERNAME` in the workflow is the exact account name (`aledminc`).
+
+After deployment:
+
+- Confirm the hero shows the contribution graph beside the copy without vertical scrolling.
+- Confirm the first graph column begins Sunday, June 28, 2026, with no partial leading week.
+- Spot-check a recent contribution day against GitHub and confirm the one-slide timer is hidden.
+- Manually run the workflow the next day and confirm the new day appears.
+- Re-run the performance and reduced-motion checks after adding any future rotating slide.
