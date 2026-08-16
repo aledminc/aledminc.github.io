@@ -1,5 +1,5 @@
 import { FaGithub, FaInstagram, FaLinkedinIn, FaXTwitter } from 'react-icons/fa6'
-import { LuArrowUp, LuArrowUpRight } from 'react-icons/lu'
+import { LuArrowUp, LuArrowUpRight, LuChevronDown } from 'react-icons/lu'
 import { socials, contactEmail } from '../data/socials.js'
 
 const SOCIAL_META = {
@@ -17,6 +17,16 @@ const LINKS = [
   socialById.x,
 ].filter(Boolean)
 
+const OPEN_ROLES = [
+  'Data Engineer',
+  'ML Engineer',
+  'AI Engineer',
+  'Data Scientist',
+  'Full Stack Dev',
+  'Tech Consulting',
+  'Tech Sales',
+]
+
 export default function Footer() {
   const backToTop = () => {
     if (document.querySelector('.scene-deck')) {
@@ -30,10 +40,18 @@ export default function Footer() {
     <footer className="footer" data-scene data-scene-label="Contact">
       <div className="container">
         <div className="footer__panel">
-          <div className="footer__signal">
-            <span className="footer__signal-dot" aria-hidden="true" />
-            Open to 2027 engineering roles
-          </div>
+          <details className="footer__roles">
+            <summary>
+              Open to 2027 engineering roles
+              <LuChevronDown size={14} aria-hidden="true" />
+            </summary>
+            <div className="footer__role-list">
+              <span>Roles in view</span>
+              <ul>
+                {OPEN_ROLES.map((role) => <li key={role}>{role}</li>)}
+              </ul>
+            </div>
+          </details>
 
           <div className="footer__hero">
             <div>

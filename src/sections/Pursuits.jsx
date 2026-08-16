@@ -91,7 +91,7 @@ export default function Pursuits() {
       {/* Back to text-left, mirroring the trajectory above it. */}
       <div className="container split pursuits__grid" ref={root}>
         <header className="layer layer--left layer--soft split__aside pursuits__head">
-          <p className="eyebrow">Off the clock</p>
+          <span className="eyebrow eyebrow--bare" aria-hidden="true" />
           <h2 id="pursuits-heading">What I do otherwise.</h2>
           <p className="lede">Same instinct to measure things. Pick one.</p>
 

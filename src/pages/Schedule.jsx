@@ -187,18 +187,17 @@ export default function Schedule() {
     <div className="sched page">
       <div className="container">
         {/* ---------- scene 1: the ask ---------- */}
-        <header className="sched__head">
-          <p className="eyebrow">{semester} · Bloomington, IN</p>
-          <h1>My week, mapped.</h1>
-          <p className="lede">
-            Fixed commitments below. Everything around them is open — that is
-            where a call fits.
-          </p>
-        </header>
-
-        {/* ---------- scene 2: the board ---------- */}
-        <section className="sched__board" aria-label="Weekly commitments">
-          <div className="sched__board-actions">
+        <header className="sched__masthead">
+          <div className="sched__head">
+            <span className="eyebrow eyebrow--bare" aria-hidden="true" />
+            <h1>My week, mapped.</h1>
+            <p className="lede">
+              Fixed commitments below. Everything around them is open — that is
+              where a call fits.
+            </p>
+          </div>
+          <div className="sched__ask">
+            <p>Have a time in mind?</p>
             <button
               ref={requestButtonRef}
               className="btn"
@@ -209,10 +208,14 @@ export default function Schedule() {
               Request a meeting <LuArrowRight size={16} />
             </button>
           </div>
+        </header>
+
+        {/* ---------- scene 2: the board ---------- */}
+        <section className="sched__board" aria-label="Weekly commitments">
           <div className="board__shell">
             <div className="board__top">
               <span className="board__live">
-                <i aria-hidden="true" /> Live semester view
+                <i aria-hidden="true" />
               </span>
               <span className="board__load">
                 {weeklyHours.toFixed(1)}h scheduled · Eastern time
@@ -357,7 +360,7 @@ export default function Schedule() {
               aria-modal="true"
               aria-labelledby="meet-heading"
             >
-              <div className="meet__card glass">
+              <div className="meet__card">
                 <button
                   ref={closeButtonRef}
                   className="meet__close"
@@ -367,7 +370,6 @@ export default function Schedule() {
                 >
                   <LuX size={19} />
                 </button>
-            <p className="eyebrow">Get in touch</p>
             <h2 id="meet-heading">Request a meeting.</h2>
 
             {!isConfigured && (

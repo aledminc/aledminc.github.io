@@ -2,21 +2,92 @@
    PROJECTS — a quiet, type-led vertical index
    ============================================================ */
 /* rem, not ch: `ch` here resolves against the body font-size, not the h1's. */
-.index__head {
-  max-width: 40rem;
-  margin-bottom: clamp(24px, 4vw, 38px);
+.index__masthead {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(0, 1.15fr) minmax(300px, .85fr);
+  align-items: end;
+  gap: clamp(30px, 7vw, 92px);
+  min-height: clamp(290px, 38vh, 410px);
+  margin-bottom: clamp(34px, 5vw, 58px);
+  padding: clamp(28px, 5vw, 58px);
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, .76);
+  border-radius: clamp(24px, 3vw, 38px);
+  background: linear-gradient(135deg, rgba(255,255,255,.74), rgba(239,238,233,.68));
+  box-shadow: var(--raise-2), inset 0 1px 0 rgba(255,255,255,.9);
 }
 
-.index__head h1 {
+.index__masthead::after {
+  content: '';
+  position: absolute;
+  width: clamp(220px, 34vw, 470px);
+  aspect-ratio: 1;
+  top: -54%;
+  right: -8%;
+  z-index: 0;
+  border: 1px solid rgba(44,106,81,.13);
+  border-radius: 50%;
+  box-shadow: 0 0 0 38px rgba(44,106,81,.035), 0 0 0 82px rgba(23,48,79,.025);
+  pointer-events: none;
+}
+
+.index__head,
+.index__filter-panel {
+  position: relative;
+  z-index: 1;
+  min-width: 0;
+}
+
+.index__head {
+  max-width: 46rem;
+}
+
+.page .index__head h1 {
   margin: 0 0 16px;
+  font-size: clamp(3.4rem, 5.6vw, 5.8rem);
+  line-height: .88;
+  letter-spacing: -.065em;
 }
 
 .index__head .lede {
   font-size: var(--step-0);
 }
 
+.index__filter-panel {
+  justify-self: stretch;
+  padding: 18px;
+  border-radius: 22px;
+  background: linear-gradient(145deg, rgba(250,249,246,.94), rgba(228,226,220,.82));
+  box-shadow: var(--raise-1);
+}
+
+.index__filter-heading {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 18px;
+  margin-bottom: 13px;
+  color: var(--slate);
+  font: 500 .64rem var(--font-data);
+  letter-spacing: .12em;
+  text-transform: uppercase;
+}
+
+.index__filter-heading strong {
+  color: var(--forest);
+  font-size: 1rem;
+}
+
 .index__filter {
-  margin-bottom: clamp(26px, 4vw, 44px);
+  display: flex;
+  width: 100%;
+  border-radius: 18px;
+}
+
+.index__filter .switch__opt {
+  flex: 1 1 auto;
+  padding-inline: 10px;
 }
 
 .index__list {
@@ -183,6 +254,17 @@
    NARROW
    ============================================================ */
 @media (max-width: 860px) {
+  .index__masthead {
+    grid-template-columns: 1fr;
+    min-height: 0;
+    gap: 34px;
+    padding: clamp(28px, 8vw, 48px);
+  }
+
+  .page .index__head h1 {
+    font-size: clamp(3.2rem, 13vw, 5.6rem);
+  }
+
   .row {
     grid-template-columns: auto minmax(0, 1fr) auto;
     gap: 12px clamp(12px, 3vw, 20px);
@@ -199,6 +281,34 @@
 }
 
 @media (max-width: 520px) {
+  .index__masthead {
+    width: 100%;
+    margin-inline: 0;
+    padding: 28px 20px 22px;
+    border-radius: 24px;
+  }
+
+  .index__filter-panel {
+    width: 100%;
+    min-width: 0;
+    padding: 12px;
+  }
+
+  .index__filter {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    border-radius: 16px;
+  }
+
+  .index__filter .switch__opt {
+    min-width: 0;
+    padding-inline: 6px;
+  }
+
+  .index__filter .switch__opt:first-child {
+    grid-column: 1 / -1;
+  }
+
   .row {
     grid-template-columns: auto minmax(0, 1fr);
   }

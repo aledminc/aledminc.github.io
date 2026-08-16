@@ -16,7 +16,7 @@ export default function SensorDisc() {
   return (
     <div className="disc system-map">
       <div className="system-map__bar">
-        <span><i aria-hidden="true" /> Live inference</span>
+        <span className="system-map__live" aria-hidden="true"><i /></span>
         <b>03 channels</b>
       </div>
 

@@ -12,7 +12,7 @@ export default function Layout() {
   return (
     <div className={`shell${isHome ? ' shell--deck' : ''}`}>
       {/* Fixed, behind everything, shared by every route — see MeridianField. */}
-      <MeridianField variant={isHome ? 'home' : 'standard'} />
+      <MeridianField variant="home" />
       <NavHeader />
       {isHome ? (
         <SceneDeck routeKey={pathname}>

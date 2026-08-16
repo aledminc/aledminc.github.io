@@ -103,7 +103,7 @@ export default function Trajectory() {
           straight down it. */}
       <div className="container split split--flip traj__grid" ref={root}>
         <header className="layer layer--right layer--soft split__aside traj__head">
-          <p className="eyebrow">Trajectory</p>
+          <span className="eyebrow eyebrow--bare" aria-hidden="true" />
           <h2 id="traj-heading">Building toward what&apos;s next.</h2>
           <p className="lede">
             Five stops between starting a CS degree and finishing a master&apos;s.

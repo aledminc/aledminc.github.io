@@ -110,6 +110,28 @@ body,
 
 html {
   scroll-padding-top: calc(var(--nav-h) + 24px);
+  scrollbar-width: thin;
+  scrollbar-color: var(--forest-soft) var(--bone-deep);
+}
+
+*::-webkit-scrollbar {
+  width: 11px;
+  height: 11px;
+}
+
+*::-webkit-scrollbar-track {
+  background: linear-gradient(90deg, var(--bone-deep), var(--paper));
+  box-shadow: inset 1px 0 3px rgba(14, 26, 43, 0.08);
+}
+
+*::-webkit-scrollbar-thumb {
+  border: 3px solid var(--bone-deep);
+  border-radius: 999px;
+  background: linear-gradient(180deg, var(--forest-soft), var(--navy-soft));
+}
+
+*::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(180deg, var(--forest), var(--navy));
 }
 
 body {
@@ -461,6 +483,28 @@ p {
   background: var(--forest-soft);
   box-shadow: 0 0 0 3px rgba(44, 106, 81, 0.14);
   flex: none;
+}
+
+.eyebrow--bare {
+  width: 15px;
+  min-height: 15px;
+  gap: 0;
+}
+
+.eyebrow--bare::before {
+  animation: signal-breathe 2.4s ease-in-out infinite;
+}
+
+@keyframes signal-breathe {
+  50% {
+    opacity: 0.48;
+    scale: 0.72;
+    box-shadow: 0 0 0 6px rgba(44, 106, 81, 0.06);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .eyebrow--bare::before { animation: none; }
 }
 
 .lede {

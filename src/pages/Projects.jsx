@@ -31,29 +31,35 @@ export default function Projects() {
   return (
     <div className="index page">
       <div className="container">
-        <header className="index__head">
-          <p className="eyebrow">{projects.length} repositories · 2025 — 2026</p>
-          <h1>Selected work.</h1>
-          <p className="lede">
-            Everything shipped since March 2025. Each row opens the repository.
-          </p>
-        </header>
-
-        <div className="index__filter">
-          <div className="switch" role="group" aria-label="Filter projects by category">
-            {chips.map((tag) => (
-              <button
-                type="button"
-                key={tag}
-                className={`switch__opt${tag === activeTag ? ' is-active' : ''}`}
-                onClick={() => setActiveTag(tag)}
-                aria-pressed={tag === activeTag}
-              >
-                {tag}
-              </button>
-            ))}
+        <header className="index__masthead">
+          <div className="index__head">
+            <span className="eyebrow eyebrow--bare" aria-hidden="true" />
+            <h1>Selected work.</h1>
+            <p className="lede">
+              Everything shipped since March 2025. Each row opens the repository.
+            </p>
           </div>
-        </div>
+
+          <div className="index__filter-panel">
+            <div className="index__filter-heading">
+              <span>Filter the index</span>
+              <strong>{visible.length.toString().padStart(2, '0')}</strong>
+            </div>
+            <div className="switch index__filter" role="group" aria-label="Filter projects by category">
+              {chips.map((tag) => (
+                <button
+                  type="button"
+                  key={tag}
+                  className={`switch__opt${tag === activeTag ? ' is-active' : ''}`}
+                  onClick={() => setActiveTag(tag)}
+                  aria-pressed={tag === activeTag}
+                >
+                  {tag}
+                </button>
+              ))}
+            </div>
+          </div>
+        </header>
 
         <ol className="index__list">
           {visible.map((p, i) => {

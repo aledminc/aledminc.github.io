@@ -76,7 +76,7 @@ export default function Hero() {
             down the middle as you leave, which is why the two layers move
             in opposite directions rather than together. */}
         <div className="layer layer--left layer--soft split__aside hero__copy">
-          <p className="eyebrow hero__eyebrow">Xander Minch · Indiana University</p>
+          <span className="eyebrow eyebrow--bare hero__eyebrow" aria-hidden="true" />
 
           <h1 id="hero-title" className="hero__title">
             {TITLE}
