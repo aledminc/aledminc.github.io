@@ -3,8 +3,6 @@ name: Deploy to GitHub Pages
 on:
   push:
     branches: [main]
-  schedule:
-    - cron: '17 6 * * *'
   workflow_dispatch:
 
 permissions:
@@ -26,11 +24,6 @@ jobs:
           node-version: 20
           cache: npm
       - run: npm ci
-      - name: Fetch live GitHub activity
-        env:
-          GH_CONTRIB_TOKEN: ${{ secrets.GH_CONTRIB_TOKEN }}
-          GH_USERNAME: aledminc
-        run: node .github/scripts/fetch-contributions.mjs
       # Vite inlines VITE_* vars at build time, so the EmailJS config has to be
       # present in THIS step or the deployed form ships unconfigured. Add these
       # under Settings -> Secrets and variables -> Actions. Missing secrets

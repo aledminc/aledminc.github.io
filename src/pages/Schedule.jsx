@@ -115,7 +115,6 @@ export default function Schedule() {
   useEffect(() => {
     if (!meetingOpen) return undefined
     const previousOverflow = document.body.style.overflow
-    const returnFocus = requestButtonRef.current
     document.body.style.overflow = 'hidden'
     const frame = requestAnimationFrame(() => closeButtonRef.current?.focus())
     const onKeyDown = (event) => {
@@ -144,7 +143,7 @@ export default function Schedule() {
       cancelAnimationFrame(frame)
       document.body.style.overflow = previousOverflow
       window.removeEventListener('keydown', onKeyDown)
-      returnFocus?.focus()
+      requestButtonRef.current?.focus()
     }
   }, [meetingOpen])
 
