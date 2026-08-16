@@ -33,7 +33,6 @@ export default function Projects() {
       <div className="container">
         <header className="index__masthead">
           <div className="index__head">
-            <span className="eyebrow eyebrow--bare" aria-hidden="true" />
             <h1>Selected work.</h1>
             <p className="lede">
               Everything shipped since March 2025. Each row opens the repository.

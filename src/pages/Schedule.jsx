@@ -189,7 +189,6 @@ export default function Schedule() {
         {/* ---------- scene 1: the ask ---------- */}
         <header className="sched__masthead">
           <div className="sched__head">
-            <span className="eyebrow eyebrow--bare" aria-hidden="true" />
             <h1>My week, mapped.</h1>
             <p className="lede">
               Fixed commitments below. Everything around them is open — that is
@@ -214,9 +213,6 @@ export default function Schedule() {
         <section className="sched__board" aria-label="Weekly commitments">
           <div className="board__shell">
             <div className="board__top">
-              <span className="board__live">
-                <i aria-hidden="true" />
-              </span>
               <span className="board__load">
                 {weeklyHours.toFixed(1)}h scheduled · Eastern time
               </span>

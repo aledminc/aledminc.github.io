@@ -108,28 +108,36 @@ export default function HeroRotator({ slides, durationMs = 8000 }) {
       </div>
 
       {slides.length > 1 && (
-        <div className="rotator__timer" role="tablist" aria-label="Rotating highlights">
-          {slides.map((slide, index) => (
-            <button
-              key={slide.id}
-              type="button"
-              role="tab"
-              id={`hero-tab-${slide.id}`}
-              aria-controls={`hero-pane-${slide.id}`}
-              aria-label={slide.label}
-              aria-selected={index === active}
-              className={`rotator__seg${index === active ? ' is-active' : ''}`}
-              onClick={() => setActive(index)}
-            >
-              <span className="rotator__track" aria-hidden="true">
-                <span
-                  className="rotator__fill"
-                  ref={(element) => { fillRefs.current[index] = element }}
-                  style={{ width: index < active ? '100%' : '0%' }}
-                />
-              </span>
-            </button>
-          ))}
+        <div className="rotator__controls">
+          <span className="rotator__count" aria-live="polite">
+            {(active + 1).toString().padStart(2, '0')}
+            <i aria-hidden="true" />
+            {slides.length.toString().padStart(2, '0')}
+          </span>
+
+          <div className="rotator__timer" role="tablist" aria-label="Rotating highlights">
+            {slides.map((slide, index) => (
+              <button
+                key={slide.id}
+                type="button"
+                role="tab"
+                id={`hero-tab-${slide.id}`}
+                aria-controls={`hero-pane-${slide.id}`}
+                aria-label={slide.label}
+                aria-selected={index === active}
+                className={`rotator__seg${index === active ? ' is-active' : ''}`}
+                onClick={() => setActive(index)}
+              >
+                <span className="rotator__track" aria-hidden="true">
+                  <span
+                    className="rotator__fill"
+                    ref={(element) => { fillRefs.current[index] = element }}
+                    style={{ width: index < active ? '100%' : '0%' }}
+                  />
+                </span>
+              </button>
+            ))}
+          </div>
         </div>
       )}
     </div>

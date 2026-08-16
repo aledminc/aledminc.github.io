@@ -485,28 +485,6 @@ p {
   flex: none;
 }
 
-.eyebrow--bare {
-  width: 15px;
-  min-height: 15px;
-  gap: 0;
-}
-
-.eyebrow--bare::before {
-  animation: signal-breathe 2.4s ease-in-out infinite;
-}
-
-@keyframes signal-breathe {
-  50% {
-    opacity: 0.48;
-    scale: 0.72;
-    box-shadow: 0 0 0 6px rgba(44, 106, 81, 0.06);
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .eyebrow--bare::before { animation: none; }
-}
-
 .lede {
   margin: 0;
   max-width: 44ch;

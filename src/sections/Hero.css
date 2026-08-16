@@ -43,7 +43,6 @@
    reduced motion no anime scope is created, so anything hidden here
    unconditionally would never come back. */
 @media (prefers-reduced-motion: no-preference) {
-  .hero__eyebrow,
   .hero__title,
   .hero__lede,
   .hero__cta,
@@ -212,17 +211,14 @@
 }
 
 .system-map__bar {
-  justify-content: space-between;
+  justify-content: flex-end;
   padding: 3px 7px 11px;
   color: var(--slate);
   font-size: .59rem;
 }
 
 .system-map__bar span { display: inline-flex; align-items: center; gap: 8px; }
-.system-map__bar i { width: 6px; height: 6px; border-radius: 50%; background: var(--forest-lit); box-shadow: 0 0 0 4px rgba(63,138,104,.12); animation: system-live 2.2s ease-in-out infinite; }
 .system-map__bar b { color: var(--navy); font-weight: 500; }
-
-@keyframes system-live { 50% { opacity: .46; scale: .72; } }
 
 .system-map__stage {
   overflow: hidden;
@@ -277,7 +273,7 @@
 
 @media (prefers-reduced-motion: reduce) {
   .system-map__packet { display: none; }
-  .system-map__path, .system-map__core circle, .system-map__bar i { animation: none; }
+  .system-map__path, .system-map__core circle { animation: none; }
 }
 
 /* ============================================================

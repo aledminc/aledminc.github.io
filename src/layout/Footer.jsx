@@ -40,34 +40,36 @@ export default function Footer() {
     <footer className="footer" data-scene data-scene-label="Contact">
       <div className="container">
         <div className="footer__panel">
-          <details className="footer__roles">
-            <summary>
-              Open to 2027 engineering roles
-              <LuChevronDown size={14} aria-hidden="true" />
-            </summary>
-            <div className="footer__role-list">
-              <span>Roles in view</span>
-              <ul>
-                {OPEN_ROLES.map((role) => <li key={role}>{role}</li>)}
-              </ul>
-            </div>
-          </details>
-
           <div className="footer__hero">
             <div>
               <p className="footer__kicker">Have a hard problem?</p>
               <h2>Let’s build what’s<br />not obvious yet.</h2>
             </div>
 
-            <a className="footer__contact" href={`mailto:${contactEmail}`}>
-              <span className="footer__contact-copy">
-                <small>Start a conversation</small>
-                <strong>{contactEmail}</strong>
-              </span>
-              <span className="footer__contact-arrow" aria-hidden="true">
-                <LuArrowUpRight size={25} />
-              </span>
-            </a>
+            <div className="footer__action">
+              <details className="footer__roles">
+                <summary>
+                  Open to 2027 engineering roles
+                  <LuChevronDown size={14} aria-hidden="true" />
+                </summary>
+                <div className="footer__role-list">
+                  <span>Roles in view</span>
+                  <ul>
+                    {OPEN_ROLES.map((role) => <li key={role}>{role}</li>)}
+                  </ul>
+                </div>
+              </details>
+
+              <a className="footer__contact" href={`mailto:${contactEmail}`}>
+                <span className="footer__contact-copy">
+                  <small>Start a conversation</small>
+                  <strong>{contactEmail}</strong>
+                </span>
+                <span className="footer__contact-arrow" aria-hidden="true">
+                  <LuArrowUpRight size={25} />
+                </span>
+              </a>
+            </div>
           </div>
 
           <nav className="footer__socials" aria-label="Social profiles">

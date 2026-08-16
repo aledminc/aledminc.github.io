@@ -20,8 +20,8 @@ export const events = [
   // ENGR-E 533 — LEC:0001 [8480]
   {
     day: 'Tue',
-    start: '09:45',
-    end: '11:00',
+    start: '09:35',
+    end: '10:50',
     code: 'ENGR-E 533',
     title: 'Deep Learning Systems',
     kind: 'class',
@@ -29,8 +29,8 @@ export const events = [
   },
   {
     day: 'Thu',
-    start: '09:45',
-    end: '11:00',
+    start: '09:35',
+    end: '10:50',
     code: 'ENGR-E 533',
     title: 'Deep Learning Systems',
     kind: 'class',
@@ -41,8 +41,8 @@ export const events = [
   // TODO(xander): title truncated as "INTRODUCTION TO M..." in the screenshot.
   {
     day: 'Mon',
-    start: '11:15',
-    end: '12:30',
+    start: '11:10',
+    end: '12:25',
     code: 'BUS-G 300',
     title: 'Intro to Managerial Econ',
     kind: 'class',
@@ -50,8 +50,8 @@ export const events = [
   },
   {
     day: 'Wed',
-    start: '11:15',
-    end: '12:30',
+    start: '11:10',
+    end: '12:25',
     code: 'BUS-G 300',
     title: 'Intro to Managerial Econ',
     kind: 'class',
@@ -61,8 +61,8 @@ export const events = [
   // CSCI-B 405 — LEC:0001 [12592]
   {
     day: 'Tue',
-    start: '13:00',
-    end: '14:15',
+    start: '12:45',
+    end: '14:00',
     code: 'CSCI-B 405',
     title: 'Applied Algorithms',
     kind: 'class',
@@ -70,8 +70,8 @@ export const events = [
   },
   {
     day: 'Thu',
-    start: '13:00',
-    end: '14:15',
+    start: '12:45',
+    end: '14:00',
     code: 'CSCI-B 405',
     title: 'Applied Algorithms',
     kind: 'class',
@@ -82,8 +82,8 @@ export const events = [
   // TODO(xander): title truncated as "INTRODUCTION TO T..." in the screenshot.
   {
     day: 'Mon',
-    start: '15:00',
-    end: '15:50',
+    start: '15:10',
+    end: '16:00',
     code: 'ENGR-E 500',
     title: 'Introduction to ISE',
     kind: 'class',

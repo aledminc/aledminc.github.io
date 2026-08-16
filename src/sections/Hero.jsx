@@ -5,6 +5,7 @@ import { useAnimeScope } from '../hooks/useAnimeScope.js'
 import { useSceneExit } from '../hooks/useSceneExit.js'
 import HeroRotator from '../components/HeroRotator.jsx'
 import ContributionGraph from '../components/ContributionGraph.jsx'
+import RecentBuildsPanel from '../components/RecentBuildsPanel.jsx'
 import './Hero.css'
 
 // Copy is drawn from the 2026 resume and is accurate. One statement, one
@@ -20,6 +21,11 @@ const HERO_SLIDES = [
     id: 'github-activity',
     label: 'GitHub activity',
     render: () => <ContributionGraph />,
+  },
+  {
+    id: 'recent-builds',
+    label: 'Recent builds',
+    render: () => <RecentBuildsPanel />,
   },
 ]
 
@@ -44,13 +50,6 @@ export default function Hero() {
       ease: 'out(3)',
     })
     animate('.hero__title', { opacity: 1, duration: 1 })
-
-    animate('.hero__eyebrow', {
-      opacity: [0, 1],
-      translateX: [-18, 0],
-      duration: 620,
-      ease: 'out(2)',
-    })
 
     animate(['.hero__lede', '.hero__cta'], {
       opacity: [0, 1],
@@ -85,8 +84,6 @@ export default function Hero() {
             down the middle as you leave, which is why the two layers move
             in opposite directions rather than together. */}
         <div className="layer layer--left layer--soft split__aside hero__copy">
-          <span className="eyebrow eyebrow--bare hero__eyebrow" aria-hidden="true" />
-
           <h1 id="hero-title" className="hero__title">
             {TITLE}
           </h1>

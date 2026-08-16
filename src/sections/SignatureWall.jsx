@@ -190,7 +190,6 @@ export default function SignatureWall() {
       <div className="container split split--flip wall__grid">
         <div className="layer layer--right layer--soft split__aside wall__side">
           <header className="wall__head">
-            <span className="eyebrow eyebrow--bare" aria-hidden="true" />
             <h2 id="wall-heading">Sign the sheet.</h2>
             <p className="lede">
               Draw it or type it. It gets inked on in a random hand and stays
