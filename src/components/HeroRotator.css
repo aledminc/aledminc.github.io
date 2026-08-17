@@ -1,5 +1,5 @@
 .hero-rotator {
-  width: min(100%, 760px);
+  width: min(100%, 540px);
   margin-inline: auto;
 }
 
@@ -12,55 +12,37 @@
 }
 
 .rotator__pane:not([hidden]) {
-  animation: rotator-materialize 520ms cubic-bezier(0.22, 1, 0.36, 1) both;
+  animation: rotator-materialize 420ms cubic-bezier(0.22, 1, 0.36, 1) both;
 }
 
 @keyframes rotator-materialize {
   from {
     opacity: 0;
-    translate: 24px 0;
-    filter: blur(8px);
-    clip-path: inset(0 0 0 14% round 24px);
+    translate: 14px 0;
+    filter: blur(5px);
+    clip-path: inset(0 0 0 9% round 20px);
   }
   to {
     opacity: 1;
     translate: 0 0;
     filter: blur(0);
-    clip-path: inset(0 0 0 0 round 24px);
+    clip-path: inset(0 0 0 0 round 20px);
   }
 }
 
 .rotator__controls {
-  display: grid;
-  grid-template-columns: auto minmax(0, 1fr);
-  align-items: center;
-  gap: 14px;
-  margin-top: 14px;
-}
-
-.rotator__count {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  color: var(--slate);
-  font: 600 0.58rem var(--font-data);
-  letter-spacing: 0.08em;
-}
-
-.rotator__count i {
-  width: 14px;
-  height: 1px;
-  background: var(--line-hi);
+  margin: 10px auto 0;
+  width: min(76%, 360px);
 }
 
 .rotator__timer {
   display: flex;
-  gap: 8px;
+  gap: 6px;
 }
 
 .rotator__seg {
   flex: 1;
-  padding: 6px 0;
+  padding: 5px 0;
   border: 0;
   background: none;
   opacity: 0.55;
@@ -69,13 +51,13 @@
 }
 
 .rotator__seg.is-active {
-  flex: 2.2;
+  flex: 1.65;
   opacity: 1;
 }
 
 .rotator__track {
   display: block;
-  height: 4px;
+  height: 3px;
   overflow: hidden;
   border-radius: 999px;
   background: rgba(14, 26, 43, 0.12);
@@ -84,7 +66,7 @@
 }
 
 .rotator__seg.is-active .rotator__track {
-  height: 6px;
+  height: 4px;
 }
 
 .rotator__fill {

@@ -5,6 +5,7 @@ import './HeroRotator.css'
 
 export default function HeroRotator({ slides, durationMs = 8000 }) {
   const [active, setActive] = useState(0)
+  const [restartTick, setRestartTick] = useState(0)
   const fillRefs = useRef([])
   const animationRef = useRef(null)
   const timeoutRef = useRef(0)
@@ -45,7 +46,7 @@ export default function HeroRotator({ slides, durationMs = 8000 }) {
       animationRef.current?.cancel()
       animationRef.current = null
     }
-  }, [active, durationMs, reduced, slides.length])
+  }, [active, durationMs, reduced, restartTick, slides.length])
 
   const pause = (reason) => {
     if (slides.length <= 1 || pauseReasons.current.has(reason)) return
@@ -84,15 +85,24 @@ export default function HeroRotator({ slides, durationMs = 8000 }) {
     if (!event.currentTarget.contains(event.relatedTarget)) resume('focus')
   }
 
+  const selectSlide = (index) => {
+    setActive(index)
+    // A same-slide click does not change `active`, so explicitly restart the
+    // timer as well. This also gives every manual selection a fresh interval.
+    setRestartTick((tick) => tick + 1)
+  }
+
   return (
-    <div
-      className="hero-rotator"
-      onMouseEnter={() => pause('hover')}
-      onMouseLeave={() => resume('hover')}
-      onFocusCapture={() => pause('focus')}
-      onBlurCapture={onBlur}
-    >
-      <div className="rotator__stage">
+    <div className="hero-rotator">
+      <div
+        className="rotator__stage"
+        onMouseEnter={() => pause('hover')}
+        onMouseLeave={() => resume('hover')}
+        onFocusCapture={(event) => {
+          if (event.target.matches(':focus-visible')) pause('focus')
+        }}
+        onBlurCapture={onBlur}
+      >
         {slides.map((slide, index) => (
           <div
             key={slide.id}
@@ -109,12 +119,6 @@ export default function HeroRotator({ slides, durationMs = 8000 }) {
 
       {slides.length > 1 && (
         <div className="rotator__controls">
-          <span className="rotator__count" aria-live="polite">
-            {(active + 1).toString().padStart(2, '0')}
-            <i aria-hidden="true" />
-            {slides.length.toString().padStart(2, '0')}
-          </span>
-
           <div className="rotator__timer" role="tablist" aria-label="Rotating highlights">
             {slides.map((slide, index) => (
               <button
@@ -126,7 +130,7 @@ export default function HeroRotator({ slides, durationMs = 8000 }) {
                 aria-label={slide.label}
                 aria-selected={index === active}
                 className={`rotator__seg${index === active ? ' is-active' : ''}`}
-                onClick={() => setActive(index)}
+                onClick={() => selectSlide(index)}
               >
                 <span className="rotator__track" aria-hidden="true">
                   <span

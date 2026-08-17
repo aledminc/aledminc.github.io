@@ -1,11 +1,10 @@
-import { Link } from 'react-router-dom'
 import { animate, stagger, splitText } from 'animejs'
-import { LuArrowRight } from 'react-icons/lu'
 import { useAnimeScope } from '../hooks/useAnimeScope.js'
 import { useSceneExit } from '../hooks/useSceneExit.js'
 import HeroRotator from '../components/HeroRotator.jsx'
 import ContributionGraph from '../components/ContributionGraph.jsx'
 import RecentBuildsPanel from '../components/RecentBuildsPanel.jsx'
+import OmegLolAd from '../components/OmegLolAd.jsx'
 import './Hero.css'
 
 // Copy is drawn from the 2026 resume and is accurate. One statement, one
@@ -26,6 +25,11 @@ const HERO_SLIDES = [
     id: 'recent-builds',
     label: 'Recent builds',
     render: () => <RecentBuildsPanel />,
+  },
+  {
+    id: 'omeglol',
+    label: 'omegLOL',
+    render: () => <OmegLolAd />,
   },
 ]
 
@@ -51,7 +55,7 @@ export default function Hero() {
     })
     animate('.hero__title', { opacity: 1, duration: 1 })
 
-    animate(['.hero__lede', '.hero__cta'], {
+    animate('.hero__lede', {
       opacity: [0, 1],
       translateX: [-34, 0],
       delay: stagger(110, { start: 500 }),
@@ -90,9 +94,6 @@ export default function Hero() {
 
           <p className="lede hero__lede">{LEDE}</p>
 
-          <Link className="btn hero__cta" to="/projects">
-            See the work <LuArrowRight size={16} />
-          </Link>
         </div>
 
         <div className="layer layer--right split__main hero__rotator">

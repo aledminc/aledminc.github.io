@@ -250,12 +250,12 @@
   opacity: 0.72;
 }
 
-/* Under an hour there is no room for the third line. */
+/* Under an hour, prioritize the actual time over the repeated course title. */
 .tt__event--short {
   padding: 5px 9px;
 }
 
-.tt__event--short .tt__event-time {
+.tt__event--short .tt__event-title {
   display: none;
 }
 

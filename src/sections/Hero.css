@@ -27,12 +27,7 @@
 }
 
 .hero__lede {
-  margin-bottom: 28px;
-}
-
-.hero__cta {
-  /* The scene's only action. */
-  align-self: start;
+  margin-bottom: 0;
 }
 
 .hero__rotator {
@@ -45,7 +40,6 @@
 @media (prefers-reduced-motion: no-preference) {
   .hero__title,
   .hero__lede,
-  .hero__cta,
   .hero-rotator {
     opacity: 0;
   }
