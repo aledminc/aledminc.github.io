@@ -1,5 +1,5 @@
 .hero-rotator {
-  width: min(100%, 540px);
+  width: min(100%, 760px);
   margin-inline: auto;
 }
 
@@ -41,17 +41,17 @@
 }
 
 .rotator__seg {
-  flex: 1;
+  flex: 1 1 0;
   padding: 5px 0;
   border: 0;
   background: none;
-  opacity: 0.55;
+  opacity: 1;
   cursor: pointer;
   transition: flex 400ms ease, opacity 300ms ease;
 }
 
 .rotator__seg.is-active {
-  flex: 1.65;
+  flex-grow: var(--inactive-count);
   opacity: 1;
 }
 
@@ -63,6 +63,10 @@
   background: rgba(14, 26, 43, 0.12);
   box-shadow: var(--press);
   transition: height 300ms ease;
+}
+
+.rotator__seg:not(.is-active) .rotator__track {
+  background: rgba(14, 26, 43, 0.24);
 }
 
 .rotator__seg.is-active .rotator__track {

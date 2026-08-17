@@ -1,22 +1,22 @@
 .contrib {
-  padding: clamp(14px, 1.8vw, 20px);
+  padding: clamp(18px, 2.4vw, 28px);
   border: 1px solid rgba(255, 255, 255, 0.88);
-  border-radius: clamp(18px, 2.4vw, 24px);
+  border-radius: clamp(22px, 3vw, 32px);
   background: linear-gradient(145deg, rgba(255, 255, 255, 0.84), rgba(239, 238, 233, 0.72));
-  box-shadow: var(--raise-2), inset 0 1px 0 rgba(255, 255, 255, 0.96);
+  box-shadow: var(--raise-3), inset 0 1px 0 rgba(255, 255, 255, 0.96);
 }
 
 .contrib__head {
   display: flex;
   align-items: end;
   justify-content: space-between;
-  gap: 18px;
-  margin-bottom: 12px;
+  gap: 24px;
+  margin-bottom: 18px;
 }
 
 .contrib__head h2 {
   margin: 0 0 5px;
-  font-size: clamp(1.05rem, 1.8vw, 1.42rem);
+  font-size: clamp(1.2rem, 2.3vw, 1.8rem);
   letter-spacing: -0.035em;
 }
 
@@ -42,7 +42,7 @@
 
 .contrib__total strong {
   color: var(--forest);
-  font: 600 clamp(1.25rem, 2.3vw, 1.8rem) / 1 var(--font-title);
+  font: 600 clamp(1.5rem, 3vw, 2.25rem) / 1 var(--font-title);
 }
 
 .contrib__total span {
@@ -52,8 +52,8 @@
 }
 
 .contrib__well {
-  padding: 12px;
-  border-radius: 14px;
+  padding: 16px;
+  border-radius: 18px;
   background: var(--bone);
   box-shadow: var(--well);
 }
@@ -117,7 +117,7 @@
   align-items: center;
   justify-content: space-between;
   gap: 18px;
-  margin-top: 8px;
+  margin-top: 10px;
   color: var(--slate-soft);
   font-size: 0.5rem;
 }

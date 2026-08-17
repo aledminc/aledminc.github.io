@@ -3,17 +3,17 @@ import { useAnimeScope } from '../hooks/useAnimeScope.js'
 import { useSceneExit } from '../hooks/useSceneExit.js'
 import HeroRotator from '../components/HeroRotator.jsx'
 import ContributionGraph from '../components/ContributionGraph.jsx'
-import RecentBuildsPanel from '../components/RecentBuildsPanel.jsx'
+import ResumePanel from '../components/ResumePanel.jsx'
 import OmegLolAd from '../components/OmegLolAd.jsx'
 import './Hero.css'
 
 // Copy is drawn from the 2026 resume and is accurate. One statement, one
 // sentence of support, one action — nothing else belongs in a hero.
-const TITLE = 'Systems that sense and decide.'
-const LEDE = `Computer science and an accelerated master's in intelligent systems at
-Indiana University. Single-cell RNA pipelines, LLM summarization for clinical
-review, and an autonomous rover I lead the build on.`
-
+const TITLE = "Hey, I'm Xander!"
+const LEDE = `As a computer science and accelerated master's in intelligent systems student at
+Indiana University, I've picked up many different experiences. From single-cell RNA pipelines, to 
+LLM summarization for clinical review, even to an autonomous rover I lead the software build on, I'm 
+always interested in learning more. Scroll to find out more about me!`
 // Adding future highlights here automatically enables the segmented timer.
 const HERO_SLIDES = [
   {
@@ -22,9 +22,9 @@ const HERO_SLIDES = [
     render: () => <ContributionGraph />,
   },
   {
-    id: 'recent-builds',
-    label: 'Recent builds',
-    render: () => <RecentBuildsPanel />,
+    id: 'resume',
+    label: 'Resume',
+    render: () => <ResumePanel />,
   },
   {
     id: 'omeglol',

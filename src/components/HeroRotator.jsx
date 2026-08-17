@@ -119,7 +119,12 @@ export default function HeroRotator({ slides, durationMs = 8000 }) {
 
       {slides.length > 1 && (
         <div className="rotator__controls">
-          <div className="rotator__timer" role="tablist" aria-label="Rotating highlights">
+          <div
+            className="rotator__timer"
+            role="tablist"
+            aria-label="Rotating highlights"
+            style={{ '--inactive-count': Math.max(slides.length - 1, 1) }}
+          >
             {slides.map((slide, index) => (
               <button
                 key={slide.id}
@@ -136,7 +141,7 @@ export default function HeroRotator({ slides, durationMs = 8000 }) {
                   <span
                     className="rotator__fill"
                     ref={(element) => { fillRefs.current[index] = element }}
-                    style={{ width: index < active ? '100%' : '0%' }}
+                    style={{ width: '0%' }}
                   />
                 </span>
               </button>
