@@ -268,92 +268,18 @@ p {
 }
 
 /* ============================================================
-   SCENES
-
-   The background is continuous for the whole site; the content is
-   staged on top of it. A scene enters however it likes, but it may
-   never LEAVE by sliding up — that would just look like scrolling.
-   Instead each layer drifts sideways (or shrinks in place) and
-   dissolves, so the stage clears and the next scene arrives on the
-   same unbroken field.
-
-   `--p` is the layer's own exit progress, 0 -> 1, written by
-   useSceneExit() from the layer's position on screen.
+   HOMEPAGE SECTIONS — ordinary document flow and native vertical scrolling.
    ============================================================ */
 .scene {
   position: relative;
   padding: clamp(56px, 9vh, 104px) 0;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .layer {
-    --p: 0;
-    --dx: 0;
-    /* Standalone translate/scale, never `transform`: anime.js writes inline
-       `transform` on the entrance targets inside these layers, and inline
-       style would beat a stylesheet rule. These two properties compose with
-       it instead of fighting it. */
-    translate: calc(var(--dx) * var(--p) * 1px) 0;
-    scale: calc(1 - var(--p) * 0.07);
-    opacity: calc(1 - var(--p));
-  }
-
-  /* Text-only layers can afford the blur; anything containing a .glass panel
-     must not, because a `filter` on an ancestor breaks backdrop-filter. */
-  .layer--soft {
-    filter: blur(calc(var(--p) * 7px));
-  }
-
-  .layer--left {
-    --dx: -170;
-  }
-  .layer--right {
-    --dx: 170;
-  }
-  /* --dx 0: dissolves where it stands. */
-
-  /* IRIS — the panel closes on itself horizontally, like a shutter. The
-     -34px on every side is not decoration: clip-path clips the element's
-     shadows too, so at rest the window has to sit OUTSIDE the border box or
-     the neumorphic relief gets a hard edge cut through it. */
-  .layer--iris {
-    clip-path: inset(
-      -34px calc(var(--p) * 56% - 34px) -34px calc(var(--p) * 56% - 34px)
-    );
-  }
-
-  /* SHEAR — leans out of frame as it goes, the way a card pulled off a deck
-     rotates before it clears. `transform` is safe on a layer: nothing here is
-     an anime target, and it composes after translate/scale anyway. */
-  .layer--shear {
-    --dx: 150;
-    transform: skewX(calc(var(--p) * -7deg));
-    transform-origin: left center;
-  }
-
-  /* Once the layout stacks there is no column for a layer to drift toward,
-     and a full-width block sliding 170px reads as a glitch rather than a
-     scene change. Shorten the throw instead of dropping it — the sideways
-     language is the point. */
-  @media (max-width: 760px) {
-    .layer--left {
-      --dx: -68;
-    }
-    .layer--right,
-    .layer--shear {
-      --dx: 68;
-    }
-  }
-}
-
 /* ============================================================
    SPLIT
 
-   Every scene on the home page is two columns: a narrow text side
-   and a wide content side, alternating which side the text is on
-   down the page. Stacking the heading on top of the content is what
-   made the old build read as a normal scrolling site — the eye had
-   nowhere to go but down.
+   Homepage sections use alternating two-column compositions on wide screens
+   and stack into a single readable column on narrow screens.
    ============================================================ */
 .split {
   display: grid;

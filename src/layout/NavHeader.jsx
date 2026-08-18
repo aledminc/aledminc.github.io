@@ -25,19 +25,12 @@ export default function NavHeader() {
 
   useEffect(() => setOpen(false), [pathname])
 
-  // The deck has no scroll offset. Its scene event now drives the same lifted
-  // material change the old vertical page got from window.scrollY.
+  // All routes use normal document flow, so the header lifts from scrollY.
   useEffect(() => {
-    const onScene = (event) => setLifted(event.detail.index > 0)
-    const onScroll = () => {
-      if (pathname !== '/') setLifted(window.scrollY > 24)
-    }
-    if (pathname === '/') setLifted(false)
-    else onScroll()
-    window.addEventListener('scenechange', onScene)
+    const onScroll = () => setLifted(window.scrollY > 24)
+    onScroll()
     window.addEventListener('scroll', onScroll, { passive: true })
     return () => {
-      window.removeEventListener('scenechange', onScene)
       window.removeEventListener('scroll', onScroll)
     }
   }, [pathname])

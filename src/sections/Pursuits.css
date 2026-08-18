@@ -7,49 +7,6 @@
 
 /* The selector itself is the shared `.switch` in index.css. */
 
-/* ---------- scene intro ----------
-   CSS, not anime: the anime scope here re-runs on every pursuit change, and
-   a reverted scope would hide the heading and selector along with it.
-
-   Text column arrives from the left, card is uncovered right-to-left — the
-   mirror of the trajectory above, and again nothing on the Y axis. */
-@media (prefers-reduced-motion: no-preference) {
-  .pursuits__head > * {
-    opacity: 0;
-    translate: -44px 0;
-    transition:
-      opacity 700ms ease,
-      translate 700ms cubic-bezier(0.22, 1, 0.36, 1);
-  }
-
-  .pursuits .pursuit {
-    /* Clip window sits outside the border box on the three static sides so
-       the card's shadow is not sliced. */
-    clip-path: inset(-28px -28px -28px 100%);
-    transition: clip-path 840ms cubic-bezier(0.22, 1, 0.36, 1);
-    transition-delay: 200ms;
-  }
-
-  .pursuits.is-in .pursuits__head > * {
-    opacity: 1;
-    translate: 0 0;
-  }
-
-  .pursuits.is-in .pursuit {
-    clip-path: inset(-28px -28px -28px -28px);
-  }
-
-  .pursuits.is-in .pursuits__head > *:nth-child(2) {
-    transition-delay: 80ms;
-  }
-  .pursuits.is-in .pursuits__head > *:nth-child(3) {
-    transition-delay: 160ms;
-  }
-  .pursuits.is-in .pursuits__head > *:nth-child(4) {
-    transition-delay: 240ms;
-  }
-}
-
 /* ---------- the card ---------- */
 .pursuit {
   display: grid;

@@ -2,8 +2,6 @@ import { useLayoutEffect, useRef, useState } from 'react'
 import { animate, utils } from 'animejs'
 import { LuArrowRight } from 'react-icons/lu'
 import { prefersReducedMotion } from '../hooks/useAnimeScope.js'
-import { useSceneExit } from '../hooks/useSceneExit.js'
-import { useInView } from '../hooks/useInView.js'
 import { saveSignature } from '../lib/signatureStore.js'
 import SignaturePad from './SignaturePad.jsx'
 import './SignatureWall.css'
@@ -90,7 +88,6 @@ const OWNER_MARK = {
 }
 
 export default function SignatureWall() {
-  const scene = useSceneExit()
   const [marks, setMarks] = useState([OWNER_MARK])
   const [mode, setMode] = useState('draw') // draw | type
   const [typed, setTyped] = useState('')
@@ -99,12 +96,6 @@ export default function SignatureWall() {
   const padApi = useRef(null)
   const sheetRef = useRef(null)
   const nextId = useRef(0)
-  const reached = useInView(scene)
-
-  // No anime scope on this section at all. The intro is CSS (`is-in`), and
-  // the marks are animated one at a time below — a scope revert would strip
-  // the inline transforms off every signature already on the sheet.
-
   const addMark = (kind, payload, extra = {}) => {
     setMarks((prev) => {
       const style = makeStyle(prev)
@@ -178,17 +169,11 @@ export default function SignatureWall() {
   }, [marks])
 
   return (
-    <section
-      ref={scene}
-      className={`scene wall${reached ? ' is-in' : ''}`}
-      data-scene
-      data-scene-label="Signature"
-      aria-labelledby="wall-heading"
-    >
+    <section className="scene wall" aria-labelledby="wall-heading">
       {/* Flipped again: text right, sheet left. Four scenes, four different
           arrangements of the same two columns. */}
       <div className="container split split--flip wall__grid">
-        <div className="layer layer--right layer--soft split__aside wall__side">
+        <div className="split__aside wall__side">
           <header className="wall__head">
             <h2 id="wall-heading">Sign the sheet.</h2>
             <p className="lede">
@@ -251,8 +236,7 @@ export default function SignatureWall() {
           </p>
         </div>
 
-        {/* Opens and closes as a horizontal shutter — see .layer--iris. */}
-        <div className="layer layer--iris split__main wall__stage">
+        <div className="split__main wall__stage">
           <div className="sheet" ref={sheetRef}>
             <span className="sheet__ticks" aria-hidden="true" />
 

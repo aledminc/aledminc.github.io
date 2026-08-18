@@ -1,5 +1,4 @@
 import { useCallback, useState } from 'react'
-import { animate, stagger } from 'animejs'
 import {
   LuArrowUpRight,
   LuBriefcaseBusiness,
@@ -7,9 +6,6 @@ import {
   LuGraduationCap,
   LuMicroscope,
 } from 'react-icons/lu'
-import { useAnimeScope } from '../hooks/useAnimeScope.js'
-import { useSceneExit } from '../hooks/useSceneExit.js'
-import { useInView } from '../hooks/useInView.js'
 import { timeline } from '../data/timeline.js'
 import './Trajectory.css'
 
@@ -50,33 +46,10 @@ function RobotArmIcon({ size = 18, ...props }) {
  * panel reports what is at that stop. Same content, one thing to read.
  */
 export default function Trajectory() {
-  const scene = useSceneExit()
-  // Gate the first run on arrival: an entrance that has already played by the
-  // time you scroll to it is just a static section.
-  const reached = useInView(scene)
   const [active, setActive] = useState(() =>
     Math.max(0, timeline.findIndex((item) => item.id === 'robotics')),
   )
   const entry = timeline[active]
-
-  const { root } = useAnimeScope(
-    () => {
-      if (!reached) return
-
-      // Panel contents restate themselves on every stop. The wipe runs on the
-      // inner .stop element, never on the .layer wrapper — anime would leave
-      // an inline opacity there and kill the scene exit.
-      animate('.stop__line, .stop__artifact', {
-        opacity: [0, 1],
-        translateX: [26, 0],
-        delay: stagger(70),
-        duration: 560,
-        ease: 'out(3)',
-      })
-
-    },
-    [active, reached],
-  )
 
   // Arrow keys walk the rail — expected of a tablist, and it makes the whole
   // scene usable without a pointer.
@@ -88,21 +61,15 @@ export default function Trajectory() {
   }, [])
 
   return (
-    // `is-in` drives the once-only scene intro from CSS. It is deliberately
-    // NOT anime: this scope re-runs on every stop change, and a reverted
-    // scope would put the heading and rail back at their start states.
     <section
-      ref={scene}
-      className={`scene traj${reached ? ' is-in' : ''}`}
-      data-scene
-      data-scene-label="Trajectory"
+      className="scene traj"
       aria-labelledby="traj-heading"
     >
       {/* Flipped: the heading sits on the RIGHT and the mechanism on the left,
           mirroring the hero so the eye crosses the page instead of running
           straight down it. */}
-      <div className="container split split--flip traj__grid" ref={root}>
-        <header className="layer layer--right layer--soft split__aside traj__head">
+      <div className="container split split--flip traj__grid">
+        <header className="split__aside traj__head">
           <h2 id="traj-heading">Building toward what&apos;s next.</h2>
           <p className="lede">
             Five stops between starting a CS degree and finishing a master&apos;s.
@@ -112,7 +79,7 @@ export default function Trajectory() {
 
         {/* Closes like a shutter on the way out — horizontally, from both
             edges — so no two consecutive scenes leave by the same gesture. */}
-        <div className="layer layer--iris split__main traj__stage">
+        <div className="split__main traj__stage">
           <div
             className="rail"
             role="tablist"

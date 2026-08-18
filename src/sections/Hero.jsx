@@ -1,20 +1,14 @@
-import { animate, stagger, splitText } from 'animejs'
-import { useAnimeScope } from '../hooks/useAnimeScope.js'
-import { useSceneExit } from '../hooks/useSceneExit.js'
 import HeroRotator from '../components/HeroRotator.jsx'
 import ContributionGraph from '../components/ContributionGraph.jsx'
 import ResumePanel from '../components/ResumePanel.jsx'
 import OmegLolAd from '../components/OmegLolAd.jsx'
 import './Hero.css'
 
-// Copy is drawn from the 2026 resume and is accurate. One statement, one
-// sentence of support, one action — nothing else belongs in a hero.
-const TITLE = "Hey, I'm Xander!"
-const LEDE = `As a computer science and accelerated master's in intelligent systems student at
-Indiana University, I've picked up many different experiences. From single-cell RNA pipelines, to 
-LLM summarization for clinical review, even to an autonomous rover I lead the software build on, I'm 
-always interested in learning more. Scroll to find out more about me!`
-// Adding future highlights here automatically enables the segmented timer.
+const TITLE = 'Systems that sense and decide.'
+const LEDE = `Computer science and an accelerated master's in intelligent systems at
+Indiana University. Single-cell RNA pipelines, LLM summarization for clinical
+review, and an autonomous rover I lead the build on.`
+
 const HERO_SLIDES = [
   {
     id: 'github-activity',
@@ -34,69 +28,15 @@ const HERO_SLIDES = [
 ]
 
 export default function Hero() {
-  const scene = useSceneExit()
-
-  const { root } = useAnimeScope(() => {
-    // Split to words, not chars: at this size a per-character stagger reads as
-    // a novelty effect, whereas words landing in sequence reads as a sentence
-    // being stated.
-    const split = splitText('.hero__title', { words: true, accessible: true })
-
-    // Nothing on this site enters on the vertical axis. The words sweep in
-    // from the left in reading order, resolving out of blur as they arrive —
-    // a line being scanned in rather than a page scrolling up.
-    animate(split.words, {
-      opacity: [0, 1],
-      translateX: [-56, 0],
-      filter: ['blur(11px)', 'blur(0px)'],
-      delay: stagger(52, { start: 110 }),
-      duration: 880,
-      ease: 'out(3)',
-    })
-    animate('.hero__title', { opacity: 1, duration: 1 })
-
-    animate('.hero__lede', {
-      opacity: [0, 1],
-      translateX: [-34, 0],
-      delay: stagger(110, { start: 500 }),
-      duration: 700,
-      ease: 'out(2)',
-    })
-
-    // The activity panel arrives like an instrument powering up.
-    //
-    // Targets `.hero-rotator` INSIDE the layer, never the layer itself. anime leaves
-    // an inline `opacity: 1` on whatever it animates, and inline style beats
-    // the stylesheet — so animating the layer here would permanently pin its
-    // exit fade at fully-opaque.
-    animate('.hero-rotator', {
-      opacity: [0, 1],
-      scale: [0.94, 1],
-      translateX: [42, 0],
-      duration: 1050,
-      delay: 180,
-      ease: 'out(4)',
-    })
-
-    return () => split.revert()
-  })
-
   return (
-    <section ref={scene} className="scene hero" data-scene data-scene-label="Signal" aria-labelledby="hero-title">
-      <div className="container split hero__grid" ref={root}>
-        {/* Exits to the left; the module exits to the right. The stage parts
-            down the middle as you leave, which is why the two layers move
-            in opposite directions rather than together. */}
-        <div className="layer layer--left layer--soft split__aside hero__copy">
-          <h1 id="hero-title" className="hero__title">
-            {TITLE}
-          </h1>
-
+    <section className="scene hero" aria-labelledby="hero-title">
+      <div className="container split hero__grid">
+        <div className="split__aside hero__copy">
+          <h1 id="hero-title" className="hero__title">{TITLE}</h1>
           <p className="lede hero__lede">{LEDE}</p>
-
         </div>
 
-        <div className="layer layer--right split__main hero__rotator">
+        <div className="split__main hero__rotator">
           <HeroRotator slides={HERO_SLIDES} durationMs={8000} />
         </div>
       </div>

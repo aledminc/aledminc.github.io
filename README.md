@@ -18,11 +18,9 @@ Three rules the components depend on:
 - **One call to action per scene**, and two or three elements on screen at a
   time. `.switch` is the site's single selector idiom — it filters projects,
   picks a pursuit, and chooses a signature method.
-- **Scenes never exit upward.** The background ([`MeridianField`](src/layout/MeridianField.jsx))
-  is fixed and continuous, so content is staged on top of it; a `.layer` leaves
-  sideways or dissolves in place. Sliding up would just read as scrolling. The
-  mechanism is [useSceneExit.js](src/hooks/useSceneExit.js) writing one custom
-  property, `--p`, that the `.layer` rules in `index.css` turn into motion.
+- **The homepage uses native vertical flow.** Hero, trajectory, pursuits, and
+  signature sections remain in ordinary document order while the fixed
+  [`MeridianField`](src/layout/MeridianField.jsx) provides visual continuity.
 
 Type is three roles, do not collapse them: **Space Grotesk** headlines,
 **Inter** prose, **JetBrains Mono** for data only — times, counts, codes,
@@ -71,15 +69,13 @@ repo would instead need `base: '/<repo-name>/'` plus a matching router
 src/
   main.jsx              entry; mounts <App/> in Router
   App.jsx               route table
-  index.css             design tokens, materials, .layer/.scene, .switch, .btn
+  index.css             design tokens, materials, .scene, .switch, .btn
   layout/               Layout (field + nav + <Outlet/> + footer),
                         MeridianField — the fixed canvas every page sits on
   pages/                Home, Projects, Schedule
   sections/             Hero + SensorDisc, Trajectory, Pursuits,
                         SignatureWall + SignaturePad
   hooks/                useAnimeScope  — anime.js scope, reduced-motion aware
-                        useSceneExit   — writes --p for the sideways exits
-                        useInView      — latches when a scene is reached
                         useMediaQuery
   data/                 content: projects, schedule, hobbies, timeline, socials
 public/assets/          logo, project thumbnails, hobby plates (all SVG)

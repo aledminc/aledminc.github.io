@@ -29,15 +29,11 @@ const OPEN_ROLES = [
 
 export default function Footer() {
   const backToTop = () => {
-    if (document.querySelector('.scene-deck')) {
-      window.dispatchEvent(new CustomEvent('scene:go', { detail: 'first' }))
-    } else {
-      window.scrollTo({ top: 0, behavior: 'smooth' })
-    }
+    window.scrollTo({ top: 0, behavior: 'smooth' })
   }
 
   return (
-    <footer className="footer" data-scene data-scene-label="Contact">
+    <footer className="footer">
       <div className="container">
         <div className="footer__panel">
           <div className="footer__hero">

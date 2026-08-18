@@ -20,29 +20,12 @@
   max-width: 15ch;
 }
 
-/* splitText sets display:inline-block on each fragment itself and tags it
-   with data-word; this only promotes them for the blur. */
-.hero__title [data-word] {
-  will-change: transform, opacity, filter;
-}
-
 .hero__lede {
   margin-bottom: 0;
 }
 
 .hero__rotator {
   min-width: 0;
-}
-
-/* Entrance start states are scoped to the media query on purpose: with
-   reduced motion no anime scope is created, so anything hidden here
-   unconditionally would never come back. */
-@media (prefers-reduced-motion: no-preference) {
-  .hero__title,
-  .hero__lede,
-  .hero-rotator {
-    opacity: 0;
-  }
 }
 
 /* ============================================================

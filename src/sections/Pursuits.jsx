@@ -1,8 +1,4 @@
 import { useMemo, useState } from 'react'
-import { animate, stagger } from 'animejs'
-import { useAnimeScope } from '../hooks/useAnimeScope.js'
-import { useSceneExit } from '../hooks/useSceneExit.js'
-import { useInView } from '../hooks/useInView.js'
 import { hobbies } from '../data/hobbies.js'
 import './Pursuits.css'
 
@@ -14,8 +10,6 @@ import './Pursuits.css'
  * keeps the same data but gives it one plate, one sentence, and one meter.
  */
 export default function Pursuits() {
-  const scene = useSceneExit()
-  const reached = useInView(scene)
   const [active, setActive] = useState(0)
   const hobby = hobbies[active]
 
@@ -27,70 +21,11 @@ export default function Pursuits() {
     return { meter: m, figures: hobby.stats.filter((s) => s !== m) }
   }, [hobby])
 
-  const { root } = useAnimeScope(
-    (self) => {
-      if (!reached) return
-
-      // Horizontal wipe on the plate — it slides into the frame it will
-      // eventually slide back out of.
-      animate('.pursuit__plate', {
-        opacity: [0, 1],
-        translateX: [-34, 0],
-        duration: 620,
-        ease: 'out(3)',
-      })
-
-      animate('.pursuit__line', {
-        opacity: [0, 1],
-        translateX: [24, 0],
-        delay: stagger(80, { start: 90 }),
-        duration: 520,
-        ease: 'out(2)',
-      })
-
-      // Bars grow with scaleX against a width set inline, so no layout runs
-      // per frame and the resting width survives if the animation never does.
-      // transform-origin stays in CSS: anime treats it as animatable.
-      animate('.meter__bar', {
-        scaleX: [0, 1],
-        duration: 980,
-        delay: 260,
-        ease: 'out(3)',
-      })
-
-      // Count up to the value already rendered in the markup. Animating a
-      // plain object and writing textContent in onUpdate, rather than
-      // animating a DOM property: it is the only form that is guaranteed to
-      // format the number (thousands separators) on the way.
-      self.root.querySelectorAll('.figure__num').forEach((el, i) => {
-        animate(
-          { v: 0 },
-          {
-            v: +el.dataset.value,
-            duration: 900,
-            delay: 200 + i * 90,
-            ease: 'out(3)',
-            onUpdate: (a) => {
-              el.textContent = Math.round(a.targets[0].v).toLocaleString()
-            },
-          },
-        )
-      })
-    },
-    [active, reached],
-  )
-
   return (
-    <section
-      ref={scene}
-      className={`scene pursuits${reached ? ' is-in' : ''}`}
-      data-scene
-      data-scene-label="Pursuits"
-      aria-labelledby="pursuits-heading"
-    >
+    <section className="scene pursuits" aria-labelledby="pursuits-heading">
       {/* Back to text-left, mirroring the trajectory above it. */}
-      <div className="container split pursuits__grid" ref={root}>
-        <header className="layer layer--left layer--soft split__aside pursuits__head">
+      <div className="container split pursuits__grid">
+        <header className="split__aside pursuits__head">
           <h2 id="pursuits-heading">What I do otherwise.</h2>
           <p className="lede">Same instinct to measure things. Pick one.</p>
 
@@ -118,7 +53,7 @@ export default function Pursuits() {
 
         {/* Leans and slides out to the right — a third distinct exit, after
             the hero's split and the trajectory's shutter. */}
-        <div className="layer layer--shear split__main pursuits__stage">
+        <div className="split__main pursuits__stage">
           <div
             className="pursuit glass"
             id="pursuit-panel"
