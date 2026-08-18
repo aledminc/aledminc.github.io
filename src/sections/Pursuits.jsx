@@ -26,8 +26,7 @@ export default function Pursuits() {
       {/* Back to text-left, mirroring the trajectory above it. */}
       <div className="container split pursuits__grid">
         <header className="split__aside pursuits__head">
-          <h2 id="pursuits-heading">What I do otherwise.</h2>
-          <p className="lede">Same instinct to measure things. Pick one.</p>
+          <h2 id="pursuits-heading">My passions outside of tech.</h2>
 
           {/* Selector: a pressed track, same idiom as the nav, so the site
               only ever teaches you one control. It belongs beside the heading,

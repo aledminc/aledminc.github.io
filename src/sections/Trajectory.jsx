@@ -6,6 +6,7 @@ import {
   LuGraduationCap,
   LuMicroscope,
 } from 'react-icons/lu'
+import { GiMechanicalArm } from 'react-icons/gi'
 import { timeline } from '../data/timeline.js'
 import './Trajectory.css'
 
@@ -13,28 +14,7 @@ const stopIcons = {
   education: LuGraduationCap,
   industry: LuBriefcaseBusiness,
   research: LuMicroscope,
-  robotics: RobotArmIcon,
-}
-
-function RobotArmIcon({ size = 18, ...props }) {
-  return (
-    <svg
-      width={size}
-      height={size}
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="1.8"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      {...props}
-    >
-      <path d="M4 20h12M6 20v-3h8v3M10 17l1.5-5.2M11.5 11.8l4-3.8M15.5 8l2.8 2.7" />
-      <circle cx="11.5" cy="11.8" r="1.7" />
-      <circle cx="15.5" cy="8" r="1.7" />
-      <path d="M18.3 10.7l1.8-1.8M18.3 10.7l1.8 1.8" />
-    </svg>
-  )
+  robotics: GiMechanicalArm,
 }
 
 /**
@@ -70,10 +50,9 @@ export default function Trajectory() {
           straight down it. */}
       <div className="container split split--flip traj__grid">
         <header className="split__aside traj__head">
-          <h2 id="traj-heading">Building toward what&apos;s next.</h2>
+          <h2 id="traj-heading">My professional Timeline.</h2>
           <p className="lede">
-            Five stops between starting a CS degree and finishing a master&apos;s.
-            Move the carriage.
+            Schooling, Research, Industry Experience, and more. Building toward a well-rounded career.
           </p>
         </header>
 
@@ -109,7 +88,7 @@ export default function Trajectory() {
                   >
                     <span className="sr-only">{item.title}</span>
                     <span className="rail__icon" aria-hidden="true">
-                      <StopIcon size={18} />
+                      <StopIcon size={item.icon === 'robotics' ? 21 : 18} />
                     </span>
                     <span className="rail__tip" aria-hidden="true">
                       {item.date}
