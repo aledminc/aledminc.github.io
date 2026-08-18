@@ -5,8 +5,8 @@ import {
   LuFileText,
   LuGraduationCap,
   LuMicroscope,
+  LuBot,
 } from 'react-icons/lu'
-import { GiMechanicalArm } from 'react-icons/gi'
 import { timeline } from '../data/timeline.js'
 import './Trajectory.css'
 
@@ -14,7 +14,7 @@ const stopIcons = {
   education: LuGraduationCap,
   industry: LuBriefcaseBusiness,
   research: LuMicroscope,
-  robotics: GiMechanicalArm,
+  robotics: LuBot,
 }
 
 /**
@@ -49,7 +49,7 @@ export default function Trajectory() {
           mirroring the hero so the eye crosses the page instead of running
           straight down it. */}
       <div className="container split split--flip traj__grid">
-        <header className="split__aside traj__head">
+        <header className="split__aside traj__head section-copy section-copy--right">
           <h2 id="traj-heading">My professional Timeline.</h2>
           <p className="lede">
             Schooling, Research, Industry Experience, and more. Building toward a well-rounded career.
@@ -88,7 +88,7 @@ export default function Trajectory() {
                   >
                     <span className="sr-only">{item.title}</span>
                     <span className="rail__icon" aria-hidden="true">
-                      <StopIcon size={item.icon === 'robotics' ? 21 : 18} />
+                      <StopIcon size={18} />
                     </span>
                     <span className="rail__tip" aria-hidden="true">
                       {item.date}

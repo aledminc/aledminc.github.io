@@ -16,10 +16,10 @@ Three rules the components depend on:
   and blurred so the site-wide field shows through; `.well` is a recess (tracks,
   boards, inputs). One light source, upper-left, for the whole site.
 - **One call to action per scene**, and two or three elements on screen at a
-  time. `.switch` is the site's single selector idiom — it filters projects,
-  picks a pursuit, and chooses a signature method.
-- **The homepage uses native vertical flow.** Hero, trajectory, pursuits, and
-  signature sections remain in ordinary document order while the fixed
+  time. `.switch` is the site's single selector idiom — it filters projects
+  and picks a pursuit.
+- **The homepage uses native vertical flow.** Hero, trajectory, and pursuits
+  remain in ordinary document order while the fixed
   [`MeridianField`](src/layout/MeridianField.jsx) provides visual continuity.
 
 Type is three roles, do not collapse them: **Space Grotesk** headlines,
@@ -73,8 +73,7 @@ src/
   layout/               Layout (field + nav + <Outlet/> + footer),
                         MeridianField — the fixed canvas every page sits on
   pages/                Home, Projects, Schedule
-  sections/             Hero + SensorDisc, Trajectory, Pursuits,
-                        SignatureWall + SignaturePad
+  sections/             Hero + SensorDisc, Trajectory, Pursuits
   hooks/                useAnimeScope  — anime.js scope, reduced-motion aware
                         useMediaQuery
   data/                 content: projects, schedule, hobbies, timeline, socials

@@ -32,7 +32,7 @@ export default function Hero() {
   return (
     <section className="scene hero" aria-labelledby="hero-title">
       <div className="container split hero__grid">
-        <div className="split__aside hero__copy">
+        <div className="split__aside hero__copy section-copy">
           <h1 id="hero-title" className="hero__title">{TITLE}</h1>
           <p className="lede hero__lede">{LEDE}</p>
         </div>

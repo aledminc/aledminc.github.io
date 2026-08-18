@@ -25,7 +25,7 @@ export default function Pursuits() {
     <section className="scene pursuits" aria-labelledby="pursuits-heading">
       {/* Back to text-left, mirroring the trajectory above it. */}
       <div className="container split pursuits__grid">
-        <header className="split__aside pursuits__head">
+        <header className="split__aside pursuits__head section-copy">
           <h2 id="pursuits-heading">My passions outside of tech.</h2>
 
           {/* Selector: a pressed track, same idiom as the nav, so the site

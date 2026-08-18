@@ -323,6 +323,65 @@ p {
   margin-top: 16px;
 }
 
+/* A quiet instrument readout for the copy that introduces each homepage
+   visual. It gives the title and caption a deliberate shared silhouette
+   without competing with the interactive panel beside it. */
+.home .section-copy {
+  position: relative;
+  padding: clamp(22px, 3vw, 34px) clamp(20px, 2.8vw, 30px);
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.64);
+  border-radius: var(--radius-lg);
+  background:
+    linear-gradient(145deg, rgba(255, 255, 255, 0.46), rgba(250, 249, 246, 0.14));
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.82),
+    12px 18px 40px -36px rgba(14, 26, 43, 0.74);
+}
+
+.home .section-copy::before {
+  position: absolute;
+  top: 20%;
+  bottom: 20%;
+  left: 0;
+  width: 3px;
+  border-radius: 999px;
+  background: linear-gradient(180deg, var(--navy-soft), var(--forest-soft));
+  box-shadow: 0 0 0 5px rgba(44, 106, 81, 0.055);
+  content: '';
+}
+
+.home .section-copy--right::before {
+  right: 0;
+  left: auto;
+}
+
+.home .section-copy h1,
+.home .section-copy h2 {
+  margin-bottom: 0;
+  text-wrap: balance;
+}
+
+.home .section-copy h1::after,
+.home .section-copy h2::after {
+  display: block;
+  width: clamp(44px, 6vw, 72px);
+  height: 2px;
+  margin-top: 16px;
+  border-radius: 999px;
+  background: linear-gradient(90deg, var(--forest), rgba(44, 106, 81, 0.18));
+  content: '';
+}
+
+.home .section-copy--right h2::after {
+  margin-left: auto;
+  background: linear-gradient(270deg, var(--forest), rgba(44, 106, 81, 0.18));
+}
+
+.home .section-copy .lede {
+  max-width: 42ch;
+}
+
 @media (max-width: 900px) {
   .split,
   .split--flip {
@@ -342,6 +401,16 @@ p {
 
   .split--flip .split__aside .eyebrow {
     flex-direction: row;
+  }
+
+  .home .section-copy--right::before {
+    right: auto;
+    left: 0;
+  }
+
+  .home .section-copy--right h2::after {
+    margin-left: 0;
+    background: linear-gradient(90deg, var(--forest), rgba(44, 106, 81, 0.18));
   }
 }
 
@@ -493,9 +562,8 @@ p {
    SWITCH
 
    The site's one selector: a pressed track holding a raised option.
-   It filters projects, picks a pursuit, and chooses a signature
-   method — three different jobs, one control to learn. Shared here
-   rather than in a section file because three pages depend on it.
+   It filters projects and picks a pursuit — two different jobs, one control
+   to learn. Shared here because multiple sections depend on it.
    ============================================================ */
 .switch {
   display: inline-flex;
