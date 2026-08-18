@@ -10,5 +10,15 @@ export const socials = [
   { id: 'linkedin', label: 'LinkedIn', url: 'https://www.linkedin.com/in/xander-minch' },
 ]
 
+const socialById = Object.fromEntries(socials.map((social) => [social.id, social]))
+
+// Shared display order for the compact hero controls and full footer links.
+export const profileLinks = [
+  { id: 'github', label: 'GitHub', url: 'https://github.com/aledminc' },
+  socialById.linkedin,
+  socialById.instagram,
+  socialById.x,
+].filter(Boolean)
+
 // Confirmed against the 2026 resume.
 export const contactEmail = 'xanderminch@gmail.com'

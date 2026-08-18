@@ -1,6 +1,6 @@
 import { FaGithub, FaInstagram, FaLinkedinIn, FaXTwitter } from 'react-icons/fa6'
 import { LuArrowUp, LuArrowUpRight, LuChevronDown } from 'react-icons/lu'
-import { socials, contactEmail } from '../data/socials.js'
+import { profileLinks, contactEmail } from '../data/socials.js'
 
 const SOCIAL_META = {
   github: { icon: FaGithub, handle: '@aledminc' },
@@ -8,14 +8,6 @@ const SOCIAL_META = {
   instagram: { icon: FaInstagram, handle: '@xandererr' },
   x: { icon: FaXTwitter, handle: '@XanderMinch' },
 }
-
-const socialById = Object.fromEntries(socials.map((social) => [social.id, social]))
-const LINKS = [
-  { id: 'github', label: 'GitHub', url: 'https://github.com/aledminc' },
-  socialById.linkedin,
-  socialById.instagram,
-  socialById.x,
-].filter(Boolean)
 
 const OPEN_ROLES = [
   'Data Engineer',
@@ -69,7 +61,7 @@ export default function Footer() {
           </div>
 
           <nav className="footer__socials" aria-label="Social profiles">
-            {LINKS.map(({ id, label, url }) => {
+            {profileLinks.map(({ id, label, url }) => {
               const { icon: Icon, handle } = SOCIAL_META[id]
               return (
                 <a key={id} href={url} target="_blank" rel="noopener noreferrer">
