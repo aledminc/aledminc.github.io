@@ -41,17 +41,16 @@ export const hobbies = [
         division: 'Division I',
         visual: {
           type: 'image',
-          src: 'https://gist.githubusercontent.com/armollica/2d03767d66218066680493b1f16cb21f/raw/c4e1b7fe3a63933de7fe9c71514ca1e29d7eff7b/champion-2.png',
+          src: '/assets/hobbies/rocket-league-champion-2.webp',
         },
       },
       {
-        game: 'Rocket League',
-        mode: 'Doubles · 2v2',
-        rank: 'Champion II',
-        division: 'Division II',
+        game: 'Fortnite',
+        mode: 'Peak rank',
+        rank: 'Unreal',
         visual: {
           type: 'image',
-          src: 'https://gist.githubusercontent.com/armollica/2d03767d66218066680493b1f16cb21f/raw/c4e1b7fe3a63933de7fe9c71514ca1e29d7eff7b/champion-2.png',
+          src: '/assets/hobbies/fortnite-unreal.png',
         },
       },
       {
@@ -63,22 +62,6 @@ export const hobbies = [
           color: '#4777d3',
         },
       },
-    ],
-  },
-  {
-    id: 'chess',
-    label: 'Chess',
-    kind: 'classic',
-    media: {
-      type: 'image',
-      src: '/assets/hobbies/chess.svg',
-      alt: 'Geometric chessboard illustration',
-    },
-    accent: '#2c6a51',
-    stats: [
-      { label: 'Rapid rating', value: 1480 },
-      { label: 'Win rate', value: 54, unit: '%' },
-      { label: 'Games played', value: 920 },
     ],
   },
 ]

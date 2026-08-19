@@ -30,8 +30,7 @@ export default function Footer() {
         <div className="footer__panel">
           <div className="footer__hero">
             <div>
-              <p className="footer__kicker">Have a hard problem?</p>
-              <h2>Let’s build what’s<br />not obvious yet.</h2>
+              <h2>Alexander David Minch</h2>
             </div>
 
             <div className="footer__action">

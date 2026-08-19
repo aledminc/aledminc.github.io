@@ -35,10 +35,7 @@ function GolfPanel({ hobby }) {
           <div className="pursuit-label" id="recent-rounds">Recent rounds</div>
           <ol>
             {hobby.recentScores.map((score, index) => (
-              <li key={`${score}-${index}`}>
-                <span>{String(index + 1).padStart(2, '0')}</span>
-                <strong>{score}</strong>
-              </li>
+              <li key={`${score}-${index}`}><strong>{score}</strong></li>
             ))}
           </ol>
         </section>
@@ -62,7 +59,6 @@ function RankVisual({ rank }) {
       <span className="premier-mark" style={{ '--rank-color': rank.visual.color }} aria-hidden="true">
         <i />
         <b>{rank.rank}</b>
-        <i />
       </span>
     )
   }
