@@ -41,7 +41,7 @@ export default function Projects() {
       <header className="yt__browsebar">
         <div className="yt__heading">
           <span>Project library</span>
-          <h1 id="projects-heading">For you.</h1>
+          <h1 id="projects-heading">My selected work.</h1>
         </div>
 
         <div className="yt__filters">

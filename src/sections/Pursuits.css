@@ -276,22 +276,25 @@
   align-items: flex-start;
 }
 
-.rank-card__copy > span {
-  color: var(--slate);
-  font: 600 0.5rem var(--font-data);
-  letter-spacing: 0.09em;
-  text-transform: uppercase;
+.rank-card__copy h4 {
+  margin: 0;
+  color: var(--navy);
+  font: 650 clamp(0.9rem, 1.5vw, 1.08rem) / 1.05 var(--font-title);
+  letter-spacing: -0.03em;
+  text-wrap: balance;
 }
 
 .rank-card__copy small {
-  margin-top: 5px;
+  margin-top: 6px;
   color: var(--slate-soft);
-  font-size: 0.6rem;
+  font: 550 0.55rem var(--font-data);
+  letter-spacing: 0.055em;
+  text-transform: uppercase;
 }
 
 .rank-card__copy strong {
-  margin-top: 2px;
-  color: var(--ink);
+  margin-top: 4px;
+  color: var(--forest);
   font: 650 clamp(0.94rem, 1.5vw, 1.12rem) var(--font-title);
 }
 
@@ -401,18 +404,109 @@
 
 @media (max-width: 620px) {
   .pursuit-layout--golf,
-  .pursuit-layout--classic,
-  .rank-grid {
+  .pursuit-layout--classic {
     grid-template-columns: 1fr;
   }
 
-  .swing-bay,
   .classic-art {
     aspect-ratio: 16 / 9;
   }
 
-  .swing-bay__empty {
+  /* Mobile golf scorecard: media and identity share the first row, followed
+     by two full-width readouts. `display: contents` lets the existing,
+     semantic sections participate in the parent grid without duplicating
+     markup for a breakpoint. */
+  .pursuit-layout--golf {
+    grid-template-columns: minmax(0, 1.45fr) minmax(92px, 0.72fr);
+    align-items: stretch;
+    gap: 12px;
+  }
+
+  .pursuit-layout--golf .swing-bay {
+    grid-column: 1;
+    grid-row: 1;
     min-height: 0;
+    aspect-ratio: 1.45 / 1;
+    border-radius: 16px;
+  }
+
+  .pursuit-layout--golf .swing-bay__empty {
+    min-height: 0;
+  }
+
+  .pursuit-layout--golf .swing-bay__empty strong {
+    margin-top: 8px;
+    font-size: 0.86rem;
+  }
+
+  .pursuit-layout--golf .swing-bay__empty small {
+    font-size: 0.49rem;
+  }
+
+  .pursuit-layout--golf .swing-bay__empty > svg {
+    width: 20px;
+  }
+
+  .pursuit-layout--golf .swing-bay__arc {
+    width: 130px;
+    height: 130px;
+  }
+
+  .pursuit-layout--golf .golf-board {
+    display: contents;
+  }
+
+  .pursuit-layout--golf .pursuit-panel__head {
+    grid-column: 2;
+    grid-row: 1;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    padding: 6px 2px;
+    border-bottom: 0;
+    text-align: center;
+  }
+
+  .pursuit-layout--golf .pursuit-panel__head > div:first-child > span {
+    display: none;
+  }
+
+  .pursuit-layout--golf .pursuit-panel__head h3 {
+    margin: 0;
+    font-size: clamp(1.45rem, 8vw, 2rem);
+  }
+
+  .pursuit-layout--golf .handicap {
+    width: 54px;
+    min-width: 54px;
+    height: 54px;
+    border-radius: 15px;
+  }
+
+  .pursuit-layout--golf .handicap strong {
+    font-size: 1.25rem;
+  }
+
+  .pursuit-layout--golf .score-strip {
+    grid-column: 1 / -1;
+    grid-row: 2;
+    padding: 14px 0;
+    border-top: 1px solid var(--line);
+  }
+
+  .pursuit-layout--golf .score-strip ol {
+    gap: 5px;
+  }
+
+  .pursuit-layout--golf .score-strip li {
+    padding: 9px 2px;
+  }
+
+  .pursuit-layout--golf .course-list {
+    grid-column: 1 / -1;
+    grid-row: 3;
+    padding-top: 2px;
   }
 
   .golf-board,
@@ -424,7 +518,59 @@
     grid-template-columns: 1fr;
   }
 
+  .rank-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 8px;
+  }
+
   .rank-card {
-    min-height: 118px;
+    grid-template-columns: 1fr;
+    align-content: center;
+    min-height: 176px;
+    padding: 10px 7px;
+    text-align: center;
+  }
+
+  .rank-card__visual > img,
+  .premier-mark {
+    width: 62px;
+    height: 62px;
+  }
+
+  .rank-card__copy {
+    align-items: center;
+    margin-top: 6px;
+  }
+
+  .rank-card__copy h4 {
+    font-size: 0.82rem;
+  }
+
+  .rank-card__copy small {
+    font-size: 0.48rem;
+  }
+
+  .rank-card__copy strong {
+    font-size: 0.88rem;
+  }
+
+  .premier-mark {
+    height: 46px;
+  }
+
+  .premier-mark b {
+    width: 48px;
+    font-size: 0.61rem;
+  }
+}
+
+@media (max-width: 360px) {
+  .rank-card {
+    min-height: 164px;
+  }
+
+  .rank-card__visual > img {
+    width: 54px;
+    height: 54px;
   }
 }

@@ -84,9 +84,9 @@ function GamingPanel({ hobby }) {
               <RankVisual rank={rank} />
             </div>
             <div className="rank-card__copy">
-              <span>{rank.game}</span>
+              <h4>{rank.game}</h4>
               <small>{rank.mode}</small>
-              <strong>{rank.rank}</strong>
+              {rank.visual.type !== 'premier' && <strong>{rank.rank}</strong>}
               {rank.division && <em>{rank.division}</em>}
             </div>
           </article>
