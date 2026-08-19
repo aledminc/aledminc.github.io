@@ -1,63 +1,84 @@
-// ============================================================
-// PLACEHOLDER CONTENT — TODO(xander): this is scaffolding, not real data.
-// Replace the hobbies, stats, and media below with your own. The `note` fields
-// deliberately say TODO so nothing here reads as a real claim while it's live.
-//
-// Shape notes:
-//   media.type : 'video' | 'image'
-//   media.src  : path under /public (served from the domain root)
-//   accent     : per-hobby accent; overrides --accent inside the dashboard
-//   stats      : keep the SAME THREE SHAPES for every hobby — two plain
-//                count-ups and one bar (the one with `max`). That consistency
-//                is what makes it read as a dashboard instead of loose figures.
-// ============================================================
 export const hobbies = [
   {
-    id: 'basketball',
-    label: 'Basketball',
-    media: {
-      type: 'image',
-      src: '/assets/hobbies/basketball.svg',
-      poster: '/assets/hobbies/basketball.svg',
-    },
-    accent: '#FF9E4A',
-    stats: [
-      { label: 'Years playing', value: 12, unit: '' },
-      { label: 'Free-throw %', value: 78, unit: '%', max: 100 },
-      { label: 'Games / week', value: 4, unit: '' },
+    id: 'golf',
+    label: 'Golf',
+    kind: 'golf',
+    accent: '#2c6a51',
+    handicap: 15,
+    recentScores: [96, 89, 87, 93, 91],
+    courses: [
+      'Sahm’s Golf Course',
+      'Cascades Golf Course',
+      'Taylor’s Par 3',
+      'West Chase Golf Course',
+      'Saddlebrook Golf Course',
     ],
-    note: 'TODO: a sentence or two about what you like about it.',
+    media: {
+      type: 'gif',
+      src: null,
+      alt: 'Xander’s golf swing',
+    },
   },
   {
-    id: 'photography',
-    label: 'Photography',
-    media: {
-      type: 'image',
-      src: '/assets/hobbies/photography.svg',
-      poster: '/assets/hobbies/photography.svg',
-    },
-    accent: '#4C6FD4',
-    stats: [
-      { label: 'Rolls shot', value: 34, unit: '' },
-      { label: 'Keeper rate', value: 62, unit: '%', max: 100 },
-      { label: 'Cameras owned', value: 3, unit: '' },
+    id: 'gaming',
+    label: 'Video games',
+    kind: 'gaming',
+    accent: '#33507a',
+    ranks: [
+      {
+        game: 'VALORANT',
+        mode: 'Peak rank',
+        rank: 'Diamond 2',
+        visual: {
+          type: 'image',
+          src: 'https://media.valorant-api.com/competitivetiers/03621f52-342b-cf4e-4f86-9350a49c6d04/19/largeicon.png',
+        },
+      },
+      {
+        game: 'Rocket League',
+        mode: 'Standard · 3v3',
+        rank: 'Champion II',
+        division: 'Division I',
+        visual: {
+          type: 'image',
+          src: 'https://gist.githubusercontent.com/armollica/2d03767d66218066680493b1f16cb21f/raw/c4e1b7fe3a63933de7fe9c71514ca1e29d7eff7b/champion-2.png',
+        },
+      },
+      {
+        game: 'Rocket League',
+        mode: 'Doubles · 2v2',
+        rank: 'Champion II',
+        division: 'Division II',
+        visual: {
+          type: 'image',
+          src: 'https://gist.githubusercontent.com/armollica/2d03767d66218066680493b1f16cb21f/raw/c4e1b7fe3a63933de7fe9c71514ca1e29d7eff7b/champion-2.png',
+        },
+      },
+      {
+        game: 'Counter-Strike 2',
+        mode: 'Premier · CS Rating',
+        rank: '10,562',
+        visual: {
+          type: 'premier',
+          color: '#4777d3',
+        },
+      },
     ],
-    note: 'TODO: a sentence or two about what you like about it.',
   },
   {
     id: 'chess',
     label: 'Chess',
+    kind: 'classic',
     media: {
       type: 'image',
       src: '/assets/hobbies/chess.svg',
-      poster: '/assets/hobbies/chess.svg',
+      alt: 'Geometric chessboard illustration',
     },
-    accent: '#23B5AC',
+    accent: '#2c6a51',
     stats: [
-      { label: 'Rapid rating', value: 1480, unit: '' },
-      { label: 'Win rate', value: 54, unit: '%', max: 100 },
-      { label: 'Games played', value: 920, unit: '' },
+      { label: 'Rapid rating', value: 1480 },
+      { label: 'Win rate', value: 54, unit: '%' },
+      { label: 'Games played', value: 920 },
     ],
-    note: 'TODO: a sentence or two about what you like about it.',
   },
 ]
