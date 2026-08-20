@@ -240,7 +240,7 @@
 
 .rank-card {
   display: grid;
-  grid-template-columns: 82px minmax(0, 1fr);
+  grid-template-columns: repeat(3, minmax(0, 1fr));
   align-items: center;
   min-height: 138px;
   padding: 12px;
@@ -257,23 +257,27 @@
 
 .rank-card__visual {
   display: grid;
+  grid-column: 1;
   min-width: 0;
   place-items: center;
 }
 
 .rank-card__visual > img {
   display: block;
-  width: 72px;
-  height: 72px;
+  width: min(72px, 100%);
+  height: auto;
+  aspect-ratio: 1;
   object-fit: contain;
   filter: drop-shadow(0 7px 9px rgba(14, 26, 43, 0.18));
 }
 
 .rank-card__copy {
   display: flex;
+  grid-column: 2 / -1;
   min-width: 0;
   flex-direction: column;
-  align-items: flex-start;
+  align-items: flex-end;
+  text-align: right;
 }
 
 .rank-card__copy h4 {
@@ -386,11 +390,13 @@
 
 @media (max-width: 1080px) and (min-width: 901px) {
   .rank-card {
-    grid-template-columns: 64px minmax(0, 1fr);
     padding: 9px;
   }
 
-  .rank-card__visual > img,
+  .rank-card__visual > img {
+    width: min(58px, 100%);
+  }
+
   .premier-mark {
     width: 58px;
   }
@@ -524,22 +530,21 @@
   }
 
   .rank-card {
-    grid-template-columns: 1fr;
-    align-content: center;
-    min-height: 176px;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    align-items: center;
+    min-height: 128px;
     padding: 10px 7px;
-    text-align: center;
   }
 
-  .rank-card__visual > img,
-  .premier-mark {
-    width: 62px;
-    height: 62px;
+  .rank-card__visual > img {
+    width: min(54px, 100%);
+    height: auto;
   }
 
   .rank-card__copy {
-    align-items: center;
-    margin-top: 6px;
+    align-items: flex-end;
+    margin-top: 0;
+    text-align: right;
   }
 
   .rank-card__copy h4 {
@@ -555,6 +560,7 @@
   }
 
   .premier-mark {
+    width: 54px;
     height: 46px;
   }
 
@@ -566,11 +572,11 @@
 
 @media (max-width: 360px) {
   .rank-card {
-    min-height: 164px;
+    min-height: 122px;
   }
 
   .rank-card__visual > img {
-    width: 54px;
-    height: 54px;
+    width: min(46px, 100%);
+    height: auto;
   }
 }

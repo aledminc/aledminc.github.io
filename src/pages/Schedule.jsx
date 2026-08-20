@@ -189,10 +189,9 @@ export default function Schedule() {
         {/* ---------- scene 1: the ask ---------- */}
         <header className="sched__masthead">
           <div className="sched__head">
-            <h1>My week, mapped.</h1>
+            <h1>My weekly commitments.</h1>
             <p className="lede">
-              Fixed commitments below. Everything around them is open — that is
-              where a call fits.
+              Feel free to reach out for a meeting in open times!
             </p>
           </div>
           <div className="sched__ask">

@@ -11,7 +11,7 @@ export default function OmegLolAd() {
       aria-label="Play omegLOL at omeglol.com"
     >
       <img
-        src="/assets/projects/omeglol-preview.png"
+        src="/assets/projects/omeglol-ad.png"
         alt="An omegLOL live comedy duel between two webcam players"
       />
       <span className="omeglol-ad__copy">

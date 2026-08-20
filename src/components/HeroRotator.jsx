@@ -141,7 +141,7 @@ export default function HeroRotator({ slides, durationMs = 8000 }) {
                   <span
                     className="rotator__fill"
                     ref={(element) => { fillRefs.current[index] = element }}
-                    style={{ width: '0%' }}
+                    style={{ width: index === active ? '0%' : '100%' }}
                   />
                 </span>
               </button>
